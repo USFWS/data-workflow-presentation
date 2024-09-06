@@ -1,0 +1,152 @@
+---
+title: "Why you should use a script-based workflow for your survey"
+
+author: McCrea Cobb | Emma Schillerstorm | Jonah Withers
+format: 
+  revealjs:
+    theme: [custom.scss]
+    logo: images/FWS-logo.png
+    footer: "Alaska Data Week"
+    self-contained: false
+editor: source
+---
+
+```{r setup}
+#| echo: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+```
+
+
+## Overview
+
+-   What is a script-based workflow?
+-   Why bother to learn R and follow a script-based workflow?
+-   Our recommended workflow
+
+::: notes
+Speaker notes go here.
+:::
+
+
+## Create an RStudio project
+
+::: notes
+-   Why bother?
+:::
+
+
+## Use standardized file structure
+
+-   
+
+::: notes
+-   Why bother?
+-   Examples
+    -   RDR, R packages
+:::
+
+
+## Put under version control
+
+::: notes
+Brief overview, maybe incorporate this into another topic?
+:::
+
+
+## Import data
+
+::: notes
+-   Data do not have to be saved locally
+-   Include ServCat example
+:::
+
+
+## Document code
+
+::: notes
+-   Commenting
+-   Sections
+-   Roxygen header in packages\
+:::
+
+
+## Tidy data
+
+::: notes
+Speaker notes go here.
+:::
+
+
+## Explore data/Quality control
+
+::: notes
+-   Why?\
+-   Options
+-   Canned packages
+-   Custom functions
+:::
+
+
+## Analyze data
+
+::: notes
+-   There is probably an R package that can do what you want
+-   Advantages of scripting an analysis
+-   Recommendations
+-   Break into individual scripts for each step
+:::
+
+
+## Visualize and summarize results
+
+::: notes
+-   Tons of options, R packages
+-   Static versus dynamic visualizations
+-   Depends on output file type (html vs. Word)
+:::
+
+
+## Report results
+
+::: notes
+-   R can output to many formats
+:::
+
+
+## Share products
+
+::: notes
+-   You can share your products through scripts
+    -   Examples
+        -   Emailing
+        -   Publish report or app to server (Posit Connect)
+        -   Save to data repository, share link
+:::
+
+
+## Preserve it all
+
+::: notes
+-   You can preserve your products using scripts
+:::
+
+
+## Demonstrate reuse
+
+::: notes
+-   You can replicate these steps if it is all scripted
+-   Documentation is important!
+:::
+
+
+## Where to go from here
+
+::: notes
+-   NCTC trainings
+-   Resources available
+-   Who to reach out to
+:::
