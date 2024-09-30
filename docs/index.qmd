@@ -84,7 +84,7 @@ Speaker notes go here.
 ## Explore data/Quality control
 
 ::: notes
--   Why?\
+-   Why?
 -   Options
 -   Canned packages
 -   Custom functions
@@ -101,52 +101,4 @@ Speaker notes go here.
 :::
 
 
-## Visualize and summarize results
-
-::: notes
--   Tons of options, R packages
--   Static versus dynamic visualizations
--   Depends on output file type (html vs. Word)
-:::
-
-
-## Report results
-
-::: notes
--   R can output to many formats
-:::
-
-
-## Share products
-
-::: notes
--   You can share your products through scripts
-    -   Examples
-        -   Emailing
-        -   Publish report or app to server (Posit Connect)
-        -   Save to data repository, share link
-:::
-
-
-## Preserve it all
-
-::: notes
--   You can preserve your products using scripts
-:::
-
-
-## Demonstrate reuse
-
-::: notes
--   You can replicate these steps if it is all scripted
--   Documentation is important!
-:::
-
-
-## Where to go from here
-
-::: notes
--   NCTC trainings
--   Resources available
--   Who to reach out to
-:::
+{{< include _mccrea.qmd >}}

@@ -1,0 +1,147 @@
+<PAMDataset>
+  <PAMRasterBand band="1">
+    <Description>Class</Description>
+    <GDALRasterAttributeTable tableType="thematic">
+      <FieldDefn index="0">
+        <Name>ID</Name>
+        <Type>0</Type>
+        <Usage>0</Usage>
+      </FieldDefn>
+      <FieldDefn index="1">
+        <Name>Class</Name>
+        <Type>2</Type>
+        <Usage>0</Usage>
+      </FieldDefn>
+      <FieldDefn index="2">
+        <Name>Color</Name>
+        <Type>2</Type>
+        <Usage>0</Usage>
+      </FieldDefn>
+      <FieldDefn index="3">
+        <Name>Description</Name>
+        <Type>2</Type>
+        <Usage>0</Usage>
+      </FieldDefn>
+      <Row index="0">
+        <F>11</F>
+        <F>Open Water</F>
+        <F>#5475A8</F>
+        <F>Areas of open water, generally with less than 25% cover of vegetation or soil.</F>
+      </Row>
+      <Row index="1">
+        <F>12</F>
+        <F>Perennial Ice/Snow</F>
+        <F>#FFFFFF</F>
+        <F>Areas characterized by a perennial cover of ice and/or snow, generally greater than 25% of total cover.</F>
+      </Row>
+      <Row index="2">
+        <F>21</F>
+        <F>Developed, Open Space</F>
+        <F>#E8D1D1</F>
+        <F>Areas with a mixture of some constructed materials, but mostly vegetation in the form of lawn grasses. Impervious surfaces account for less than 20% of total cover. These areas most commonly include large-lot single-family housing units, parks, golf courses, and vegetation planted in developed settings for recreation, erosion control, or aesthetic purposes.</F>
+      </Row>
+      <Row index="3">
+        <F>22</F>
+        <F>Developed, Low Intensity</F>
+        <F>#E29E8C</F>
+        <F>Areas with a mixture of constructed materials and vegetation. Impervious surfaces account for 20% to 49% percent of total cover. These areas most commonly include single-family housing units.</F>
+      </Row>
+      <Row index="4">
+        <F>23</F>
+        <F>Developed, Medium Intensity</F>
+        <F>#ff0000</F>
+        <F>Areas with a mixture of constructed materials and vegetation. Impervious surfaces account for 50% to 79% of the total cover. These areas most commonly include single-family housing units.</F>
+      </Row>
+      <Row index="5">
+        <F>24</F>
+        <F>Developed High Intensity</F>
+        <F>#B50000</F>
+        <F>Highly developed areas where people reside or work in high numbers. Examples include apartment complexes, row houses and commercial/industrial. Impervious surfaces account for 80% to 100% of the total cover.</F>
+      </Row>
+      <Row index="6">
+        <F>31</F>
+        <F>Barren Land (Rock/Sand/Clay)</F>
+        <F>#D2CDC0</F>
+        <F>Areas of bedrock, desert pavement, scarps, talus, slides, volcanic material, glacial debris, sand dunes, strip mines, gravel pits and other accumulations of earthen material. Generally, vegetation accounts for less than 15% of total cover.</F>
+      </Row>
+      <Row index="7">
+        <F>41</F>
+        <F>Deciduous Forest</F>
+        <F>#85C77E</F>
+        <F>Areas dominated by trees generally greater than 5 meters tall, and greater than 20% of total vegetation cover. More than 75% of the tree species shed foliage simultaneously in response to seasonal change.</F>
+      </Row>
+      <Row index="8">
+        <F>42</F>
+        <F>Evergreen Forest</F>
+        <F>#38814E</F>
+        <F>Areas dominated by trees generally greater than 5 meters tall, and greater than 20% of total vegetation cover. More than 75% of the tree species maintain their leaves all year. Canopy is never without green foliage.</F>
+      </Row>
+      <Row index="9">
+        <F>43</F>
+        <F>Mixed Forest</F>
+        <F>#D4E7B0</F>
+        <F>Areas dominated by trees generally greater than 5 meters tall, and greater than 20% of total vegetation cover. Neither deciduous nor evergreen species are greater than 75% of total tree cover.</F>
+      </Row>
+      <Row index="10">
+        <F>51</F>
+        <F>Dwarf Scrub</F>
+        <F>#AF963C</F>
+        <F>Alaska only areas dominated by shrubs less than 20 centimeters tall with shrub canopy typically greater than 20% of total vegetation. This type is often co-associated with grasses, sedges, herbs, and non-vascular vegetation.</F>
+      </Row>
+      <Row index="11">
+        <F>52</F>
+        <F>Shrub/Scrub</F>
+        <F>#DCCA8F</F>
+        <F>Areas dominated by shrubs; less than 5 meters tall with shrub canopy typically greater than 20% of total vegetation. This class includes true shrubs, young trees in an early successional stage or trees stunted from environmental conditions.</F>
+      </Row>
+      <Row index="12">
+        <F>71</F>
+        <F>Grassland/Herbaceous</F>
+        <F>#FDE9AA</F>
+        <F>Areas dominated by gramanoid or herbaceous vegetation, generally greater than 80% of total vegetation. These areas are not subject to intensive management such as tilling, but can be utilized for grazing.</F>
+      </Row>
+      <Row index="13">
+        <F>72</F>
+        <F>Sedge/Herbaceous</F>
+        <F>#D1D182</F>
+        <F>Alaska only areas dominated by sedges and forbs, generally greater than 80% of total vegetation. This type can occur with significant other grasses or other grass like plants, and includes sedge tundra, and sedge tussock tundra.</F>
+      </Row>
+      <Row index="14">
+        <F>73</F>
+        <F>Lichens</F>
+        <F>#A3CC51</F>
+        <F>Alaska only areas dominated by fruticose or foliose lichens generally greater than 80% of total vegetation.</F>
+      </Row>
+      <Row index="15">
+        <F>74</F>
+        <F>Moss</F>
+        <F>#82BA9E</F>
+        <F>Alaska only areas dominated by mosses, generally greater than 80% of total vegetation.</F>
+      </Row>
+      <Row index="16">
+        <F>81</F>
+        <F>Pasture/Hay</F>
+        <F>#FBF65D</F>
+        <F>Areas of grasses, legumes, or grass-legume mixtures planted for livestock grazing or the production of seed or hay crops, typically on a perennial cycle. Pasture/hay vegetation accounts for greater than 20% of total vegetation.</F>
+      </Row>
+      <Row index="17">
+        <F>82</F>
+        <F>Cultivated Crops</F>
+        <F>#CA9146</F>
+        <F>Areas used for the production of annual crops, such as corn, soybeans, vegetables, tobacco, and cotton, and also perennial woody crops such as orchards and vineyards. Crop vegetation accounts for greater than 20% of total vegetation. This class also includes all land being actively tilled.</F>
+      </Row>
+      <Row index="18">
+        <F>90</F>
+        <F>Woody Wetlands</F>
+        <F>#C8E6F8</F>
+        <F>Areas where forest or shrubland vegetation accounts for greater than 20% of vegetative cover and the soil or substrate is periodically saturated with or covered with water.</F>
+      </Row>
+      <Row index="19">
+        <F>95</F>
+        <F>Emergent Herbaceous Wetlands</F>
+        <F>#64B3D5</F>
+        <F>Areas where perennial herbaceous vegetation accounts for greater than 80% of vegetative cover and the soil or substrate is periodically saturated with or covered with water.</F>
+      </Row>
+    </GDALRasterAttributeTable>
+  </PAMRasterBand>
+</PAMDataset>

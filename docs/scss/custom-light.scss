@@ -1,0 +1,73 @@
+/*-- scss:defaults --*/
+
+// fonts (https://doimspp.sharepoint.com/sites/fws-FF09R00000/SitePages/Comms-Visual-Identity-Landing.aspx)
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Permanent+Marker&display=swap');
+
+
+// Fonts
+// $presentation-heading-font: "Gloria Hallelujah", cursive;
+$font-family-sans-serif: "Lato", sans-serif !default;
+$Protest: "Gloria Hallelujah", cursive;
+$Marker: "Permanent Marker", cursive;
+$Lato: "Lato", sans-serif !default;
+
+
+// colors
+$blue: #02426D;
+$light-blue: #4e7b99;
+$white: #FFFFFF;
+$accent-yellow: #FFC94F;
+$accent-dark-blue: #012137;
+$accent-orange: #F7885A;
+$accent-light-blue: #D1EDFF;
+$accent-yellow: #FFE4A7;
+$accent-champagne: #E9D3AD;
+$accent-blue: #007AC2;
+$accent-green: #265D3A;
+$accent-light-green: #BACF8C;
+$accent-brown: #A09B81;
+$transparent: #00000000;
+
+
+$body-bg: $white;
+$body-color: $blue;
+$link-color: $light-blue;
+$code-block-font-size: 0.7em;
+// $code-block-bg: $blue;
+// $code-block-color: $white;
+// $code-block-bg-alpha: -.9;
+
+
+/*-- scss:rules --*/
+
+.slides h1 {
+  font-family: $Protest;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+  }
+
+.smaller {
+  font-size: 0.80em;
+  }
+
+.larger {
+  font-size: 1.2em;
+  }
+
+.shadow {
+    border-radius: 5px;
+    box-shadow: 4.2px 4.5px 2.5px rgba(65, 65, 65, 0.737);
+}
+
+.valign {
+	vertical-align: bottom;
+        }
+
+.author {
+  font-family: $Protest
+}
+
+
