@@ -70,4 +70,56 @@ $code-block-font-size: 0.7em;
   font-family: $Protest
 }
 
-
+/* float 30% 70% width */
+.pull-right-30 {
+  width: 29%;
+  float: right;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-right-70 {
+  width: 69%;
+  float: right;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-left-30 {
+  width: 29%;
+  float: left;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-left-70 {
+  width: 69%;
+  float: left;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-left-60 {
+  width: 59%;
+  float: left;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-right-40 {
+  width: 39%;
+  float: right;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-left-40 {
+  width: 39%;
+  float: left;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.pull-right-60 {
+  width: 59%;
+  float: right;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+.shadow {
+    border-radius: 5px;
+    box-shadow: 4.2px 4.5px 2.5px rgba(65, 65, 65, 0.737);
+}

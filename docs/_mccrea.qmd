@@ -55,18 +55,49 @@ Fisheries and Ecological Services
 :::
 
 
-## Potential Datasets {.smaller}
+## Witch Occupancy at Tetlin NWR
 
-- [unmarked](https://github.com/hmecology/unmarked) R package (occupancy models, distance sampling)
-    - [Canned data](https://github.com/hmecology/unmarked/tree/main/data)
-    - [Simulated data analysis](https://hmecology.github.io/unmarked/articles/colext.html)
-- 
+![](images/witch_tetlin.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch flying over mountains."}
+
+
+##
+
+![](images/witch_hiding.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch hiding in the forest."}
+
+
 
 
 
 ## Visualize and summarize results
 
--   Self contained workflow
+<br>
+
+::: columns
+
+::: {.column width="50%"}
+
+**Manual Workflow**
+
+::: incremental  
+- Move data into Excel
+- Create summary tables and plots
+- Cut/paste into Word doc
+- Reformat to match document
+:::
+:::
+
+::: {.column width="50%"}  
+
+**Scripted Workflow**
+
+::: incremental
+- some text
+:::
+
+:::
+
+:::
+
 
 ::: notes
 -   Tons of options, R packages
@@ -74,13 +105,36 @@ Fisheries and Ecological Services
 -   Depends on output file type (html vs. Word)
 :::
 
-```{r}
-#| eval: true
-#| echo: true
 
-## Some code will go here
-p <- 1+1
-p
+## R Workflow
+
+::: columns
+
+
+:::
+
+::: notes
+
+:::
+
+
+## Visualize and summarize results
+
+```{r}
+#| echo: false
+#| message: false
+#| cache: true
+
+# create_map function
+source("./R/create_map.R")
+
+# Data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+create_map(ras = psi, s= sites, r = tetlin, hgt = 650)
+
 ```
 
 
@@ -135,3 +189,8 @@ p
 -   Resources available
 -   Who to reach out to
 :::
+
+##
+
+![](images/witch_moose.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch riding a moose in the forest."}
+
