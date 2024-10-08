@@ -59,9 +59,10 @@ Fisheries and Ecological Services
 
 <br><br>
 
-::: {.center .smaller"}
+::: {.center .smaller}
 {{< fa brands github title="The GitHub octocat logo" >}} <https://github.com/USFWS/data-workflow-presentation>
 :::
+
 
 ::: notes
 
@@ -148,6 +149,17 @@ style A fill:#FFFF00,stroke:#333,stroke-width:4px
 
 ::: columns
 
+::: {.column width="50%"}
+::: incremental  
+- Some text
+:::
+:::
+
+::: {.column width="50%"}
+::: incremental  
+- Some text
+:::
+:::
 
 :::
 
@@ -155,8 +167,14 @@ style A fill:#FFFF00,stroke:#333,stroke-width:4px
 
 :::
 
-
 ## Visualize and summarize results
+
+::: columns
+
+
+:::
+
+## Witch occurrence at Tetlin
 
 ```{r}
 #| echo: false
@@ -171,7 +189,7 @@ tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
 sites <- read.csv("data/csv/sites.csv")
 psi <- terra::rast("data/raster/psi/psi.tif")
 
-create_map(ras = psi, s= sites, r = tetlin, hgt = 650)
+create_map(ras = psi, s= sites, r = tetlin, hgt = 600)
 
 ```
 
