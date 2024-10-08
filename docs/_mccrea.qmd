@@ -4,9 +4,22 @@ format:
     theme: scss/custom-dark.scss
     logo: images/FWS-logo.png
     footer: "[Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
+    mermaid: 
+      theme: neutral
 editor: source
 highlight-style: tango
 ---
+
+```{r setup}
+#| echo: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+library(emojifont)
+```
+
 
 # A Reproducible Data Workflow {.smaller}
 
@@ -46,7 +59,7 @@ Fisheries and Ecological Services
 
 <br><br>
 
-::: {.center .smaller style="align-items: bottom;"}
+::: {.center .smaller"}
 {{< fa brands github title="The GitHub octocat logo" >}} <https://github.com/USFWS/data-workflow-presentation>
 :::
 
@@ -54,6 +67,31 @@ Fisheries and Ecological Services
 
 :::
 
+## Scripted Data Workflow
+
+<br><br><br>
+
+::: {.center height="80%"}
+```{mermaid}
+%%| fig-height: 100
+
+%%{ init: {
+    'themeVariables':
+        { 'fontSize': '30px'}
+} }%%
+
+flowchart LR
+  A(Import) --> B(Tidy)
+  B --> C(Transform)
+  C --> D(Visualize)
+  D --> E(Analyze)
+  E --> F(Communicate)
+  F --> G(Preserve)
+  G --> A
+  
+style A fill:#FFFF00,stroke:#333,stroke-width:4px
+```
+:::
 
 ## Witch Occupancy at Tetlin NWR
 
@@ -140,11 +178,30 @@ create_map(ras = psi, s= sites, r = tetlin, hgt = 650)
 
 ## Report results
 
+::: columns
+::: {.column width="40%"}  
 
+`r emoji('raising_hand')` Goals
+
+::: incremental  
+- Easy to update
+- Clear link between the data and the report
+- Reproducible
+:::
+
+:::
+:::
 
 ::: notes
 - R can output to many formats
 - Mention the Alaska Refuge reporting series Quarto and Rmarkdown templates
+:::
+
+## Our Witch Occurrance Report
+
+
+::: notes
+
 :::
 
 
