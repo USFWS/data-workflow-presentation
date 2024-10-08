@@ -21,5 +21,14 @@ po/*~
 README.html
 DISCLAIMER.html
 NEWS.html
-**/docs/data/raster/
+
+# Rasters
+/docs/data/raster/nlcd/forest_distance.tif
+/docs/data/raster/nlcd/water_distance.tif
+/docs/data/raster/nlcd/nlcd_ak_2016.tif
+/docs/data/raster/nlcd/nlcd.tif.aux.xml
+/docs/data/raster/nlcd/forest_distance.tif
+**/docs/data/raster/ned/
+
+# revealjs files (many of them)
 **/docs/_mccrea_files/
