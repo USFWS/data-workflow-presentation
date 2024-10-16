@@ -1,0 +1,426 @@
+---
+title: "Why you should use a script-based workflow for your survey"
+
+author: McCrea Cobb | Emma Schillerstorm | Jonah Withers
+format: 
+  revealjs:
+    theme: [custom.scss]
+    logo: images/FWS-logo.png
+    footer: "Alaska Data Week"
+    self-contained: false
+editor: source
+---
+
+```{r setup}
+#| echo: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+```
+
+## The Tetlin Witch Project
+
+-   Witch Background:
+    -   Range: witch trials of the early modern period pushed the North American witch range northward into Alaska and parts of Canada
+    -   Habitat: primarily boreal forest; avoid water bodies
+    -   Threats: deforestation eliminating ability to craft broomsticks; competition for resources with Yetis
+-   The Survey:
+    -   Annual presence/absence survey conducted for 40 years
+    -   For 8 consecutive days in October, data is collected on witch presence at 100 sites on the refuge
+    -   Occupancy is assessed based on proximity to forest and proximity to water
+
+::: notes
+none
+:::
+
+## Photos from the Field
+
+Coming soon to your Wild Weekly...
+
+\[insert photos\]
+
+::: notes
+none
+:::
+
+## Where We Are
+
+-   Completed: data collection, data entry (in a multi-sheet Excel workbook)
+-   Next: data clean-up
+-   No automated data processing workflow exists for this dataset, but I have a little bit of prior experience with R, so let's create one!
+
+\[Insert screenshot of workbook\]
+
+::: notes
+none
+:::
+
+## Step 1: Set Up New Script File
+
+-   Looks like a text file with a "Run" button
+-   Document code:
+    -   Human readability = key to the foundation of reusability
+
+    -   Translate coding language to human language = critical for yourself AND others
+
+        -   Adding comments serves as a reminder for what your code accomplishes and why it was included
+
+    -   Basic documentation is as easy as a "\#" (shortcut: CTRL-SHIFT-C)
+
+        ```{r}
+        #| echo: true
+        #This is how I document my code. This code does not execute.
+
+        #I can add an optional header to the top of my script file to remind myself #what the file accomplishes:
+
+        #This file is a reusable script to tidy and QC occupancy data collected on #witches in Tetlin NWR.
+        ```
+
+    -   More advanced documentation for creating functions and packages: "roxygen comments"
+
+::: notes
+none
+:::
+
+## Step 1: Set Up New Script File
+
+-   Get started coding by using a "function" -\> takes an input, accomplishes a task, and spits out an output
+
+    -   R has built-in functions to accomplish many common tasks
+
+    -   However, you can install additional packages (sets of functions) for your specific needs
+
+        -   Always includes documentation on how to use their functions
+
+-   Utilizing existing functions allows you to accomplish complex tasks with a single line of code
+
+    -   Back-end code is already written for you
+
+    -   You can also create your own functions and even bundle your own functions into your own packages
+
+::: notes
+none
+:::
+
+## Step 1: Set Up New Script File
+
+-   To use external functions, we need to load their packages
+    -   First, install packages to be able to load them
+
+        ```{r}
+        #| echo: true
+        #| eval: false
+        install.packages("tidyverse","readxl","janitor")
+        ```
+
+    -   Use `library()` to load at top of document
+
+        -   Continually update while writing rest of code
+
+        ```{r}
+        #| echo: true
+        #Load packages
+        library(tidyverse)
+        library(readxl)
+        library(janitor)
+        ```
+
+::: notes
+none
+:::
+
+## Step 2: Import Data
+
+-   Built-in and installable functions exist for reading data from various sources
+-   Can read data from a locally stored file (.csv, .xlsx, etc.)
+    -   Example: `my_data <- read.csv("path/to/filename.csv")`
+-   Can read data from a provided link (online authoritative source, ServCat, etc.)
+    -   Example: `my_data <- read.csv(download.file("www.url.com","save_as_filename.csv"))`
+
+::: notes
+none
+:::
+
+## Step 2: Import Data
+
+-   For our data:
+    -   Going to use `read_excel()` to import data from a workbook and specify which sheet we want to access
+    -   Set new "dataframe" as a **variable** - the basis of reusability!
+
+```{r}
+#| echo: true
+#Import raw data
+witch_data <- read_excel("emma_files/witch_survey.xlsx", sheet = 1)
+```
+
+::: notes
+none
+:::
+
+## Step 3: Tidy Data
+
+-   Definition of "tidy data" \[Insert photo\]
+
+::: notes
+none
+:::
+
+## Step 3: Tidy Data
+
+-   Let's take a peak at what we are working with:
+
+```{r}
+#| echo: true
+#Peak at data
+str(witch_data)
+summary(witch_data)
+```
+
+-   Why is our data not tidy?
+-   Answer: Some column names are values NOT variables
+
+::: notes
+none
+:::
+
+## Step 3: Tidy Data
+
+-   Let's use `tidyverse()` to tidy our data in one line by "pivoting"
+
+```{r}
+#| echo: true
+#Tidy data structure
+tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+head(tidy_data)
+```
+
+::: notes
+none
+:::
+
+## Step 3: Tidy Data
+
+-   In tidy data, column names are variables, so they should be structured as such
+-   Common variable naming conventions:
+    -   camelCase
+    -   snake_case
+-   We can use the `janitor` package to fix all our column names in a single line of code
+
+```{r}
+#| echo: true
+#Clean column names
+tidy_data <- clean_names(tidy_data)
+head(tidy_data)
+```
+
+::: notes
+none
+:::
+
+## Step 4: Quality Control and Exploratory Data Analysis
+
+-   Exploratory Data Analysis (EDA) = a way to get to know your data before drawing conclusions
+
+    -   May consist of: generating summary statistics, plotting variables, etc.
+
+    -   Uses:
+
+        -   QC - Are there errors in my data? Are my data within the expected range of values?
+
+        -   Check assumptions - Does the data follow an expected distribution? How variable is the data?
+
+        -   Identify patterns and relationships - Are my variables correlated?
+
+        -   Generate hypotheses
+
+    -   Example packages: skimr(), corrplot(), summary_tools(), data_explorer(), assertr()
+
+::: notes
+none
+:::
+
+## Step 4: Quality Control and Exploratory Data Analysis
+
+Notes regarding my field team...
+
+-   **Frank and Stein the Wildlife Biologists** (*Roles: field work, data recording*)
+    -   Frank - records "none" rather than "0" on the data sheets
+    -   Stein - has illegible handwriting (his 0's can look like 6's, and his 1's can look like 2's or 7's)
+-   **Casper the friendly Biotech** (*Role: data entry/digitization*)
+    -   Enters data exactly as it is written
+
+::: notes
+none
+:::
+
+## Step 4: Quality Control and Exploratory Data Analysis
+
+-   Let's check and see why our "presence" column is non-numeric
+
+```{r}
+#| echo: true
+#Find non-numerics - hide warning
+tidy_data$presence[which(is.na(as.numeric(tidy_data$presence)))]
+```
+
+-   Let's replace all instances of "none" with a value of 0 and convert the column back to a numeric type
+
+```{r}
+#| echo: true
+#Fix non-numerics
+tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+tidy_data$presence <- as.integer(tidy_data$presence)
+```
+
+::: notes
+none
+:::
+
+## Preserve Products
+
+-   Write machine-readable metadata for the tidied data file, including a data dictionary defining each of the variables (columns) and their domains
+-   Preserve data, script files, and reports
+    -   In ServCat, create separate reference for each and link all to the project reference corresponding to our witch survey
+
+::: notes
+none
+:::
+
+## Preserve Products
+
+-   I want to go further and compile all years of data to preserve
+    -   However, all past years are in the same untidy format, and Frank used "none" instead of "0" since the survey first began
+    -   Would be a nightmare to manually fix, but we can reuse the script we just created
+-   Wrapping script into a function makes this even more streamlined (optional)
+
+::: notes
+none
+:::
+
+## Preserve Products
+
+-   Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step
+
+```{r}
+#| echo: true
+#| eval: false
+
+#Load packages
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+#Import raw data
+witch_data <- read_excel("witch_survey.xlsx", sheet = 1)
+
+#Tidy data structure
+tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+
+#Clean column names
+tidy_data <- clean_names(tidy_data)
+
+#Fix non-numerics
+tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+tidy_data$presence <- as.integer(tidy_data$presence)
+
+#Fix typos
+tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+
+#Export tidy csv
+write.csv(tidy_data, file = "tidy_witch_data.csv", row.names = FALSE)
+```
+
+::: notes
+none
+:::
+
+## Preserve Products
+
+-   OR wrap script into function
+
+```{r}
+#| echo: true
+#| eval: false
+
+#' Tidy and QC witch data
+#'
+#' @param year The year (YYYY) representing the worksheet name to pull data from
+#'
+#' @return A tidied dataframe
+#' @export
+#'
+#' @examples
+#' clean_witch_data(year = 2024)
+clean_witch_data <- function(year){
+  #Import raw data
+  observation_data <- read_excel("witch_survey.xlsx", sheet = paste0(year))
+  site_data <- read_excel("witch_survey.xlsx", sheet = "Site Info")
+  
+  #Relate tables: observation data and site data
+  witch_data <- left_join(observation_data, site_data)
+  
+  #Tidy data structure
+  tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+  
+  #Clean column names
+  tidy_data <- clean_names(tidy_data)
+  
+  #Fix non-numerics
+  tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+  tidy_data$presence <- as.integer(tidy_data$presence)
+  
+  #Fix typos
+  tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+  tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+  
+  #Return tidy dataframe
+  return(tidy_data)
+}
+```
+
+::: notes
+none
+:::
+
+## Preserve Products
+
+-   Can run function for each year and compile data as follows:
+
+```{r}
+#| echo: true
+#| eval: false
+
+#Clean and compile all years of data
+compiled_data <- clean_witch_data(2004)
+for(val in 2005:2024){
+  compiled_data <- full_join(compiled_data, clean_witch_data(year = val))
+}
+
+#Export
+write.csv(compiled_data, file = "compiled_witch_data.csv", row.names = FALSE)
+```
+
+::: notes
+none
+:::
+
+## Reuse
+
+-   Can now repeat all tidying, analyses, and visualizations next year with just the click of a button!
+-   Medium to high initial investment for dramatically reduced future workload
+
+::: notes
+none
+:::
+
+## Resources
+
+-   Available in the README.md
+-   If you are in Refuges and interested in developing an automated workflow for your survey but need some assistance, submit an I&M Tech Request
+
+::: notes
+none
+:::
