@@ -2,23 +2,67 @@
 format: 
   revealjs:
     theme: scss/custom-dark.scss
+    code-block-height: 450px
+    code-overflow: wrap
+    width: 1280
+    height: 720
     logo: images/FWS-logo.png
-    footer: "[Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
+    footer: "![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
     mermaid: 
       theme: neutral
 editor: source
-highlight-style: tango
+highlight-style: a11y
 ---
 
 ```{r setup_mccrea}
-#| echo: false
-
 knitr::opts_chunk$set(warning = FALSE, 
                       message = FALSE, 
                       fig.retina = 3, 
                       fig.align = "center")
 library(emojifont)
+library(unmarked)
+library(terra)
+library(tidyverse)
 ```
+
+```{r}
+#| cache: true
+
+theme_fws <- function() {
+  theme_bw() +
+  theme(strip.text = element_text(size = 100),
+        axis.text.x = element_text(size = 60),
+        axis.text.y = element_text(size = 60),  
+        axis.title.x = element_text(size = 80),
+        axis.title.y = element_text(size = 80),
+        plot.margin = margin(t = 20,
+                             r = 40,  
+                             b = 20,  
+                             l = 20))
+}
+```
+
+
+## Two column template (incremental)
+
+::: columns
+
+::: {.column width="50%"}
+::: incremental
+-   Some text
+:::
+:::
+
+::: {.column width="50%"}
+::: incremental
+-   Some text
+:::
+:::
+
+:::
+
+::: notes
+:::
 
 
 ## Scripted Data Workflow
@@ -27,7 +71,7 @@ library(emojifont)
 
 ::: {.center height="80%"}
 ```{mermaid}
-%%| fig-height: 100
+%%| fig-height: 600
 
 %%{ init: {
     'themeVariables':
@@ -47,45 +91,166 @@ style A fill:#FFFF00,stroke:#333,stroke-width:4px
 ```
 :::
 
-## Witch Occupancy at Tetlin NWR
+# Analysis
 
-![](images/witch_tetlin.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch flying over mountains."}
+## [Analysis]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   The steps are clear
+-   The workflow is reproducible
+-   Limited opportunities for human error
+:::
 
 
-##
-
-![](images/witch_hiding.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch hiding in the forest."}
-
-
-
-
-
-## Visualize and summarize results
-
-<br>
+## [Analysis]{.cursive}: Manual Workflow
 
 ::: columns
 
 ::: {.column width="50%"}
-
-**Manual Workflow**
-
-::: incremental  
-- Move data into Excel
-- Create summary tables and plots
-- Cut/paste into Word doc
-- Reformat to match document
-:::
-:::
-
-::: {.column width="50%"}  
-
-**Scripted Workflow**
+### Steps {.center}
 
 ::: incremental
-- some text
+1.  Reformat data
+2.  Load data into software (PRESENCE, Mark, Distance, etc.)
+3.  Use interface to select options
+4.  Run it
+5.  Export results
+:::
 :::
 
+::: {.column width="50%"}
+![](images/mark.png){.shadow width="100%" fig-align="center"}
+:::
+
+:::
+
+::: notes
+:::
+
+
+## [Analysis]{.cursive}: Manual Workflow
+
+### Limitations {.center}
+
+::: columns
+
+::: {.column width="50%"}
+::: {.fragment fragment-index=1}
+-   Restricted to functions in the software
+:::
+
+::: {.fragment fragment-index=2}
+-   "Black Box"
+:::
+
+::: {.fragment fragment-index=3}
+-   Difficult/time-consuming to document and reproduce steps
+:::
+
+::: {.fragment fragment-index=4}
+-   Must extract results into another software to visualize
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment fragment-index=2}
+![](images/black_box.png){width="70%" fig-align="center"}
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+## [Analysis]{.cursive}: R Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Advantages {.center}
+
+::: {.small}
+::: {.fragment fragment-index=1}
+-   Many custom R packages for performing most common ecological data analyses
+    -   21,477 ^[Just on [CRAN](https://cran.r-project.org/web/packages/) as of 10/8/24] R packages available to download 
+    -   There's probably an R package that does what you need!
+:::
+
+::: {.fragment fragment-index=2}
+-   R packages are generally well-documented
+:::
+
+::: {.fragment fragment-index=3}
+- Your code documents your steps
+:::
+
+
+
+
+
+:::
+:::
+
+::: {.column width="50%" .center}
+::: {.fragment fragment-index=2}
+```{=html}
+<iframe width="600" height="600" src="https://biodiverse.github.io/unmarked/index.html" title="unmarked vignette"></iframe>
+```
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+#
+
+::: {.scary}
+Witch Survey
+:::
+::: {.cursive .center .larger}
+Analysis
+:::
+
+::: notes
+:::
+
+
+## Single Season Occupancy Model
+
+
+
+
+
+# Summarize Results
+
+## -: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.   Move data into Excel
+2.   Create summary tables and plots
+3.   Cut/paste into Word doc
+4.   Reformat to match document
+:::
+:::
+
+::: {.column width="50%" .center}
+[![](images/excel.png){.shadow width="55%" fig-alt="A funny image downplaying on our fears of AI by showing a mistake in Excel"}](https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/)
+
+::: {.tiny}
+https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
+:::
 :::
 
 :::
@@ -97,42 +262,214 @@ style A fill:#FFFF00,stroke:#333,stroke-width:4px
 -   Depends on output file type (html vs. Word)
 :::
 
+## [Summarize Results]{.cursive}: Manual Workflow
 
-## R Workflow
+### Limitations {.center}
 
-::: columns
-
-::: {.column width="50%"}
-::: incremental  
-- Some text
-:::
-:::
-
-::: {.column width="50%"}
-::: incremental  
-- Some text
-:::
-:::
-
+::: incremental
+-   
 :::
 
 ::: notes
-
 :::
 
-## Visualize and summarize results
+
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+Results
+:::
+
+::: notes
+:::
+
+
+## Witch Survey Results 
+### Occupancy {.center}
 
 ::: columns
 
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|1-6|8-9|11-12|14-24"
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values
+pred <- predict_occ(mod, sc)
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, 
+                 y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, 
+                  ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+::: {layout="[[-1], [1], [-1]]"}
+``` {r}
+#| out-height: "100%"
+
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+:::
+:::
 
 :::
 
-## Witch occurrence at Tetlin
 
+::: notes
+:::
+
+
+## Witch Survey Results
+
+```{r}
+
+
+
+# Get fit_model() function
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+## Witch Survey Results 
+### Detection {.center}
+
+::: columns
+::: {.column width="50%"}
+<br><br>
+```{r}
+#| eval: false
+#| echo: true
+
+# Plot predicted values (detection)
+ggplot(pred, aes(x = covariateValue, 
+                 y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, 
+                         ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+
+::: {.column width="50%"}
+::: {.center-xy-container}
+::: {.fragment}
+``` {r}
+#| out-width: "100%"
+#| fig-height: 8
+
+# Get fit_model() function
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values (unscaled)
+pred <- plotEffectsData(mod, "det", "forest") %>%
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+
+# Plot predicted values (detection)
+ggplot(pred, aes(x = covariateValue, y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance to Forest (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+:::
+:::
+
+:::
+
+
+::: notes
+:::
+
+
+## Witch Survey Results
+
+
+::: {.center-xy-container}
 ```{r}
 #| echo: false
 #| message: false
 #| cache: true
+#| fig-align: center
 
 # create_map function
 source("./R/create_map.R")
@@ -142,83 +479,57 @@ tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
 sites <- read.csv("data/csv/sites.csv")
 psi <- terra::rast("data/raster/psi/psi.tif")
 
-create_map(ras = psi, s= sites, r = tetlin, hgt = 600)
+create_map(ras = psi, s = sites, r = tetlin, hgt = 550)
 
 ```
-
-
-## Report results
-
-::: columns
-::: {.column width="40%"}  
-
-`r emoji('raising_hand')` Goals
-
-::: incremental  
-- Easy to update
-- Clear link between the data and the report
-- Reproducible
 :::
-
-:::
-:::
-
-::: notes
-- R can output to many formats
-- Mention the Alaska Refuge reporting series Quarto and Rmarkdown templates
-:::
-
-## Our Witch Occurrance Report
 
 
 ::: notes
-
 :::
 
 
-## Share products
+# Report
 
+## 
+
+
+<br><br><br>
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   Easy to update
+-   Clear link between the data and the report
+-   Reproducible
+:::
 
 
 ::: notes
--   You can share your products through scripts
-    -   Examples
-        -   Emailing
-        -   Publish report or app to server (Posit Connect)
-        -   Save to data repository, share link
+-   R can output to many formats
+-   Mention the Alaska Refuge reporting series Quarto and Rmarkdown templates
 :::
 
 
-## Preserve it all
-
-
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Report]{.cursive}
+:::
 
 ::: notes
--   You can preserve your products using scripts
 :::
 
 
-## Demonstrate reuse
-
-
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Preserve]{.cursive}
+:::
 
 ::: notes
--   You can replicate these steps if it is all scripted
--   Documentation is important!
 :::
-
-
-## Where to go from here
-
-
-
-::: notes
--   NCTC trainings
--   Resources available
--   Who to reach out to
-:::
-
-##
-
-![](images/witch_moose.png){.shadow width="80%" fig-align="center" fig-alt="An image of a witch riding a moose in the forest."}
-
