@@ -1,6 +1,16 @@
-get_refuge <- function(orgname = "Tetlin National Wildlife Refuge") {  # Get sf multipolygon of refuge boundary
-  library(httr)
-  library(sf)
+#' Get a FWS refuge boundary from the FWS AGOL feature server
+#'
+#' @param orgname the name of the refuge
+#'
+#' @return an sf multipolygon object 
+#' 
+#' @import httr
+#' @import sf
+#' 
+#' @export
+#'
+#' @example get_refuge("Tetlin National Wildlife Refuge")
+get_refuge <- function(orgname) {
   
   orgname <- toupper(orgname)
   
@@ -8,8 +18,7 @@ get_refuge <- function(orgname = "Tetlin National Wildlife Refuge") {  # Get sf 
   
   url <- httr::parse_url("https://services.arcgis.com/QVENGdaPbd4LUkLV/arcgis/rest/services")
   url$path <- paste(url$path, "National_Wildlife_Refuge_System_Boundaries/FeatureServer/0/query", sep = "/")
-  url$query <- list(where = paste("ORGNAME =", paste0("'",orgname,"'")),  # Arctic Refuge, in this case
-                    outFields = "*",
+  url$query <- list(where = paste("ORGNAME =", paste0("'",orgname,"'")),
                     returnGeometry = "true",
                     f = "pgeojson"
   )
@@ -22,48 +31,71 @@ get_refuge <- function(orgname = "Tetlin National Wildlife Refuge") {  # Get sf 
 }
 
 
-get_sites <- function(n = 100, saveit = FALSE) {  # Generate a data frame of a sample of sites 
-  library(sf)
-  library(terra)
-  
+#' Generate a random sample of points within a multipolygon and extract raster data
+#'
+#' @param refuge a sf multipolygon boundary of a refuge
+#' @param n the sample size
+#'
+#' @return
+#' 
+#' @import sf
+#' @import terra
+#' 
+#' @export
+#'
+#' @example get_sites(tetlin)
+get_sites <- function(refuge,
+                      n = 100) {
   # Generate sample
-  sites <- sf::st_sample(tetlin, n, type = "random", exact = TRUE) |>
+  sites <- sf::st_sample(refuge, n, type = "random", exact = TRUE) |>
     sf::st_as_sf(quite = TRUE)
+  }
   
-  # Extract covariate data to sites
-  tetlin <- sf::st_read("./docs/data/shapefile/tetlin.shp", quiet = TRUE)
-  forest <- terra::rast("./docs/data/raster/nlcd/forest_distance.tif")
-  water <- terra::rast("./docs/data/raster/nlcd/water_distance.tif")
   
-  # Extract covariate data at sites
+extract_cov <- function(sites, forest, water) {
+  # # Import rasters
+  # forest <- terra::rast("./docs/data/raster/nlcd/forest_distance.tif")
+  # water <- terra::rast("./docs/data/raster/nlcd/water_distance.tif")
+  
+  # Extract raster data at sites
   sites <- data.frame(sf::st_coordinates(sites),
                       forest = terra::extract(forest, sites)$forest,
                       water = terra::extract(water, sites)$water)
-  
-  # Save it
-  if (saveit) write.csv(sites, "./docs/data/csv/sites.csv", row.names = FALSE)
-  
-  sites
-}
+  }
 
 
-crop_nlcd <- function(nlcd, refuge) {  # Crop NLCD spatraster to sf multipoloygon boundary (refuge)
-  library(terra)
-  library(magrittr)
-  library(sf)
-  library(dplyr)
-  library(FedData)
+#'  Crop a spatraster (NLCD) to an sf multipoloygon (refuge boundary)
+#'
+#' @param nlcd a `spatraster` object (NLCD)
+#' @param refuge an `sf` multipolygon (refuge boundary)
+#'
+#' @return a `spatraster` cropped to the refuge boundary
+#' 
+#' @import terra
+#' @import magrittr
+#' @import sf
+#' @import dplyr
+#' @import FedData
+#' 
+#' @export
+#'
+#' @example crop_nlcd(nlcd, tetlin)
+crop_nlcd <- function(nlcd, refuge) {
   
+  # Crop raster
   nlcd <- nlcd %>%
     terra::crop(., sf::st_transform(refuge, sf::st_crs(terra::crs(.))),
                 snap = "out") %>%
     terra::as.factor()
   
+  # Assign NLCD colors to the classes
   levels(nlcd) <- FedData::nlcd_colors() %>% as.data.frame()
-  
   terra::coltab(nlcd) %<>% 
     magrittr::extract2(1) %>% 
     dplyr::filter(value %in% FedData::nlcd_colors()$ID)
   
   return(nlcd)
 }
+
+
+

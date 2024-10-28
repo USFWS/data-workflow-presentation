@@ -1,0 +1,265 @@
+---
+format: 
+  docx:
+    toc: false
+    toc-depth: 3
+    toc-title: Contents
+    number-sections: false
+    reference-doc: "akrreport-template.docx"
+    crossref: 
+      chapters: false     # set to 'true' if figure numbering should follow subsections
+    # Code options:
+    highlight-style: arrow # default
+execute: 
+  echo: false
+  warning: false
+  message: false
+editor: source
+
+# Comment or remove the following two lines if NO references are used
+bibliography: [bib/sample.bib, bib/packages.bib]  # Path to bibliography files
+csl: bib/the-journal-of-wildlife-management.csl   # Path to reference style file
+---
+
+```{r load_packages}
+#| label: load-packages
+#| include: false
+
+# Load required packages
+library(knitr)
+library(flextable)
+library(unmarked)
+library(terra)
+library(tidyverse)
+library(RColorBrewer)
+library(sf)
+library(leaflet)
+```
+
+
+```{r setup}
+#| echo: false
+#| message: false
+#| include: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      echo = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+```
+
+
+```{r load-data}
+#| cache: true
+
+# Load site data
+dat <- read.csv("../../data/csv/dat.csv")
+sites <- read.csv("../../data/csv/sites.csv")
+
+source("../../R/simulate_data.R")
+source("../../R/create_map.R")
+
+# Scaled covariates
+sc <- dat |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Load site data and scale them
+load("../../data/rdata/unmarked_df.Rdata")
+```
+
+```{r fit-model}
+#|cache: true
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+
+```{r}
+#| label: generate-package-refs
+#| include: false
+
+# Automatically create a bib database for R packages used above
+knitr::write_bib(
+  x = c(.packages(), 'bookdown', 'rmarkdown', 'akrreport',
+    # Add here all packages that are loaded in the above 'load-packages' chunk
+    'knitr'), 
+  file = 'bib/packages.bib')
+```
+
+
+| ![Photo Caption/FWS](images/banner.jpg)
+
+<!-- Report Number -->
+::: {custom-style="ReportNumber"}
+| Alaska Refuge Report 2024-REPORT # 1
+:::
+<!-- Report Number -->
+
+<!-- Title -->
+::: {custom-style="Title"}
+| Tetlin Witch Report
+:::
+<!-- Title -->
+
+<!-- Author -->
+::: {custom-style="Author"}
+| Jane Biologist, Tetlin National Wildlife Refuge
+:::
+<!-- Author -->
+
+<!-- Cover photo -->
+::: {custom-style="CoverPhoto"}
+![Photo Caption/FWS](../../images/witch_hiding.png){fig-align="center" width=5.5in}
+:::
+<!-- Cover photo -->
+
+<br>
+
+<!-- Add page break -->
+\newpage
+
+<!-- Refuge logo -->
+::: {custom-style="CoverPhoto"}
+| ![Photo Caption/FWS](images/nwrs_logo.png)
+:::
+<!-- Refuge logo -->
+
+<br> <br>
+
+The Alaska Refuge Report Series is used to disseminate information and analysis about natural resources and related topics concerning lands managed by the National Wildlife Refuge System in Alaska. The series supports the advancement of science and informed decision-making by publishing scientific findings that may be ongoing or too limited for journal publication but provide valuable information or interpretations to the field of study. 
+
+<br>
+
+Manuscripts in the series receive an appropriate level of peer review to ensure that the information is scientifically credible, technically accurate, appropriately written for the intended audience, and designed and published in a professional manner. 
+
+<br>
+
+Disclaimer: The use of trade names of commercial products in this report does not constitute endorsement or recommendation for use by the federal government.
+
+<br>
+
+How to cite this report:
+Biologist, J. 2024. Tetlin Witch Report. Alaska Refuge Report
+2024-01. https://doi.org/{UNIQUEDOI}.
+
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br> 
+<br>  
+<br>  
+<br>  
+<br> 
+<br>  
+<br>  
+<br> 
+<br> 
+<br> 
+
+ON THE COVER  
+Image caption goes here  
+Image credit goes here 
+
+<!-- Add page break -->
+
+\newpage
+
+
+## Abstract
+
+Invasive witches have become a management concern at Tetlin National Wildlife Refuge. As such, there is a need to estimate witch occurrence within the Refuge.
+
+## Keywords
+
+Halloween, occupancy, Witches
+
+######## 
+
+<br><br><br>
+
+# Study Area
+
+We surveyed for witches at Tetlin National Wildlife Refuge, Alaska. blah blah
+
+
+# Methods
+
+### Data Collection
+
+We visited a sample randomly distributed sites across Tetlin Refuge. At each site, we spent one hour looking and listening for witches. We revisited each site eight times.
+
+### Model
+
+We estimated witch occupancy and detection using a single-season occupancy model. We used the `unmarked` R package. [blah, blah, blah]
+
+
+# Results
+
+## Results
+
+We surveyed a total of `r nrow(dat)` sites. The average distance to water at our sites was `r round(mean(dat$water), 2)` m. The average distance to forest at our sites was `r round(mean(dat$forest), 2)` m.
+
+![](../../images/base_map.png "Title: A map of the sites surveyed for witches, Tetlin National Wildlife Refuge, Alaska."){width="50%"}
+
+We observed witches on `r sum(dat[6:13])` of 800 site visits, for a naive occupancy of `r round(sum(dat[6:13])/ncell(dat[6:13]), 2)`. 
+
+```{r plot-psi}
+#| fig-height: 3
+#| fig-cap: Occupancy of witches at Tetlin National Wildlife Refuge, Alaska, 2024.
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  facet_grid(~covariate, scales = "free")
+```
+
+
+# Discussion
+
+## Adding citations and bibliography
+
+Link a `.bib` document via the YAML header, and the bibliogaphy will be printed at the very end (as usual). The default bibliography style is provided in the `the-journal-of-wildlife-management.csl` file, which adopts the [Journal of Wildlife Management](https://www.nacwg.org/JWMguidelines2011.pdf) reference style.
+
+References can be cited directly within the document using the R Markdown equivalent of the LaTeX citation system `[@key]`, where key is the citation key in the first line of the entry in the .bib file. Example: \[\@fws2001\]. To cite multiple entries, separate the keys by semicolons (e.g., [@paul2009; @buckland1997]).
+
+If you are using the reference manager [Zotero](https://www.zotero.org/) (**highly recommended**), then Rstudio can [access your reference library directly](https://bookdown.org/pdr_higgins/rmrwr/adding-citations-to-your-rmarkdown.html). Zotero is available through FWS Apps-2-Go. There is also the package [citr](https://github.com/crsh/citr). *citr* provides functions and an RStudio add-in to search a BibTeX-file to create and insert formatted Markdown citations into the current document.
+
+
+# Acknowledgements
+
+Include your appreciation of logistical support, funding sources, field technicians, managers, and others who contributed to the work.
+
+
+# Data availability
+
+All the raw data used in your report should be publicly-accessible, unless legally exempt (e.g., [FOIA-exempt](https://www.fws.gov/program/fws-freedom-information-act-foia)) Recommended boilerplate language for this section could read "The data presented in this report are available at {your data's ServCat URL}".
+
+<!-- Add page break -->
+
+\newpage
+
+
+# References
+
+::: {#refs}
+:::
+
+<!-- All references will be added here automatically. -->
