@@ -1,0 +1,141 @@
+/*-- scss:defaults --*/
+
+// fonts (https://doimspp.sharepoint.com/sites/fws-FF09R00000/SitePages/Comms-Visual-Identity-Landing.aspx)
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Permanent+Marker&display=swap&family=Eater&display=swap');
+
+// $presentation-heading-font: "Gloria Hallelujah", cursive;
+$font-family-sans-serif: "Lato", sans-serif !default;
+$presentation-font-size-root: 40px;
+
+// Name fonts
+$Gloria: "Gloria Hallelujah", cursive;
+$Marker: "Permanent Marker", cursive;
+$Lato: "Lato", sans-serif;
+$Scary: "Eater", serif;
+
+// colors (https://doimspp.sharepoint.com/sites/fws-FF09R00000/SitePages/Comms-Visual-Identity-Landing.aspx)
+$blue: #02426D;
+$light-blue: #A3DBFF;
+$white: #FFFFFF;
+$accent-yellow: #FFC94F;
+$accent-dark-blue: #012137;
+$accent-orange: #F7885A;
+$accent-light-blue: #D1EDFF;
+$accent-yellow: #FFE4A7;
+$accent-champagne: #E9D3AD;
+$accent-blue: #007AC2;
+$accent-green: #265D3A;
+$accent-light-green: #BACF8C;
+$accent-brown: #A09B81;
+$transparent: #00000000;
+
+// slide styling
+$body-bg: $blue;
+$body-color: $white;
+$link-color: $light-blue;
+
+// code block styling
+$code-block-font-size: 0.5em;
+$code-block-border-left: $light-blue;
+// $code-block-bg: $accent-orange;
+// $code-block-color: $blue;
+// $code-block-bg-alpha: -.9;
+
+
+/*-- scss:rules --*/
+
+/* title slide font */
+.slides h1 {
+  font-family: $Gloria;
+  text-align: center;
+}
+
+/* slide header font */
+.slides h2 {
+  font-family: $Lato;
+  text-align: center;
+}
+
+/* scary font */
+.scary {
+  font-family: $Scary;
+  color: $accent-orange;
+  text-align: center;
+  font-size: 3.0em;
+}
+
+/* cursive font */
+.cursive {
+  font-family: $Gloria;
+}
+
+
+/* center text */
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* center an inline image horizontally */
+.center-inline {
+  margin: 0!important;}
+
+/* center text vertically and horizontally */
+.center-xy {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translateY(-50%), translateX(-50%);
+  transform: translateY(-50%), translateX(-50%);
+}
+
+/* center text in a column */
+.center-xy-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+
+/* adjust font sizes */
+.small {
+  font-size: 0.8em;
+  }
+
+.smaller {
+  font-size: 0.5em;
+  }
+
+.tiny {
+  font-size: 0.2em;
+}
+
+.large {
+  font-size: 1.50em;
+}
+
+.larger {
+  font-size: 3.0em;
+}
+
+
+/* author font style */
+.author {
+  font-family: $Gloria
+}
+
+/* footnote font */
+.reveal .slide aside .aside-footnotes {
+    font-size: 0.5em;
+}
+
+
+/* add shadow to figures */
+.shadow {
+  fig-align: "center";
+  border-radius: 5px;
+  box-shadow: 4.2px 4.5px 2.5px rgba(65, 65, 65, 0.737);
+}
+

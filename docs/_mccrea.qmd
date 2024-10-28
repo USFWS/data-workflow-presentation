@@ -1,0 +1,963 @@
+---
+format: 
+  revealjs:
+    theme: scss/custom-dark.scss
+    code-block-height: 500px
+    code-overflow: wrap
+    width: 1280
+    height: 720
+    logo: images/FWS-logo.png
+    footer: "![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
+editor: source
+highlight-style: a11y
+---
+
+```{r setup_mccrea}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+library(emojifont)
+library(unmarked)
+library(terra)
+library(tidyverse)
+library(RColorBrewer)
+library(sf)
+library(leaflet)
+```
+
+```{r}
+#| cache: true
+
+theme_fws <- function() {
+  theme_bw() +
+  theme(strip.text = element_text(size = 100),
+        axis.text.x = element_text(size = 60),
+        axis.text.y = element_text(size = 60),  
+        axis.title.x = element_text(size = 80),
+        axis.title.y = element_text(size = 80),
+        plot.margin = margin(t = 20,
+                             r = 40,  
+                             b = 20,  
+                             l = 20))
+}
+```
+
+
+# Analysis
+
+![](images/witch_analysis.png)
+
+## [Analysis]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   The steps are clear
+-   The workflow is reproducible
+-   Limited opportunities for human error
+:::
+
+
+## [Analysis]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.  Reformat observation data
+2. Get spatial covariates
+3.  Load data into software (PRESENCE, Mark, Distance, etc.)
+4.  Use interface to select options
+5.  Run it and export results
+:::
+:::
+
+::: {.column width="50%"}
+![](images/mark.png){.shadow width="100%" fig-align="center"}
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Compare Workflows
+
+::: {.columns .small}
+
+::: {.column width="50%"}
+### [Manual]{.cursive}
+
+::: {.fragment fragment-index=1}
+-   Restricted to functions in the software
+:::
+
+<br>
+
+::: {.fragment fragment-index=2}
+-   "Black Box" {{< fa box >}}
+:::
+
+::: {.fragment fragment-index=3}
+-   Difficult/time-consuming to document and reproduce steps
+:::
+
+::: {.fragment fragment-index=4}
+-   Must extract results into another software to visualize
+:::
+:::
+
+::: {.column width="50%"}
+### [Scripted]{.cursive}
+
+::: {.fragment fragment-index=1}
+-   Many custom R packages for performing most common ecological data analyses
+:::
+
+::: {.fragment fragment-index=2}
+-   R packages are generally well-documented
+:::
+
+::: {.fragment fragment-index=3}
+- Your code documents your steps
+:::
+
+<br>
+
+::: {.fragment fragment-index=4}
+- Self-contained workflow
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+# 
+
+::: {.scary}
+Witch Survey
+:::
+::: {.cursive .center .larger}
+Analysis
+:::
+
+::: notes
+:::
+
+
+## Get Covariates
+
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1-3|5-7"
+
+# Refuge boundary
+source("./R/spatial_helpers.R")
+tetlin <- get_refuge("Tetlin National Wildlife Refuge")
+
+# NLCD layer
+library(FedData)
+get_nlcd(tetlin, label = "tetlin", year = 2016, landmass = "AK")
+```
+
+::: {.fragment}
+![](images/nlcd.png){height=400}
+:::
+
+::: notes
+:::
+
+
+## Calculate Distances
+
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1|3-12|14-22"
+
+library(terra)
+
+# Calculate distance to forest
+forest <- terra::segregate(nlcd, classes = 42)  # Extract the forest layer
+forest <- terra::classify(forest, 
+                          rcl = matrix(c(1, 0, 1, NA), 
+                                       nrow = 2, 
+                                       ncol = 2))  # Reclassify 0 as NA
+forest <- terra::distance(forest)
+forest <- project(forest, "EPSG: 4326")  # Reproject to WGS84
+forest <- mask(crop(forest, ext(tetlin)), tetlin)
+names(forest) <- "forest"
+
+# Calculate distance to water
+water <- terra::segregate(nlcd, classes = 11)  # Extract the water layer
+water <- terra::classify(water, rcl = matrix(c(1, 0, 1, NA), 
+                                             nrow = 2, 
+                                             ncol = 2))  # Reclassify 0 as NA
+water <- terra::distance(water)
+water <- project(water, "EPSG: 4326")  # Reproject to WGS84
+water <- mask(crop(water, ext(tetlin)), tetlin)
+names(water) <- "water"
+
+```
+
+::: notes
+:::
+
+
+## 
+
+::: columns
+::: {.column width="50%"}
+![](images/water_distance.png)
+:::
+
+::: {.column width="50%"}
+![](images/forest_distance.png)
+:::
+
+:::
+
+
+## Extract Covariates to Sites
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(sf)
+library(terra)
+
+sites <- data.frame(sf::st_coordinates(sites),
+                    forest = terra::extract(forest, sites)$forest,
+                    water = terra::extract(water, sites)$water)
+
+
+```
+
+
+```{r}
+#| echo: false
+
+dat <- read.csv("data/csv/dat.csv")
+dat[,2:3] <- round(dat[2:3], 4)
+dat[,4:5] <- round(dat[,4:5], 2)
+
+library(gt)
+dat[1:12,2:13] %>%
+  gt()
+```
+
+::: notes
+:::
+
+
+## Single-Season Occupancy Model
+
+::: columns
+
+::: {.column width="55%"}
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1-2|4-5|7-10|12-13"
+
+# Required package
+library(unmarked)
+
+# Create an unmarked data frame
+unmarked_df <- unmarkedFrameOccu(y = y, siteCovs = site_covs)
+sc <- scale(site_covs)
+siteCovs(unmarked_df) <- sc
+
+# Fit a single-season occupancy model
+mod <- unmarked::occu(formula = ~forest ~ water + 
+                                forest, 
+                        data = unmarked_df[[1]])
+
+# Look at the estimates
+mod@estimates
+```
+
+
+:::
+
+::: {.column width="45%"}
+::: {.fragment}
+``` {r}
+#| echo: false
+
+# Required package
+library(unmarked)
+
+# Load data
+load("./data/rdata/unmarked_df.Rdata")
+
+# Fit single-season occupancy model
+mod <- unmarked::occu(formula = ~forest ~ water + forest, 
+                        data = unmarked_df[[1]])
+
+# Look at the estimates
+mod@estimates
+```
+:::
+:::
+
+:::
+
+::: notes
+- Estimate occupancy and accounts for imperfect detection
+- Occupancy predictions:
+  - Higher near forests
+  - Lower near water
+- `unmarked` R Package
+:::
+
+
+# Summarize Results
+
+![](images/witch_summarize_results.png)
+
+
+## [Summarize Results]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+- Customizable
+- Updateable
+- Standardized
+:::
+
+::: notes
+- Customizable: Flexible enough to create unique visualizations that look good and clearly communicate results. 
+- Products can be regenerated or updated efficiently and without a lot of work
+- A standard "look and feel"
+:::
+
+
+## [Summarize Results]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.   Import results and data into Excel
+2.   Create summary tables and plots
+3.   Cut/paste into Word doc
+4.   Reformat style to match document
+5. (Repeat...)
+:::
+:::
+
+::: {.column width="50%" .center}
+[![](images/excel.png){.shadow width="55%" fig-alt="A funny image downplaying on our fears of AI by showing a mistake in Excel"}](https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/)
+
+::: {.tiny}
+https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
+:::
+:::
+
+:::
+
+::: notes
+-   Tons of options, R packages
+-   Static versus dynamic visualizations
+-   Depends on output file type (html vs. Word)
+:::
+
+
+## [Summarize Results]{.cursive}: Compare Workflows
+
+::: {.columns .small}
+
+::: {.column width="50%"}
+### [Manual]{.cursive}
+
+::: {.fragment fragment-index=1}
+- Introduce human error 
+:::
+
+::: {.fragment fragment-index=2}
+- Limited plotting function
+:::
+
+::: {.fragment fragment-index=3}
+- Static output
+:::
+:::
+
+::: {.column width="50%"}
+### [Scripted]{.cursive}
+
+::: {.fragment fragment-index=1}
+- Self-contained workflow
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Results]{.cursive}
+:::
+
+::: notes
+:::
+
+
+## Witch Survey Results 
+### Occupancy {.center}
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|1-9|11-12|14-26"
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values
+pred <- predict_occ(mod, sc)
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, 
+                 y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, 
+                  ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+::: {layout="[[-1], [1], [-1]]"}
+``` {r}
+#| out-height: "100%"
+
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Witch Survey Results
+
+```{r}
+
+# Get fit_model() function
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+::: notes
+:::
+
+
+## Witch Survey Results 
+### Detection {.center}
+
+::: columns
+
+::: {.column width="50%"}
+<br><br>
+```{r}
+#| eval: false
+#| echo: true
+
+# Plot predicted values (detection)
+ggplot(pred, aes(x = covariateValue, 
+                 y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, 
+                         ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+
+::: {.column width="50%"}
+::: {.center-xy-container}
+::: {.fragment}
+``` {r}
+#| out-width: "100%"
+#| fig-height: 8
+
+# Get fit_model() function
+source("./R/simulate_data.R")
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+sc <- read.csv("./data/csv/sites.csv") |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+
+# Calculate predicted values (unscaled)
+pred <- plotEffectsData(mod, "det", "forest") %>%
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+
+# Plot predicted values (detection)
+ggplot(pred, aes(x = covariateValue, y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance to Forest (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+:::
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Witch Survey Results
+
+```{r}
+#| eval: false
+#| echo: true
+#| file: R/create_map.R
+#| code-line-numbers: "|1|3-8|10|12-14|20|23-74"
+```
+
+::: notes
+:::
+
+
+## Witch Occupancy ($\psi$)
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1-2|4-8|10-15"
+
+# Source the `create_map()` function
+source("./R/create_map.R")
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+# Create a map
+create_map(ras = psi, 
+           s = sites, 
+           r = tetlin, 
+           h = 650,
+           w = 300)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| cache: true
+#| fig-align: center
+
+# create_map function
+source("./R/create_map.R")
+
+# Data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+map_predict <- create_map(ras = psi, s = sites, r = tetlin, h = 600, w = 600)
+map_predict
+```
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Precision of Estimates (SE)
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|14"
+
+# Source the `create_map()` function
+source("./R/create_map.R")
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+# Create a map
+create_map(ras = psi, 
+           s = sites, 
+           r = tetlin, 
+           p = "SE",
+           h = 650,
+           w = 300)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| cache: true
+#| fig-align: center
+
+# create_map function
+source("./R/create_map.R")
+
+# Data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+map_se <- create_map(ras = psi, 
+           s = sites,
+           r = tetlin,
+           p = "SE",
+           h = 600, w = 600)
+map_se
+```
+:::
+
+:::
+
+::: notes
+:::
+
+
+# Report
+
+![](images/witch_report.png)
+
+
+# Report
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   Easy to update
+-   Clear link between the data and the report
+-   Reproducible
+:::
+
+::: notes
+-   R can output to many formats
+-   Mention the Alaska Refuge reporting series Quarto and Rmarkdown templates
+:::
+
+
+## [Report]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.  Copy/paste tables and figures into Word
+2. Calculate inline statistics and add into doc
+3. Update formatting to look good
+4. Repeat steps for PowerPoint presentation
+:::
+:::
+
+::: {.column width="50%"}
+![](images/copy_paste.png){.shadow width="100%" fig-align="center"}
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Reporting in R: Quarto ![](images/quarto_logo.png){.center-inline height="60px"}
+
+![](images/quarto_illustration.png)
+
+::: notes
+:::
+
+
+## Reporting in R: Shiny ![](images/shiny_logo.png){.center-inline height="60px"}
+
+![](images/shiny_app.png)
+
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Report]{.cursive}
+:::
+
+::: notes
+:::
+
+
+## Witch Report
+
+
+::: columns
+::: {.column width="50%"}
+````{{r}}
+---
+title: "Tetlin Witch Report"
+author: Jane Biologist
+format: html
+fig-align: center
+editor: source
+---
+
+
+```{{r setup}}
+#| echo: false
+#| message: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      echo = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+library(unmarked)
+library(terra)
+library(tidyverse)
+library(RColorBrewer)
+library(sf)
+library(leaflet)
+```
+
+```{{r load_data}}
+#| cache: true
+
+# Load site data
+dat <- read.csv("data/csv/dat.csv")
+
+source("R/simulate_data.R")
+source("R/create_map.R")
+
+# Scaled covariates
+sc <- dat |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+```
+
+```{{r fit_model}}
+#|cache: true
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+## Introduction
+
+Invasive witches have become a management concern at Tetlin National Wildlife Refuge. As such, there is a need to estimate witch occurrence within the Refuge.
+
+## Methods
+
+### Data Collection
+
+We visited a sample randomly distributed sites across Tetlin Refuge. At each site, we spent one hour looking and listening for witches. We revisited each site eight times.
+
+### Model
+
+We estimated witch occupancy and detection using a single-season occupancy model. We used the `unmarked` R package. [blah, blah, blah]
+
+
+## Results
+
+We surveyed a total of `r knitr::inline_expr("nrow(dat)")` sites. The average distance to water at our sites was `r knitr::inline_expr("round(mean(dat$water), 2)")` m. The average distance to forest at our sites was `r knitr::inline_expr("round(mean(dat$forest), 2)")` m.
+
+```{{r}}
+#| out-width: "50%"
+#| fig-cap: "A map of the sites surveyed for witches, Tetlin National Wildlife Refuge, Alaska."
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+
+# Create leaflet map
+base_map(sites, tetlin)
+```
+
+We observed witches on `r knitr::inline_expr("sum(dat[6:13])")` of 800 site visits, for a naive occupancy of `r knitr::inline_expr("round(sum(dat[6:13])/ncell(dat[6:13]), 2)")`. 
+
+```{{r plot_psi}}
+#| fig-height: 3
+#| fig-cap: Occupancy of witches at Tetlin National Wildlife Refuge, Alaska, 2024.
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  facet_grid(~covariate, scales = "free")
+```
+
+````
+:::
+
+::: {.column width="50%"}
+```{=html}
+<iframe width="780" height="650" src="qmd/witch_report.html" title="Example Report"></iframe>
+```
+:::
+
+:::
+
+::: notes
+:::
+
+
+## Pretty Witch Report 
+
+![](images/witch_report_pretty.png){.absolute top="100" left="50" width="35%"}
+![](images/witch_report_pretty2.png){.absolute top="100" left="600" width="35%"}
+
+::: notes
+- That all good, but you might be thinking that that report looks like garbage and the reports that I currently produce look good
+- Or maybe your manager isn't comfortable with HTML reports. We do Word docs.
+- That's ok. You can output reports in Quarto as PDFs or in Word
+- You can create a report that has the same look and feel as your current report
+- Here's an example of that. The same information as the previous HTML report, but saves as a Word doc with the look and feel of a AK Refuge Report.
+:::
+
+
+## Pretty Witch Report 
+
+::: {.center}
+[![](images/akrreportr.png){width="70%"}](https://github.com/USFWS/akrreport)
+:::
+
+::: notes
+- This Quarto template is available on GitHub as an R package that you can install locally.
+- Once you create your template, you can render all your Quarto reports with that look.
+:::
+
+
+## Sharing Survey Products
+
+![](images/posit_connect.png)
+
+::: notes
+:::
+
+
+## Summary
+
+
+# Questions {background-image="images/witch_flying.png" background-size=contain}
+
