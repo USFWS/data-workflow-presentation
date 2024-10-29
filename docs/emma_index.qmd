@@ -46,148 +46,9 @@ Content
 ::: notes
 :::
 
-## The Tetlin Witch Project {.smaller}
+# Data Clean-Up
 
-### Species Background - [*North American Witch*]{.champagne}
-
-::: columns
-::: {.column width="50%"}
-#### [History:]{.extrabold .champagne}
-
-{{< fa up-long >}} Early modern period witch trials shifted range northward
-
-#### [Habitat:]{.extrabold .champagne}
-
-{{< fa tree >}} Boreal forest
-
-#### [Threats:]{.extrabold .champagne}
-
-{{< fa broom >}} Deforestation eliminates ability to craft broomsticks
-
-{{< fa ghost >}} Competition for resources with ghosts
-:::
-
-::: {.column width="50%"}
-![Witch flying over Tetlin NWR in early fall](images/witch_tetlin.png){fig-align="left" width="4.4in"}
-:::
-:::
-
-::: notes
-none
-:::
-
-## The Tetlin Witch Project {.smaller}
-
-### Survey Design - [*an Occurrence Survey*]{.champagne}
-
-::: columns
-::: {.column width="50%"}
-\[Insert Map\]
-:::
-
-::: {.column width="50%"}
--   Conducted annually 20 years
--   Completed over 8 days in August
--   Each day, data is collected at 100 sites on the refuge
--   Goal:
-    -   understand distribution of witches on Tetlin NWR
-    -   learn about the factors that influence it
-:::
-:::
-
-::: notes
-lots of biotechs - obviously national funding for witch conservation
-:::
-
-## The Tetlin Witch Project {.smaller}
-
-### Survey Design - [*an Occupancy Survey*]{.champagne}
-
-::: columns
-::: {.column width="50%"}
-\[Insert Map\]
-:::
-
-::: {.column width="50%"}
--   Conducted annually 20 years
--   Completed over 8 days in August
--   Each day, data is collected at 100 sites on the refuge
--   Goal:
-    -   understand [distribution of witches]{.champagne} on Tetlin NWR
-    -   learn about the factors that influence it
-:::
-:::
-
-::: notes
-none
-:::
-
-## The Tetlin Witch Project {.smaller}
-
-### Survey Design - [*an Occupancy Survey*]{.champagne}
-
-::: columns
-::: {.column width="50%"}
-\[Insert Map\]
-:::
-
-::: {.column width="50%"}
--   Conducted annually 20 years
--   Completed over 8 days in August
--   Each day, data is collected at 100 sites on the refuge
--   Goal:
-    -   understand [distribution of witches]{.champagne} on Tetlin NWR
-    -   learn about the [factors that influence it]{.champagne}
-:::
-:::
-
-::: notes
-none
-:::
-
-## Photos from the Field
-
-{{< fa camera >}} Coming soon to your Wild Weekly...
-
-::: columns
-::: {.column width="50%"}
-![](images/witch_hiding.png){fig-align="center"}
-:::
-
-::: {.column width="50%"}
-![](images/witch_moose.png){fig-align="center"}
-:::
-:::
-
-::: notes
-none
-:::
-
-## Where We Are
-
-::: columns
-::: {.column width="50%"}
-**Completed:**
-
--   Data collection ✓
-
--   Data entry ✓
-
-**Next:**
-
--   Data clean-up ☐
-:::
-
-::: {.column width="50%"}
-::: {layout="[[-1], [1], [-1]]"}
-![Excel workbook with all years of data](images/workbook_sc.png){fig-align="center"}
-:::
-:::
-:::
-
-::: notes
-*No automated data processing workflow exists for this dataset, so let's create one!*
-:::
+![](images/witch_data_cleanup.png){fig-align="center"}
 
 ## Why Clean Up Data in R? {.incremental .smaller}
 
@@ -247,7 +108,158 @@ none
 -   can apply changes to all rows, all sheets, all files at once
 :::
 
-## Set Up New Script File
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Intro to the Data
+:::
+
+::: notes
+what data are we cleaning up? let me introduce you to the tetlin witch project
+:::
+
+## Tetlin Witch Survey {.smaller}
+
+::: columns
+::: {.column width="50%"}
+\[Insert Map\]
+:::
+
+::: {.column width="50%"}
+<br>
+
+[Type:]{.extrabold .orange} Annual occurrence survey
+
+[Logistics:]{.extrabold .orange}
+
+-   Completed over 8 days in August
+
+-   Detection (0, 1) recorded at 100 sites/day
+
+-   Conducted for 20 years at Tetlin NWR
+
+[Goal:]{.extrabold .orange} Estimate probability of witch occurrence across the refuge
+:::
+:::
+
+::: notes
+the Tetlin Witch project, not the same as the Blair witch project
+
+lots of biotechs - obviously national funding for witch conservation
+:::
+
+## Witch Background
+
+::: columns
+::: {.column .center width="50%"}
+Do NOT like water
+
+![](images/witch_melting.png){fig-align="center"}
+:::
+
+::: {.column .center width="50%"}
+DO favor forest
+
+![](images/witch_broom.png){fig-align="center"}
+:::
+:::
+
+::: notes
+Can use to characterize and predict their distribution
+
+Species Background - North American Witch
+
+Began inhabiting Tetlin NWR during the early modern period when widespread witch trials shifted their range northward
+
+Started monitoring them due to concerns surrounding the threat of deforestation, impacting their ability to construct broomsticks
+:::
+
+## Where We Are
+
+::: columns
+::: {.column width="50%"}
+**Completed:**
+
+-   Data collection ✓
+
+-   Data entry ✓
+
+**Next:**
+
+-   Data clean-up ☐
+:::
+
+::: {.column width="50%"}
+::: {layout="[[-1], [1], [-1]]"}
+![Excel workbook with all years of data](images/workbook_sc.png){fig-align="center"}
+:::
+:::
+:::
+
+::: notes
+I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it.
+No automated data processing workflow exists for this dataset, so let's create one!
+:::
+
+## Photos from the Field
+
+{{< fa camera >}} Coming soon to your Wild Weekly...
+
+::: columns
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_hiding.png){fig-align="center"}
+:::
+
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_moose.png){fig-align="center"}
+:::
+
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_tetlin.png){fig-align="center"}
+:::
+:::
+
+::: notes
+none
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Starting Our Script
+:::
+
+::: notes
+:::
+
+## Getting Set Up
+
+<br>
+
+✓ Created a new R project
+
+✓ Set up a standard file directory structure
+
+<br>
+
+::: center
+[Time to get coding!]{.large .yellow}
+:::
+
+::: notes
+following Jonah's guidance...
+open a new blank R script file and...
+:::
+
+## Setting Up New Script
 
 -   To use external functions, we need to load their packages
     -   First, install packages
@@ -255,8 +267,10 @@ none
         ```{r}
         #| echo: true
         #| eval: false
-        install.packages("tidyverse","readxl","janitor")
+        install.packages(c("tidyverse","readxl","janitor"))
         ```
+
+        -   For non-CRAN packages, use `devtools::install_github("author/package_name")`
 
     -   Next, use `library()` to load
 
@@ -272,6 +286,8 @@ none
 
 ::: notes
 sits at top of script
+
+these packages are all in the CRAN (comprehensive R archive network) repository
 :::
 
 ## Set Up New Script File
@@ -288,16 +304,16 @@ library(readxl)
 library(janitor)
 ```
 
-::: callout-tip
-## Best Practice
-
-Document every line to few lines of code with a comment.
-:::
-
 A comment precedes [machine-readable language]{.yellow} and supplies a translation to [human-readable language]{.yellow}.
 
 ::: center
 [Human Readability]{.orange .extrabold} {{< fa handshake >}} [Reusability]{.orange .extrabold}
+:::
+
+::: callout-tip
+## Best Practice
+
+Document every line to few lines of code with a comment.
 :::
 
 ::: notes
@@ -328,7 +344,9 @@ It serves as a reminder for what your code accomplishes and why it was included.
 Translating coding language to human language is critical for yourself AND others.
 :::
 
-## Import Data
+# Data Clean-Up: *Importing*
+
+## Importing Data
 
 Can read data from a...
 
@@ -347,7 +365,7 @@ my_data <- read.csv("path/to/filename.csv")
 2.  [Online source]{.orange} (*download link, API, ServCat, etc.*)
 
 ::: small
-*Example:*
+*Examples:*
 :::
 
 ```{r}
@@ -356,11 +374,51 @@ my_data <- read.csv("path/to/filename.csv")
 my_data <- read.csv(download.file("www.url.com","save_as_filename.csv"))
 ```
 
+```{r}
+#| echo: true
+#| eval: false
+my_data <- GET(url = "api-url.com/input-id", body = list("parameter1","parameter2"))
+```
+
 ::: notes
 Built-in and installable functions exist for reading data from various sources Like a link to the online authoritative source for a dataset
 :::
 
-## Import Data
+## Importing Data
+
+Extra Step: merge multiple tables
+
+```{r}
+#| echo: true
+#| eval: false
+#Join tables by common variables
+all_data <- left_join(observation_data, site_data)
+```
+
+::: callout-note
+## Suggestion
+
+You can often replace complex MS Access databases with R scripts. Using R to join related tables also ensures your files are all in an open format.
+:::
+
+::: notes
+none
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Importing Our Data
+:::
+
+::: notes
+:::
+
+## Importing Our Data
 
 -   For our data:
     -   Use `read_excel()` to import data from a specific sheet in a workbook
@@ -382,6 +440,8 @@ Variables are the basis of reusability!
 Variables allow us to easily reference complex expressions and enable reusability. If I write all my code referencing the "witch_data" variable and I decide I want to change the input file, I can easily do that in this one line and not have to tamper with any of the rest of my code.
 :::
 
+# Data Clean-Up: [Tidying]{.orange}
+
 ## Tidy Data
 
 ::: {layout="[[-1], [1], [-1]]"}
@@ -392,7 +452,36 @@ Variables allow us to easily reference complex expressions and enable reusabilit
 none
 :::
 
-## Tidy Data
+## Why Tidy Data?
+
+::: incremental
+-   Standardization
+
+-   Interpretability
+
+-   Machine readability
+
+-   Ease of use and reuse
+:::
+
+::: notes
+By keeping data in a standardized format with clear attributes and values, the data can be easily interpreted by humans and manipulated through computers
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Tidying Our Data
+:::
+
+::: notes
+:::
+
+## Tidying Our Data
 
 Let's take a peak at what we are working with:
 
@@ -418,43 +507,7 @@ gt(head(witch_data, 6)) %>% opt_stylize(style = 6, color = 'cyan')
 -   This means we need to restructure our data
 :::
 
-## Tidy Data
-
-Let's take a closer look at our data using some R built-in functions
-
--   First, with `str()`
-
-    ```{r}
-    #| echo: true
-    #| eval: true
-    #| class-output: highlight
-    #| output-line-numbers: "|5|9|11"
-    #Glimpse of dataset,including datatypes of columns
-    str(witch_data)
-    ```
-
-::: notes
--   Restructing our data requires a little bit more knowledge on the state of the data because we are going to have to combine columns, and columns of different types cannot be combined
-:::
-
-## Tidy Data {.scrollable chalkboard-buttons="true"}
-
--   Then, with `summary()`
-
-    ```{r}
-    #| echo: true
-    #| eval: true
-    #| class-output: highlight
-    #| output-line-numbers: "|3|10|17|14"
-    #Summary of dataset, including summary stats
-    summary(witch_data)
-    ```
-
-::: notes
-none
-:::
-
-## Tidy Data
+## Tidying Our Data
 
 Let's use `tidyverse` to tidy our data in one line by "pivoting"
 
@@ -483,7 +536,7 @@ gt(tidy_data) %>% opt_stylize(style = 6, color = 'cyan')
 none
 :::
 
-## Tidy Data {.scrollable}
+## Tidying Our Data {.scrollable}
 
 ::: small
 -   In tidy data, column names are variables, so they should be structured as such
@@ -515,7 +568,9 @@ gt(head(tidy_data,1)) %>% opt_stylize(style = 6, color = 'cyan')
 none
 :::
 
-## Quality Control and Exploratory Data Analysis {.small}
+# Data Clean-Up: [Exploratory Data Analysis (EDA)]{.orange}
+
+## What is EDA? {.small}
 
 Exploratory Data Analysis (EDA) = [getting to know your data before drawing conclusions]{.orange}, often through summarization and/or visualization
 
@@ -534,7 +589,20 @@ Exploratory Data Analysis (EDA) = [getting to know your data before drawing conc
 :::
 
 ::: notes
-none
+Lends itself to quality control
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center}
+Exploring Our Data & Performing Quality Control
+:::
+
+::: notes
 :::
 
 ##  {.small}
@@ -551,13 +619,53 @@ none
 
 ![](images/casper_graphic.png){fig-align="left"}
 
+![](images/qc_6.jpg){.absolute top="360" right="280" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="360" right="170" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="360" right="60" width="100" height="100"}
+
 ::: notes
 none
 :::
 
-## Quality Control and Exploratory Data Analysis
+## Exploring Our Data (EDA)
 
-Check to see why our `presence` column is non-numeric
+Let's [rewind {{< fa backward-fast >}}]{.orange} and take a closer look at our starting data
+
+-   First, with `str()`
+
+    ```{r}
+    #| echo: true
+    #| eval: true
+    #| class-output: highlight
+    #| output-line-numbers: "|5|9|11"
+    #Glimpse of dataset,including datatypes of columns
+    str(witch_data)
+    ```
+
+::: notes
+-   (Restructing our data requires a little bit more knowledge on the state of the data because we are going to have to combine columns, and columns of different types cannot be combined)
+-   using some R built-in functions
+:::
+
+## Exploring Our Data (EDA) {.scrollable chalkboard-buttons="true"}
+
+-   Then, with `summary()`
+
+    ```{r}
+    #| echo: true
+    #| eval: true
+    #| code-block-height: 300px
+    #| class-output: highlight
+    #| output-line-numbers: "|3|10|17|14"
+    #Summary of dataset, including summary stats
+    summary(witch_data)
+    ```
+
+::: notes
+none
+:::
+
+## EDA for Quality Control
+
+See why our presence data is non-numeric
 
 ```{r}
 #| echo: true
@@ -566,7 +674,7 @@ Check to see why our `presence` column is non-numeric
 tidy_data$presence[which(is.na(as.numeric(tidy_data$presence)))]
 ```
 
-Replace all instances of `"none"` with a value of `0`
+Replace all instances of `"none"` with `0`
 
 ```{r}
 #| echo: true
@@ -579,20 +687,18 @@ tidy_data$presence <- as.integer(tidy_data$presence)
 and convert the column back to a numeric type
 :::
 
-## Quality Control and Exploratory Data Analysis {.scrollable}
+## EDA for Quality Control {.scrollable}
 
--   Explore our data again
+Explore distribution
 
 ```{r}
 #| echo: true
 #| eval: true
-#Check data
-str(tidy_data)
-summary(tidy_data$presence)
+#Plot histogram of "presence" values
 hist(tidy_data$presence)
 ```
 
--   Let's correct all misread numbers
+Correct misread numbers
 
 ```{r}
 #| echo: true
@@ -602,10 +708,10 @@ tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))]
 ```
 
 ::: notes
-none
+applies change to all 800 lines of data in one line of code
 :::
 
-## Quality Control and Exploratory Data Analysis {.small}
+## More EDA Options {.small}
 
 ::: columns
 ::: {.column width="50%"}
@@ -618,7 +724,7 @@ none
 create_report(tidy_data, output_format = pdf(), output_file = "report.pdf")
 ```
 
--   Endless EDA options!
+-   Endless options!
 
 ```{r}
 #| eval: true
@@ -632,17 +738,18 @@ library(DataExplorer)
 :::
 
 ::: notes
-none
+not necessary for our simple dataset but a great, customizable option
 :::
 
-## Preserve Data Assets {.small .scrollable}
+# Preservation
 
-[*Should occur several times during data management lifecycle!*]{.champagne}
+\[insert photo\]
 
-To Do List {{< fa pencil >}}:
+## Preserving Data and Data Assets {.small}
 
-1.  Write machine-readable metadata, including a data dictionary
-2.  Preserve raw data and script file (if reusing) in ServCat
+Yes, **already**!
+
+Preservation should occur [several times]{.orange} during the data management lifecycle and include all data, metadata, and data assets (e.g., protocols, presentations, reports, code)
 
 ::: callout-tip
 ## Tip
@@ -655,7 +762,42 @@ Contact your program's data manager for program-specific preservation guidelines
 
 -   National Wildlife Refuge Program - *Caylen Cummins*
 
--   Science Applications - *Hilmar Maier*
+-   Other programs - *Hilmar Maier*
+:::
+
+[Reminder:]{.yellow} Reproducibility and reuse are impossible without *findability*
+
+::: notes
+-   In the FWS, we must preserve our data and data assets in a Board approved repository, which is ServCat or ScienceBase
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center}
+Preserving Our Data
+:::
+
+::: notes
+:::
+
+## Preserving Our Data
+
+[To Do List {{< fa pencil >}}:]{.extrabold .yellow}
+
+1.  Write machine-readable metadata, including a data dictionary
+2.  Preserve raw data and script file (if reusing) in ServCat
+3.  Link new ServCat references to the "Tetlin Witch Survey" ServCat Project
+
+::: fragment
+A step further...
+
+::: center
+Tidy, compile, and preserve all 20 years of data
+:::
 :::
 
 ::: notes
@@ -666,26 +808,36 @@ Contact your program's data manager for program-specific preservation guidelines
 
 ## Preserve Data Assets
 
--   A step further: tidy, compile, and preserve all 20 years of data
-    -   All past year sheets are in the same untidy format
-    -   Frank used "none" instead of "0" since the survey first began
--   Wrapping script into a function makes this even more streamlined (*optional*)
+Uh Oh {{< fa face-frown >}}...
+
+-   All past workbook sheets are in the same untidy format
+
+-   And Frank used `none` instead of `0` since the survey began
+
+::: fragment
+Don't worry, [we can reuse our script]{.yellow}!
+
+::: callout-note
+## Suggestion
+
+Wrapping the script into a function makes this even more streamlined (*optional*)
+:::
+:::
 
 ::: notes
 -   Would be a nightmare to manually fix, but we can reuse the script we just created
 :::
 
-## Preserve Data Assets
+## Preserve Data Assets {.scrollable}
 
 ::: panel-tabset
 ### [Basic: Script]{.smaller}
 
 Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step
 
-```{r}
+```{r .custom-code-block-1}
 #| echo: true
 #| eval: false
-#| code-block-height: 200px
 
 #Load packages
 library(tidyverse)
@@ -720,7 +872,6 @@ OR wrap script into function
 ```{r}
 #| echo: true
 #| eval: false
-#| code-block-height: 200px
 
 clean_witch_data <- function(year){
   #Import raw data
@@ -756,7 +907,6 @@ Make sure to add proper documentation!
 ```{r}
 #| echo: true
 #| eval: false
-#| code-block-height: 200px
 
 #' Tidy and QC witch data
 #'
@@ -807,8 +957,7 @@ Can run our function for each year and compile data as follows:
 #| echo: true
 #| eval: false
 
-# Clean and compile all years of data
-
+## Clean and compile all years of data
 #Tidy first year of data
 compiled_data <- clean_witch_data(2004)
 
@@ -821,13 +970,6 @@ for(val in 2005:2024){
 write.csv(compiled_data, file = "compiled_witch_data.csv", row.names = FALSE)
 ```
 
-::: {style="height:190px; overflow-y: scroll"}
-```{r}
-#| eval: TRUE
-gt(tidy_data) %>% opt_stylize(style = 6)
-```
-:::
-
 ::: notes
 none
 :::
@@ -836,13 +978,16 @@ none
 
 Tidy, compiled data ready to be preserved and shared
 
+[*Rows: 16,000*]{.smaller}
+
 ::: smaller
-::: {style="height:500px; overflow-y: scroll"}
+::: {style="height:520px"}
 ```{r}
 #| eval: TRUE
-#gt(tidy_data) %>% opt_stylize(style = 6, color = 'white')
 library(DT)
 DT::datatable(tidy_data, options = list(
+  pageLength = 9,
+  dom = 't',
   columnDefs = list(
       list(targets = "_all", className = "custom-header")
     )
@@ -858,35 +1003,43 @@ none
 
 ## Preserve Data Assets
 
-Avoid any input files through automated pulls from ServCat!
+Eliminate input files through ServCat API requests!
 
 ```{r}
 #| eval: false
 #| echo: true
 library(httr)
 
-#Request
-url <- "https://ecos.fws.gov/ServCatServices/servcat-secure/v4/rest/DownloadFile/255753"
-response <- GET(url = url, config = authenticate(":",":","ntlm"), add_headers("Content-Type" = "application/json"), verbose())
+#' Pull complete Tetlin witch survey dataset from ServCat
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' pull_witch_data()
+pull_witch_data <- function(){
+  #Request
+  url <- "https://ecos.fws.gov/ServCatServices/servcat-secure/v4/rest/DownloadFile/1234"
+  response <- GET(url = url, config = authenticate(":",":","ntlm"), add_headers("Content-Type" = "application/json"), verbose())
+  
+  #Extract file name from response header
+  header <- headers(response)
+  filename <- sub('.*filename="([^"]+)".*',"\\1", header$`content-disposition`)
+  
+  #Save file
+  writeBin(content(response,"raw"), paste0("data/",filename))
+  
+  #Import dataset
+  return(read.csv(paste0("data/",filename)))
+}
 
-#Extract file name from response header
-header <- headers(response)
-filename <- sub('.*filename="([^"]+)".*',"\\1", header$`content-disposition`)
-
-#Save file
-writeBin(content(response,"raw"),filename)
-
-#
-new_data <- clean_witch_data("witch_data.xlsx", 2025)
-old_data <- read.csv("all_witch_data.csv")
-combine_data(old_data, new_data)
-
-analyze_witch_data(new_data)
 ```
 
 ::: notes
 none
 :::
+
+# Break Time
 
 ## Reuse
 
@@ -899,64 +1052,10 @@ Like magic {{\< fa wand-sparkles \>}
 none
 :::
 
-## Reuse: Example
-
-Fast forward to 2025 {{< fa forward-fast >}}
-
-```{r}
-#| eval: false
-#| echo: true
-library(httr)
-
-#Request
-url <- "https://ecos.fws.gov/ServCatServices/servcat-secure/v4/rest/DownloadFile/255753"
-response <- GET(url = url, config = authenticate(":",":","ntlm"), add_headers("Content-Type" = "application/json"), verbose())
-
-#Extract file name from response header
-header <- headers(response)
-filename <- sub('.*filename="([^"]+)".*',"\\1", header$`content-disposition`)
-
-#Save file
-writeBin(content(response,"raw"),filename)
-
-#
-new_data <- clean_witch_data("witch_data.xlsx", 2025)
-old_data <- read.csv("all_witch_data.csv")
-combine_data(old_data, new_data)
-
-analyze_witch_data(new_data)
-
-#Maybe code to reupload to ServCat??
-```
-
-::: notes
-none
-:::
-
 ## Resources
 
 -   Available in the README.md
 -   If you are in Refuges and interested in developing an automated workflow for your survey but need some assistance, submit an I&M Tech Request
-
-::: notes
-none
-:::
-
-## Import Data
-
--   Extra step: merge environmental site data and occurrence data
-
-```{r}
-#| echo: true
-#Relate tables: observation data and site data; reorder joined columns
-# witch_data <- left_join(observation_data, site_data) %>% relocate(c(12,13), .after = 3)
-```
-
-::: callout-note
-## Suggestion
-
-You can often replace complex MS Access databases with R scripts. Using R to relate tables also ensures your files are all in an open format.
-:::
 
 ::: notes
 none
