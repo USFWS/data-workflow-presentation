@@ -1,0 +1,787 @@
+---
+format: 
+  revealjs:
+    theme: scss/custom-dark.scss
+    logo: images/FWS-logo.png
+    footer: "[Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
+    mermaid: 
+      theme: neutral
+editor: source
+highlight-style: tango
+---
+
+```{r setup_index}
+#| echo: false
+
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+```
+
+# A Reproducible Data Workflow {.smaller}
+
+<br><br>
+
+::: columns
+::: {.column width="33%"}
+[**McCrea Cobb**]{.author}
+
+::: smaller
+Refuge Inventory and Monitoring\
+{{< fa envelope title="Email address logo" >}} [mccrea_cobb\@fws.gov](mailto:mccrea_cobb@fws.gov)\
+{{< fa brands github title="The GitHub octocat logo" >}} [mccrea-cobb](https://github.com/mccrea-cobb)
+:::
+:::
+
+::: {.column width="34%"}
+[**Emma Schillerstrom**]{.author}
+
+::: smaller
+Refuge Inventory and Monitoring\
+{{< fa envelope title="Email address logo" >}} [emma_shillerstrom\@fws.gov](mailto:emma_schillerstrom@fws.gov)\
+{{< fa brands github title="The GitHub octocat logo" >}} [eschillerstrom-usfws](https://github.com/eschillerstrom-usfws)
+:::
+:::
+
+::: {.column width="33%"}
+[**Jonah Withers**]{.author}
+
+::: smaller
+Fisheries and Ecological Services\
+{{< fa envelope title="Email address logo" >}} [jonah_withers\@fws.gov](mailto:jonah_withers@fws.gov)\
+{{< fa brands github title="The GitHub octocat logo" >}} [JonahWithers-USFWS](https://github.com/JonahWithers-USFWS)
+:::
+:::
+:::
+
+<br><br>
+
+::: {.center .smaller}
+{{< fa brands github title="The GitHub octocat logo" >}} <https://github.com/USFWS/data-workflow-presentation>
+:::
+
+::: notes
+Welcome everyone. My name is Jonah Withers and I'm a data manager with the Fisheries and Ecological Services program. My colleagues and co-presenters of today's talk are McCrea Cobb and Emma Schillerstrom. McCrea is a biometrician with the refuges program and Emma is a data management technician with the refuges program.Today's presentation is on creating reproducible workflows.
+:::
+
+## Overview
+
+<br>
+
+- What is a script-based workflow?
+
+:::{.fragment}
+- Advantages to using a script-based workflow?
+:::
+
+:::{.fragment}
+- Why choose {{< fa brands "r-project" size=1x title="R project icon" >}}?
+:::
+
+:::{.fragment}
+- Our recommended workflow
+:::
+::: notes
+In this presentation, we are going to cover what script-based workflows are, why they're worth using, and why you should consider using program R. Then we will step you through some best practices to follow when you are creating and using script-based workflows. Our hope is that by the end of this presentation, you'll understand the advantages of using a script-based data workflow over a manual data workflow, you will be familiar with some best-practices and understand why they are important, and have a better understanding of resources and staff available to assist you with developing code-based workflows.
+:::
+
+# What is a Script-Based Workflow?
+
+::: notes
+So what is a script-based workflow? A script-based workflow is a structured process that utilizes code to automate tasks. This means we use code rather than manual processes to process our data.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_1.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon"}
+
+::: notes
+So for example, in a traditional workflow we may be conducting a survey where we record observations of a given species on a datasheet and say a hand-held GPS unit.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_2.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon with an arrow pointing from this box to another box labeled Digital Storage that contains images of microsoft access and excel icons."}
+
+::: notes
+Then when we return from the field, we may transcribe those observations into an excel workbook or access database.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_3.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon with an arrow pointing from this box to another box labeled Digital Storage that contains images of microsoft access and excel icons with an arrow pointing from this box to another box labeled Quality Control that contains images of microsoft access and excel icons and datasheets."}
+
+::: notes
+From there we may do some manual quality control by comparing datasheets to the digital copy and visually reviewing data to find potential errors.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_4.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon with an arrow pointing from this box to another box labeled Digital Storage that contains images of microsoft access and excel icons with an arrow pointing from this box to another box labeled Quality Control that contains images of microsoft access and excel icons and datasheets with an arrow pointing to another box labeled Analyses and Mapping with icons of R and ArcPro."}
+
+::: notes
+After which we may import the data into something like ArcGIS Pro to create some maps and do spatial analyses and import the data into statistical software like R to create figures and run analyses.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_5.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon with an arrow pointing from this box to another box labeled Digital Storage that contains images of microsoft access and excel icons with an arrow pointing from this box to another box labeled Quality Control that contains images of microsoft access and excel icons and datasheets with an arrow pointing to another box labeled Analyses and Mapping with icons of R and ArcPro with an arrow pointing to another box labeled Reports and Presentations containing an image of a microsoft word icon and power point icon."}
+
+::: notes
+Next we write a report in Microsoft Word and maybe make a presentation in Microsoft powerpoint.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+![](images/traditional_workflow_6.png){.shadow width="80%" fig-align="center" fig-alt="An image of a box labeled Field Data Collection with a datasheet icon and hand-held GPS icon with an arrow pointing from this box to another box labeled Digital Storage that contains images of microsoft access and excel icons with an arrow pointing from this box to another box labeled Quality Control that contains images of microsoft access and excel icons and datasheets with an arrow pointing to another box labeled Analyses and Mapping with icons of R and ArcPro with an arrow pointing to another box labeled Reports and Presentations containing an image of a microsoft word icon and power point icon with another arrow pointing to a box labeled Publication and Archiving with a sciencebase and servcat icon."}
+
+::: notes
+And finally we archive our products in an approved repository.
+:::
+
+## [Workflows]{.cursive}: Script-Based Workflow
+
+![](images/script_based_workflow.png){.shadow width="80%" fig-align="center" fig-alt="An image of a series of boxes labeled Field Data Collection, Digital Storage, Quality Control, Analyses and Mapping, Reports and Presentations, and Publication and Archiving. Each box contains the R icon with the exception of the Field Data Collection box, which has an icon of a tablet and the ESRI Survey123 and Field Maps icons, and the Publication and Archiving box which has the sciencebase and servcat icons."}
+
+::: notes
+However, with a script-based workflow all these steps - from acquiring data through publishing reports and presentations - can all be done using code. Now, I want to take a moment here to explicitly point out that there's nothing wrong with using a traditional manual approach but there are some advantages to using a script based-workflow.
+:::
+
+## Why use Script-Based Workflow?
+
+<br>
+
+![](images/advantages_of_script_based_workflow.png){.shadow width="100%" fig-align="center" fig-alt="A witch-themed image with six scrolls. Each scroll is either labeled documented, reproducible, reduce errors, easily scaled, version control, or sharing."}
+
+::: notes
+By using scripts, we create a paper trail that documents the steps we use to manage and process our data and documents. By documenting our steps in scripts, our workflow becomes replicable, reproducible, and more transparent to our future selves and others. Scripts also automate our processes which means we reduce our likelihood of introducing errors; such as transcription errors, cut and paste errors, or migration errors. It also makes it really easy for us to the most up-to-date information if we are referencing something online. By automating our workflow, we also make our steps very scalable so that whether we are processing a data set with 10 rows or one with 10 million rows of data our script can be used handle the data in the exact same way and processing can happen with the click of a button. Script-based workflows can as enable version control to track and save changes we make to our scripts over time. By enabling version control, its easy to share our scripts with others and allow collaborators to contribute to them.
+:::
+
+## Why Choose {{< fa brands "r-project" size=1x title="R project icon" >}}? 
+
+::: columns
+
+::: {.column width="50%"}
+
+<br>
+
+-   Open-source and free
+
+:::{.fragment}
+-   Flexible
+:::
+
+:::{.fragment}
+-   Widely used in ecology
+:::
+
+:::{.fragment}
+-   Statistically powerful
+:::
+
+:::{.fragment}
+-   Active community & tons of packages (`r prettyNum(round((nrow(available.packages()) / 1000) * 1000), big.mark = ",", scientific = FALSE)`!)
+:::
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+![](images/R_witch-themed_benefits.png){.shadow width="100%" fig-align="right" fig-alt="A witch-themed image displaying the power of R and why to use it."}
+
+:::
+
+
+:::
+
+::: notes
+So why start with R over other coding languages? R is open-source and free. Its extremely flexible, providing options for manipulation, analysis, and visualization among other things. R is also widely used in ecology, statistically powerful, and has a very active community that has developed `r prettyNum(round((nrow(available.packages()) / 1000) * 1000), big.mark = ",", scientific = FALSE)` packages for you to use. Packages contain useful functions that will help you more easily perform tasks with limited amounts of coding.
+:::
+
+# Our Recommended Workflow 
+
+::: notes
+So now I'm going to transition into the part of the presentation where we step through our recommended best practices starting with our project set up.
+:::
+
+# [Create RStudio Project]{.cursive}
+
+## Create RStudio Project
+
+::: columns
+
+::: {.column width="50%" .left}
+
+<br>
+
+- Root directory
+
+::: {.fragment}
+- Standard file paths
+:::
+
+:::
+
+::: {.column width="50%" .center}
+
+<br> 
+
+<br>
+
+![](images/r_project_icon.png){.shadow width="35%" fig-align="center" fig-alt="Image of Rstudio project icon."}
+
+:::
+
+:::
+
+::: notes
+To start, we recommend creating an RStudio project. An R project serves as a project folder, or root directory, that houses all your project-related files and folders in one place. By establishing an R project, you create a default working directory for your project, which helps minimize file path issues when sharing the project with others.
+:::
+
+
+
+## Create RStudio Project
+
+::: columns
+
+::: {.column width="50%" .left}
+
+<br>
+
+- Root directory
+
+- Standard file paths
+
+::: {.fragment}
+- Self-contained, bundling
+:::
+
+::: {.fragment}
+- Version control
+:::
+
+::: {.fragment}
+- Collaboration
+:::
+
+:::
+
+::: {.column width="50%" .small}
+
+<br>
+
+![](images/r_project_bundling_files.png){.shadow width="100%" fig-align="center" fig-alt="Image of witch themed letter R with files bundled inside it"}
+
+:::
+
+:::
+
+::: notes
+R projects also facilitate the bundling of all our project files, creating a self-contained package, much like a map package in ArcGIS, which allows us to easily share our code with others. Lastly, R projects make is possible for us to implement version control, which we will discuss shortly.
+:::
+
+## Create R project
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+Manually
+
+![](images/r_project.png){.shadow width="80%" fig-align="center" fig-alt="Image of Rstudio project setup window."}
+
+:::
+
+::: {.column width="50%" .center}
+
+<br>
+
+Using Code 
+
+::: {.smaller}
+
+<br>
+
+<br>
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(makeProject)
+
+makeProject(name = "myProject", 
+            path = "C:/Users/jwithers/Presentations", 
+            force = FALSE, 
+            author = "Your Name", 
+            email = "yourfault@somewhere.net")
+```
+
+:::
+
+:::
+
+:::
+
+
+::: notes
+There are several ways to create an R project. You can do it manually through the RStudio IDE or programmatically using code. Here's an example using the MakeProject function from  "makeProject" package. 
+:::
+
+
+# [Standardized File Structure]{.cursive}
+
+## Standardized File Structure
+
+::: columns
+
+<!-- General ReadMe that cover 5 Ws, then Markdown file, then Dublin Code  -->
+
+File structure guidance ^[[Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/file-organization-and-best-practices), [Alaska Data Week 2024 presentations](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx), or reach out to a [data manager](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Contacts.aspx)]
+
+::: {.column width="50%" .small}
+
+- Short-descriptive names
+- Avoid special characters and spaces
+- Name and group files consistently 
+  - Use subfolders
+- Include README .txt
+
+:::
+
+::: {.column width="50%"}
+![](images/poor_file_structure.png){.shadow width="60%" fig-align="center" fig-alt="Image of poor file structure."}
+
+:::
+
+:::
+
+::: aside 
+For additional information check out:
+:::
+
+::: notes
+-   After creating a R project, we will want to set up a logical, standardized file structure along with some documentation; such as a READMe .txt file. Why? Standardized file structures help us keep our files organized and make it easier for us, our future selves, and others to navigate, find, and understand what and where your files. We have several resources available on how to establish a good file structure but some main take-aways are to use short-descriptive names, avoid using special characters or spaces in file or folder names, consistently naming and grouping files (remember subfolders are your friend!), and documenting the who, what, when, where, and why in a readme file. The image displayed here demonstrates a poorly crafted file structure.
+:::
+
+## File Structure
+
+::: columns
+
+::: {.column width="33%" .small .center}
+
+<br>
+
+Alaska Regional Data Repository ^[[Alaska Regional Data Repository](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/alaska-regional-data-repository)]
+
+![](images/rdr_file_structure.png){.shadow width="50%" fig-align="center" fig-alt="Image of Alaska Regional Data Repository File Structure"}
+
+:::
+
+::: {.column width="33%" .small .center}
+
+<br>
+
+Alaska National Wildlife Refuges ^[[Refugetools GitHub](https://github.com/USFWS/refugetools)]
+
+![](images/refuges_file_structure.png){.shadow width="40%" fig-align="center" fig-alt="Image of Alaska Refuges program file structure"}
+
+:::
+
+::: {.column width="33%" .small .center}
+<br>
+
+
+Roxygen2 ^[[Roxygen2 documentation](https://roxygen2.r-lib.org/)]
+
+<br>
+
+![](images/roxygen2_file_structure.png){.shadow width="50%" fig-align="center" fig-alt="Image showing file structure of roxygen2."}
+
+:::
+
+:::
+
+:::notes
+There are a number of folder structure templates you can use but we would direct you to the Alaska Regional Data Repository template, the refuges template, and the Roxygen2 template. The Alaska regional data repository and alaska refuges templates are great for project files structures and the roxygen2 file template is particularly useful when creating packages and documenting code. Using
+:::
+
+## File Structure: README
+
+::: columns
+
+:::{.column width=33% .center}
+### Manually
+![](images/txt.png){.shadow width="100%" fig-align="center" fig-alt="Image of .txt file icon"}
+:::
+
+:::{.column width=33% .center}
+### Markdown
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+# Hello, world!
+#
+# This is an example function named 'hello' 
+# which prints 'Hello, world!'.
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   https://r-pkgs.org
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Install Package:           'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
+
+hello <- function() {
+  print("Hello, world!")
+}
+```
+:::
+
+:::
+
+:::{.column width=33% .center}
+### Dublin core
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+
+refugetools:::dublin(project = "myProject",
+                     name = "jonah withers",
+                     email = "jonah_withers@fws.gov",
+                     office = "conservation genetics laboratory")
+```
+
+
+<br>
+
+```{r}
+
+text <- readLines("C:/Users/jwithers/OneDrive - DOI/Presentations/DataManagementPresentations/DataWeek/data-workflow-presentation/docs/project_meta.txt")
+cat(text, sep = "\n")
+
+```
+:::
+
+:::
+
+:::
+
+:::notes
+A little more on readme files. When documenting your file structure its important to include 
+the 5 w’s or the who, what, when, where, and why. Start with a project title, contact information for a point of contact, a description of project, what files are in the folder structure, how they’re organized, and how they interaction. You can also include information on when files were added, deleted, or updated and who made the changes. Or if you’d like to elevate your readme, consider following a standard such as Dublin Core. Once written, you’ll want to save the file in a stable format such as a .txt. 
+:::
+
+
+## [File Structure]{.cursive}: Manual
+
+![](images/create_dir_manual.png){.shadow width="1px" fig-align="center" fig-alt="Image of file explore create folder."}
+
+:::notes
+In a manual workflow, we might create new folders in file explorer and rename them to create to file structure. Or maybe we have a folder structure template that we can copy and paste. 
+:::
+
+## [File Structure]{.cursive}: R
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+<br>
+
+<br>
+
+Code
+
+::: {.smaller}
+```{r}
+#| echo: true
+#| eval: false
+
+library(refugetools)
+
+create.dir(proj.name = "myProject", 
+           dir.name = "C:/Users/jwithers/Presentations")
+
+```
+:::
+
+:::
+
+::: {.column width="50%" .center}
+
+Resulting Folder Structure
+
+![](images/refuges_file_structure.png){.shadow width="40%" fig-align="center" fig-alt="Image of Alaska Refuges program file structure"}
+:::
+
+:::
+
+:::notes
+Alternatively with R we can create or use existing folder structures with a few lines of code. Here's an example where we use the create.dir() function from refuges refugetools package. Once we run this code, our standardized file structure is created for us. 
+:::
+
+# [Version Control]{.cursive}
+
+## Version Control
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+- Manage and track changes
+- Easily share and collaborate
+- Provides documentation
+
+:::
+
+::: {.column width="50%" .center}
+
+<br>
+
+<br>
+
+{{< fa "code-branch" size=4x title="code branch icon" >}}
+
+:::
+
+:::
+
+::: notes
+After we've created a R project and set up the project folder structure, we set up version control for our project. Just like backing up your files on an external hard drive or in the cloud, we can Version control backup our code and manage our code. Enabling version control also makes it easy to share our scripts with collaborators and allows others to contribute to our code. 
+:::
+
+## [Version Control]{.cursive}: Mannual Workflow
+
+::: columns
+
+::: {.column width="33%" .center}
+
+<br>
+
+### External hard drive
+
+![](images/external_hard_drive.png){.shadow width="100%" fig-align="center" fig-alt="Image of external hard drive"}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### Sharepoint
+
+![](images/sharepoint_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of sharepoint file version control"}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### OneDrive
+
+![](images/OneDrive_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of OneDrive file version control"}
+:::
+
+:::
+
+:::notes
+In a manual workflow we could manually copy and paste our documents to network drives or external hard drives or use software like Microsoft sharepoint or OneDrive to back our files us regularly and retain older versions from the cloud.
+:::
+
+## [Version Control]{.cursive}: R Workflow
+
+<br>
+
+![](images/git_tracking.png){.shadow width="75%" fig-align="center" fig-alt="Image of r git commit preview"}
+
+::: notes
+With R, we can set up version control on our R project and push and pull changes to and from the cloud as needed with the click of a button. Some of the advantages of version control with R are that changes to our code are tracked line-by-line. This means if you make a few minor changes its easy for others to pin point these changes and track them whereas with something like Microsoft Word, we are tracking versions of the entire document.  Additionally, version control allows others to track and submit proposed changes to our code which increases opportunities for collaboration and code improvement.  
+:::
+
+## Version Control
+
+:::{.center}
+
+{{< fa brands github size=5x title="The GitHub octocat logo" >}}
+Github
+
+{{< fa brands gitlab size=5x title="The Gitlab tanuki logo" >}}
+Gitlab
+
+:::
+
+::: notes
+Git is the most popular version control software used with code with GitHub and GitLab probably being the two most popular centrally managed Git hosting platforms. I'll give a very brief overview of these two platforms and how you may want to use them. 
+:::
+
+## Version Control
+
+::: columns
+
+::: {.column width="30%" .center}
+ 
+<br>
+ 
+{{< fa brands github size=5x title="The GitHub octocat logo" >}}
+
+Github
+
+:::
+
+::: {.column width="70%" .small .right}
+
+<br>
+
+- DOI GitHub Enterprise Cloud (DGEC) ^[[DGEC sharepoint site](https://doimspp.sharepoint.com/sites/ocio-DOI-GitHub-Enterprise/SitePages/Home.aspx)]
+- USFWS Organizational Account ^[[USFWS GitHub organization](https://www.github.com/usfws)]
+- USFWS Github Guidance ^[[USFWS Github sharepoint](https://doimspp.sharepoint.com/sites/fws-gis/SitePages/Using-Git-and-GitHub.aspx)]
+
+:::
+
+:::
+
+::: aside
+Resources:
+:::
+
+:::notes
+Many of you may have experience working with GitHub and may even have a personal account; however, when we are creating code for the Service we need to ensure the code follows DOI guidelines and is preserved in a way that others can use the code after we have left the Service. 
+
+To accomplish this, the Department of the Interior has designated GitHub as the system of record for publishing source code for collaborating and sharing between agencies and with the public. DOI has created the "DOI GitHub Enterprise Cloud" or DGEC in an effort to organize and manage control of published source code. You can visit the DGEC sharepoint page and join their Microsoft Team's site for more information on the DGEC. 
+
+The U.S. Fish and Wildlife Service has created an organization account that is hosted under the DGEC umbrella. If you plan to share your code publicly, you'll want to host your code on the USFWS organizational account. To access the account you must create a USFWS user account using your FWS email address, complete one of the introductory DOI talent training modules for GitHub, and request access to the DGEC. For more information on this check out the sharepoint site linked below.
+:::
+
+## Version Control
+
+
+::: columns
+
+::: {.column width="30%" .center}
+ 
+<br>
+ 
+{{< fa brands gitlab size=5x title="The Gitlab tanuki logo" >}}
+GitLab
+
+:::
+
+::: {.column width="50%" .small .right}
+
+<br>
+
+- USFWS user Gitlab account ^[[USFWS Gitlab](https://gitlab.fws.doi.net/)]
+
+:::
+
+:::
+
+::: aside
+Resources:
+:::
+
+::: notes
+Alternatively, if you'd like to enable version control for a project or code you don't plan on sharing outside DOI, the service has set up a GitLab account for each of you under your MyAccount username. The Gitlab accounts are restricted to the DOI network meaning you can share code internally within DOI but cannot make your code publicly available through Gitlab. Now that we have an R Project set up with a good file structure and version control enabled for our project, I am going to pass it over to Emma who will continue along the data workflow steps.
+:::
+
+## Import data
+
+::: notes
+-   Data do not have to be saved locally
+-   Include ServCat example
+:::
+
+## Document code
+
+::: notes
+-   Commenting
+-   Sections
+-   Roxygen header in packages\
+:::
+
+## Tidy data
+
+::: notes
+Speaker notes go here.
+:::
+
+## Explore data/Quality control
+
+::: notes
+-   Why?
+-   Options
+-   Canned packages
+-   Custom functions
+:::
+
+## Analyze data
+
+::: notes
+-   There is probably an R package that can do what you want
+-   Advantages of scripting an analysis
+-   Recommendations
+-   Break into individual scripts for each step
+:::
+
+## Visualize and summarize results
+
+::: notes
+-   Tons of options, R packages
+-   Static versus dynamic visualizations
+-   Depends on output file type (html vs. Word)
+:::
+
+## Report results
+
+::: notes
+-   R can output to many formats
+:::
+
+## Share products
+
+::: notes
+-   You can share your products through scripts
+    -   Examples
+        -   Emailing
+        -   Publish report or app to server (Posit Connect)
+        -   Save to data repository, share link
+:::
+
+## Preserve it all
+
+::: notes
+-   You can preserve your products using scripts
+:::
+
+## Demonstrate reuse
+
+::: notes
+-   You can replicate these steps if it is all scripted
+-   Documentation is important!
+:::
+
+## Where to go from here
+
+::: notes
+-   NCTC trainings
+-   Resources available
+-   Who to reach out to
+:::
