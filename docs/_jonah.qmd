@@ -64,7 +64,7 @@ Fisheries and Ecological Services\
 :::
 
 ::: notes
-Welcome everyone. My name is Jonah Withers and I'm a data manager with the Fisheries and Ecological Services program. My colleagues and co-presenters of today's talk are McCrea Cobb and Emma Schillerstrom. McCrea is a biometrician with the refuges program and Emma is a data management technician with the refuges program.
+Welcome everyone. My name is Jonah Withers and I'm a data manager with the Fisheries and Ecological Services program. My colleagues and co-presenters of today's talk are McCrea Cobb and Emma Schillerstrom. McCrea is a biometrician with the refuges program and Emma is a data management technician with the refuges program.Today's presentation is on creating reproducible workflows.
 :::
 
 ## Overview
@@ -72,10 +72,18 @@ Welcome everyone. My name is Jonah Withers and I'm a data manager with the Fishe
 <br>
 
 - What is a script-based workflow?
-- Advantages to using a script-based workflow?
-- Why choose {{< fa brands "r-project" size=1x title="R project icon" >}}?
-- Our recommended workflow
 
+:::{.fragment}
+- Advantages to using a script-based workflow?
+:::
+
+:::{.fragment}
+- Why choose {{< fa brands "r-project" size=1x title="R project icon" >}}?
+:::
+
+:::{.fragment}
+- Our recommended workflow
+:::
 ::: notes
 In this presentation, we are going to cover what script-based workflows are, why they're worth using, and why you should consider using program R. Then we will step you through some best practices to follow when you are creating and using script-based workflows. Our hope is that by the end of this presentation, you'll understand the advantages of using a script-based data workflow over a manual data workflow, you will be familiar with some best-practices and understand why they are important, and have a better understanding of resources and staff available to assist you with developing code-based workflows.
 :::
@@ -149,7 +157,7 @@ However, with a script-based workflow all these steps - from acquiring data thro
 ![](images/advantages_of_script_based_workflow.png){.shadow width="100%" fig-align="center" fig-alt="A witch-themed image with six scrolls. Each scroll is either labeled documented, reproducible, reduce errors, easily scaled, version control, or sharing."}
 
 ::: notes
-By using scripts, we create a paper trail that documents the steps we use to manage and process our data and documents. By documenting our steps in scripts, our workflow becomes replicable, reproducible, and more transparent to our future selves and others. Scripts also automate our processes which means we reduce our likelihood of introducing errors; such as transcription errors, cut and paste erros, or migration errors. It also makes it really easy for us to the most up-to-date information if we are referencing something online. By automating our workflow, we also make our steps very scalable so that whether we are processing a data set with 10 rows or one with 10 million rows of data our script can be used handle the data in the exact same way and processing can happen with the click of a button. Script-based workflows can as enable version control to track and save changes we make to our scripts over time. By enabling version control, its easy to share our scripts with others and allow collaborators to contribute to them.
+By using scripts, we create a paper trail that documents the steps we use to manage and process our data and documents. By documenting our steps in scripts, our workflow becomes replicable, reproducible, and more transparent to our future selves and others. Scripts also automate our processes which means we reduce our likelihood of introducing errors; such as transcription errors, cut and paste errors, or migration errors. It also makes it really easy for us to the most up-to-date information if we are referencing something online. By automating our workflow, we also make our steps very scalable so that whether we are processing a data set with 10 rows or one with 10 million rows of data our script can be used handle the data in the exact same way and processing can happen with the click of a button. Script-based workflows can as enable version control to track and save changes we make to our scripts over time. By enabling version control, its easy to share our scripts with others and allow collaborators to contribute to them.
 :::
 
 ## Why Choose {{< fa brands "r-project" size=1x title="R project icon" >}}? 
@@ -161,10 +169,23 @@ By using scripts, we create a paper trail that documents the steps we use to man
 <br>
 
 -   Open-source and free
+
+:::{.fragment}
 -   Flexible
+:::
+
+:::{.fragment}
 -   Widely used in ecology
+:::
+
+:::{.fragment}
 -   Statistically powerful
+:::
+
+:::{.fragment}
 -   Active community & tons of packages (`r prettyNum(round((nrow(available.packages()) / 1000) * 1000), big.mark = ",", scientific = FALSE)`!)
+:::
+
 :::
 
 ::: {.column width="50%"}
@@ -191,80 +212,105 @@ So now I'm going to transition into the part of the presentation where we step t
 # [Create RStudio Project]{.cursive}
 
 ## Create RStudio Project
-:::{.center}
+
+::: columns
+
+::: {.column width="50%" .left}
+
+<br>
+
+- Root directory
+
+::: {.fragment}
+- Standard file paths
+:::
+
+:::
+
+::: {.column width="50%" .center}
 
 <br> 
 
 <br>
 
+![](images/r_project_icon.png){.shadow width="35%" fig-align="center" fig-alt="Image of Rstudio project icon."}
 
-![](images/r_project_icon.png){.shadow width="15%" fig-align="center" fig-alt="Image of Rstudio project icon."}
+:::
 
 :::
 
 ::: notes
-To start, we recommend creating an RStudio project. An R project serves as a project folder, or root directory, that houses all your project-related files and folders in one place. By establishing an R project, you create a default working directory, or root directory for your project, which helps minimize file path issues when sharing the project with others. 
+To start, we recommend creating an RStudio project. An R project serves as a project folder, or root directory, that houses all your project-related files and folders in one place. By establishing an R project, you create a default working directory for your project, which helps minimize file path issues when sharing the project with others.
 :::
 
 
 
 ## Create RStudio Project
 
-<br> 
-
 ::: columns
 
-::: {.column width="33%" .small}
+::: {.column width="50%" .left}
 
-![](images/rdr_file_structure.png){.shadow width="75%" fig-align="right" fig-alt="Image of Alaska Regional Data Repository File Structure"}
+<br>
+
+- Root directory
+
+- Standard file paths
+
+::: {.fragment}
+- Self-contained, bundling
+:::
+
+::: {.fragment}
+- Version control
+:::
+
+::: {.fragment}
+- Collaboration
+:::
 
 :::
 
-::: {.column width="33%" .center}
+::: {.column width="50%" .small}
 
 <br>
 
-<br>
-
-{{< fa "arrow-right" size=3x title="arrow icon" >}} 
-
-:::
-
-::: {.column width="33%"}
-
-<br>
-
-<br>
-
-![](images/r_project_icon.png){.shadow width="35%" fig-align="left" fig-alt="Image of Rstudio project icon."} 
+![](images/r_project_bundling_files.png){.shadow width="100%" fig-align="center" fig-alt="Image of witch themed letter R with files bundled inside it"}
 
 :::
 
 :::
 
 ::: notes
-R projects also facilitate the bundling of all our project files, creating a self-contained package of our project, much like a map package in ArcGIS, which allows us to easily share our project with others. Lastly, R projects make is possible for us to implement version control, which we will discuss shortly.
+R projects also facilitate the bundling of all our project files, creating a self-contained package, much like a map package in ArcGIS, which allows us to easily share our code with others. Lastly, R projects make is possible for us to implement version control, which we will discuss shortly.
 :::
 
 ## Create R project
 
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="50%" .center}
 
 <br>
 
 Manually
 
-![](images/r_project.png){.shadow width="80%" fig-align="left" fig-alt="Image of Rstudio project setup window."}
+![](images/r_project.png){.shadow width="80%" fig-align="center" fig-alt="Image of Rstudio project setup window."}
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" .center}
 
 <br>
 
 Using Code 
+
+::: {.smaller}
+
+<br>
+
+<br>
+
 ```{r}
 #| echo: true
 #| eval: false
@@ -282,9 +328,11 @@ makeProject(name = "myProject",
 
 :::
 
+:::
+
 
 ::: notes
-There are several ways to create an R project. You can do it manually through the RStudio IDE or programmatically using code. Here's an example using the MakeProject function from  "makeProject" package.
+There are several ways to create an R project. You can do it manually through the RStudio IDE or programmatically using code. Here's an example using the MakeProject function from  "makeProject" package. 
 :::
 
 
@@ -294,6 +342,7 @@ There are several ways to create an R project. You can do it manually through th
 
 ::: columns
 
+<!-- General ReadMe that cover 5 Ws, then Markdown file, then Dublin Code  -->
 
 File structure guidance ^[[Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/file-organization-and-best-practices), [Alaska Data Week 2024 presentations](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx), or reach out to a [data manager](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Contacts.aspx)]
 
@@ -319,7 +368,7 @@ For additional information check out:
 :::
 
 ::: notes
--   After creating a R project, we will want to set up a logical, standardized file structure along with some documentation; such as a READMe .txt file. Why? Standardized file structures help us keep our files organized and make it easier for us, our future selves, and others to navigate, find, and understand what and where your files. We have several resources available on how to establish a good file structure but some main take-aways are to use short-descriptive names, avoid using special characters or spaces in file or folder names, consistently naming and grouping files (remember subfolders are your friend!), and documenting the who, what, when, where, and why in a readme .txt document. The image displayed here demonstrates a poorly crafted file structure.
+-   After creating a R project, we will want to set up a logical, standardized file structure along with some documentation; such as a READMe .txt file. Why? Standardized file structures help us keep our files organized and make it easier for us, our future selves, and others to navigate, find, and understand what and where your files. We have several resources available on how to establish a good file structure but some main take-aways are to use short-descriptive names, avoid using special characters or spaces in file or folder names, consistently naming and grouping files (remember subfolders are your friend!), and documenting the who, what, when, where, and why in a readme file. The image displayed here demonstrates a poorly crafted file structure.
 :::
 
 ## File Structure
@@ -361,8 +410,82 @@ Roxygen2 ^[[Roxygen2 documentation](https://roxygen2.r-lib.org/)]
 :::
 
 :::notes
-There are a number of folder structure templates you can use but we would direct you to the Alaska Regional Data Repository template, the refuges template, and the Roxygen2 template. The Alaska regional data repository and alaska refuges templates are great for project files structures and the roxygen2 file template is particularly useful when creating packages and documenting code.
+There are a number of folder structure templates you can use but we would direct you to the Alaska Regional Data Repository template, the refuges template, and the Roxygen2 template. The Alaska regional data repository and alaska refuges templates are great for project files structures and the roxygen2 file template is particularly useful when creating packages and documenting code. Using
 :::
+
+## File Structure: README
+
+::: columns
+
+:::{.column width=33% .center}
+### Manually
+![](images/txt.png){.shadow width="100%" fig-align="center" fig-alt="Image of .txt file icon"}
+:::
+
+:::{.column width=33% .center}
+### Markdown
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+# Hello, world!
+#
+# This is an example function named 'hello' 
+# which prints 'Hello, world!'.
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   https://r-pkgs.org
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Install Package:           'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
+
+hello <- function() {
+  print("Hello, world!")
+}
+```
+:::
+
+:::
+
+:::{.column width=33% .center}
+### Dublin core
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+
+refugetools:::dublin(project = "myProject",
+                     name = "jonah withers",
+                     email = "jonah_withers@fws.gov",
+                     office = "conservation genetics laboratory")
+```
+
+
+<br>
+
+```{r}
+
+text <- readLines("C:/Users/jwithers/OneDrive - DOI/Presentations/DataManagementPresentations/DataWeek/data-workflow-presentation/docs/project_meta.txt")
+cat(text, sep = "\n")
+
+```
+:::
+
+:::
+
+:::
+
+:::notes
+A little more on readme files. When documenting your file structure its important to include 
+the 5 w’s or the who, what, when, where, and why. Start with a project title, contact information for a point of contact, a description of project, what files are in the folder structure, how they’re organized, and how they interaction. You can also include information on when files were added, deleted, or updated and who made the changes. Or if you’d like to elevate your readme, consider following a standard such as Dublin Core. Once written, you’ll want to save the file in a stable format such as a .txt. 
+:::
+
 
 ## [File Structure]{.cursive}: Manual
 
@@ -384,6 +507,9 @@ In a manual workflow, we might create new folders in file explorer and rename th
 
 <br>
 
+Code
+
+::: {.smaller}
 ```{r}
 #| echo: true
 #| eval: false
@@ -394,12 +520,13 @@ create.dir(proj.name = "myProject",
            dir.name = "C:/Users/jwithers/Presentations")
 
 ```
+:::
 
 :::
 
 ::: {.column width="50%" .center}
 
-<br>
+Resulting Folder Structure
 
 ![](images/refuges_file_structure.png){.shadow width="40%" fig-align="center" fig-alt="Image of Alaska Refuges program file structure"}
 :::
@@ -444,10 +571,39 @@ After we've created a R project and set up the project folder structure, we set 
 
 ## [Version Control]{.cursive}: Mannual Workflow
 
-![](images/git_process_placeholder.png){.shadow width="80%" fig-align="center" fig-alt="Image github workflow"}
+::: columns
+
+::: {.column width="33%" .center}
+
+<br>
+
+### External hard drive
+
+![](images/external_hard_drive.png){.shadow width="100%" fig-align="center" fig-alt="Image of external hard drive"}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### Sharepoint
+
+![](images/sharepoint_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of sharepoint file version control"}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### OneDrive
+
+![](images/OneDrive_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of OneDrive file version control"}
+:::
+
+:::
 
 :::notes
-In a manual workflow we could manually copy and paste our documents to network drives or external hard drives or use software like Microsoft Teams or OneDrive to back our files us regularly and retain older versions.
+In a manual workflow we could manually copy and paste our documents to network drives or external hard drives or use software like Microsoft sharepoint or OneDrive to back our files us regularly and retain older versions from the cloud.
 :::
 
 ## [Version Control]{.cursive}: R Workflow
@@ -457,7 +613,7 @@ In a manual workflow we could manually copy and paste our documents to network d
 ![](images/git_tracking.png){.shadow width="75%" fig-align="center" fig-alt="Image of r git commit preview"}
 
 ::: notes
-With R, we can set up version control on our R project and push and pull changes to and from the cloud as needed with the click of a button. Some of the advantages of version control with R are that changes to our code are tracked line-by-line. This means if you make a few minor changes its easy for others to pin point these changes and track them whereas with something like word, we are tracking versions of the entire document.  Additionally, version control allows others to track and submit proposed changes to our code which increases opportunities for collaboration and code improvement.  
+With R, we can set up version control on our R project and push and pull changes to and from the cloud as needed with the click of a button. Some of the advantages of version control with R are that changes to our code are tracked line-by-line. This means if you make a few minor changes its easy for others to pin point these changes and track them whereas with something like Microsoft Word, we are tracking versions of the entire document.  Additionally, version control allows others to track and submit proposed changes to our code which increases opportunities for collaboration and code improvement.  
 :::
 
 ## Version Control
@@ -511,7 +667,7 @@ Many of you may have experience working with GitHub and may even have a personal
 
 To accomplish this, the Department of the Interior has designated GitHub as the system of record for publishing source code for collaborating and sharing between agencies and with the public. DOI has created the "DOI GitHub Enterprise Cloud" or DGEC in an effort to organize and manage control of published source code. You can visit the DGEC sharepoint page and join their Microsoft Team's site for more information on the DGEC. 
 
-The U.S. Fish and Wildlife Service has created an organization account that is hosted under the DGEC umbrella. If you plan to share your code publicly, you'll want to host your code on the USFWS organizational account. To access the account you must create a USFWS user account using your FWS email address, complete one of the introductory DOI talent training modules for GitGub, and request access to the DGEC. For more information on this check out the sharepoint site linked below.
+The U.S. Fish and Wildlife Service has created an organization account that is hosted under the DGEC umbrella. If you plan to share your code publicly, you'll want to host your code on the USFWS organizational account. To access the account you must create a USFWS user account using your FWS email address, complete one of the introductory DOI talent training modules for GitHub, and request access to the DGEC. For more information on this check out the sharepoint site linked below.
 :::
 
 ## Version Control
@@ -543,7 +699,7 @@ Resources:
 :::
 
 ::: notes
-Alternatively, if you'd like to enable version control for a project or code you don't plan on sharing outside DOI, the service has set up a GitLab account for each of you under your MyAccount username. The Gitlab accounts are restricted to the DOI network meaning you can share code internally within DOI but cannot make your code publicly avialable through Gitlab. Now that we have an R Project set up with a good file structure and version control enabled for our project, I am going to pass it over to Emma who will continue along the data workflow steps.
+Alternatively, if you'd like to enable version control for a project or code you don't plan on sharing outside DOI, the service has set up a GitLab account for each of you under your MyAccount username. The Gitlab accounts are restricted to the DOI network meaning you can share code internally within DOI but cannot make your code publicly available through Gitlab. Now that we have an R Project set up with a good file structure and version control enabled for our project, I am going to pass it over to Emma who will continue along the data workflow steps.
 :::
 
 ## Import data
