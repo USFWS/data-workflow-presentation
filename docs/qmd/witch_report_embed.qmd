@@ -1,0 +1,107 @@
+---
+title: "Tetlin Witch Report"
+author: Jane Biologist
+format: html
+fig-align: center
+editor: source
+---
+
+
+```{{r setup}}
+#| echo: false
+#| message: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      echo = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+library(unmarked)
+library(terra)
+library(tidyverse)
+library(RColorBrewer)
+library(sf)
+library(leaflet)
+```
+
+```{{r load_data}}
+#| cache: true
+
+# Load site data
+dat <- read.csv("data/csv/dat.csv")
+
+source("R/simulate_data.R")
+source("R/create_map.R")
+
+# Scaled covariates
+sc <- dat |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+```
+
+```{{r fit_model}}
+#|cache: true
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+## Introduction
+
+Invasive witches have become a management concern at Tetlin National Wildlife Refuge. As such, there is a need to estimate witch occurrence within the Refuge.
+
+## Methods
+
+### Data Collection
+
+We visited a sample randomly distributed sites across Tetlin Refuge. At each site, we spent one hour looking and listening for witches. We revisited each site eight times.
+
+### Model
+
+We estimated witch occupancy and detection using a single-season occupancy model. We used the `unmarked` R package. [blah, blah, blah]
+
+
+## Results
+
+We surveyed a total of `r nrow(dat)` sites. The average distance to water at our sites was `r round(mean(dat$water), 2)` m. The average distance to forest at our sites was `r round(mean(dat$forest), 2)` m.
+
+```{{r}}
+#| out-width: "50%"
+#| fig-cap: "A map of the sites surveyed for witches, Tetlin National Wildlife Refuge, Alaska."
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+
+# Create leaflet map
+base_map(sites, tetlin)
+```
+
+We observed witches on `r sum(dat[6:13])` of 800 site visits, for a naive occupancy of `r round(sum(dat[6:13])/ncell(dat[6:13]), 2)`. 
+
+```{{r plot_psi}}
+#| fig-height: 3
+#| fig-cap: Occupancy of witches at Tetlin National Wildlife Refuge, Alaska, 2024.
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  facet_grid(~covariate, scales = "free")
+```
