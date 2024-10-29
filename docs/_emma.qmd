@@ -201,8 +201,7 @@ Started monitoring them due to concerns surrounding the threat of deforestation,
 :::
 
 ::: notes
-I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it.
-No automated data processing workflow exists for this dataset, so let's create one!
+I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it. No automated data processing workflow exists for this dataset, so let's create one!
 :::
 
 ## Photos from the Field
@@ -255,42 +254,48 @@ Starting Our Script
 :::
 
 ::: notes
-following Jonah's guidance...
-open a new blank R script file and...
+following Jonah's guidance... open a new blank R script file and...
 :::
 
-## Setting Up New Script
+## Starting a New Script
 
--   To use external functions, we need to load their packages
-    -   First, install packages
+-   Install packages
 
-        ```{r}
-        #| echo: true
-        #| eval: false
-        install.packages(c("tidyverse","readxl","janitor"))
-        ```
+    ```{r}
+    #| echo: true
+    #| eval: false
+    install.packages(c("tidyverse","readxl","janitor"))
+    ```
 
-        -   For non-CRAN packages, use `devtools::install_github("author/package_name")`
+    -   For non-CRAN packages, use `devtools::install_github("author/package_name")`
 
-    -   Next, use `library()` to load
+-   Use `library()` to load
 
-        -   Sits at top of script and updated as you go
+    -   Sits at top of script and updated as you go
 
-        ```{r}
-        #| echo: true
-        #Load packages
-        library(tidyverse)
-        library(readxl)
-        library(janitor)
-        ```
+    ```{r}
+    #| echo: true
+    #Load packages
+    library(tidyverse)
+    library(readxl)
+    library(janitor)
+    ```
 
 ::: notes
-sits at top of script
+To use external functions, we need to load their packages
 
 these packages are all in the CRAN (comprehensive R archive network) repository
+
+you can also install non-CRAN packages, such as those developed by your regional biometrician, directly from GitHub using a package called devtools
+
+once we... can go ahead and load them. only have to install once (so we can remove the installation code), but need to reload in every script
+
+sits at top of script -
+
+tells user what packages they need to have installed
 :::
 
-## Set Up New Script File
+## Starting a New Script
 
 This is called a [*comment*]{.yellow}.
 
@@ -320,7 +325,7 @@ Document every line to few lines of code with a comment.
 none
 :::
 
-## Set Up New Script File
+## Starting a New Script
 
 Basic documentation is as easy as a "`#`" (shortcut: `CTRL-SHIFT-C`)
 
@@ -344,7 +349,9 @@ It serves as a reminder for what your code accomplishes and why it was included.
 Translating coding language to human language is critical for yourself AND others.
 :::
 
-# Data Clean-Up: *Importing*
+# Data Clean-Up: [Importing]{.orange}
+
+![](images/witch_import.jpg){fig-align="center"}
 
 ## Importing Data
 
@@ -420,9 +427,9 @@ Importing Our Data
 
 ## Importing Our Data
 
--   For our data:
-    -   Use `read_excel()` to import data from a specific sheet in a workbook
-    -   Set new "dataframe" as a [*variable*]{.yellow}
+Use `read_excel()` to import data from a specific sheet in a workbook
+
+-   Set new "dataframe" as a [*variable*]{.yellow}
 
 ```{r}
 #| echo: true
@@ -442,6 +449,8 @@ Variables allow us to easily reference complex expressions and enable reusabilit
 
 # Data Clean-Up: [Tidying]{.orange}
 
+![](images/witch_tidying.jpg){fig-align="center"}
+
 ## Tidy Data
 
 ::: {layout="[[-1], [1], [-1]]"}
@@ -454,7 +463,10 @@ none
 
 ## Why Tidy Data?
 
-::: incremental
+::: columns
+::: {.column .incremental width="50%"}
+<br>
+
 -   Standardization
 
 -   Interpretability
@@ -462,6 +474,15 @@ none
 -   Machine readability
 
 -   Ease of use and reuse
+
+-   Conducive to metadata
+:::
+
+::: {.column width="50%"}
+::: {layout="[[-1], [1], [-1]]"}
+![](images/why_tidy_data.jpg){fig-align="center"}
+:::
+:::
 :::
 
 ::: notes
@@ -525,7 +546,7 @@ Updated dataframe:
 *Row Count: 800*
 :::
 
-::: {style="height:290px; overflow-y: scroll"}
+::: {style="height:320px; overflow-y: scroll"}
 ```{r}
 #| echo: false
 gt(tidy_data) %>% opt_stylize(style = 6, color = 'cyan')
@@ -570,6 +591,8 @@ none
 
 # Data Clean-Up: [Exploratory Data Analysis (EDA)]{.orange}
 
+![](images/witch_eda.jpg){fig-align="center"}
+
 ## What is EDA? {.small}
 
 Exploratory Data Analysis (EDA) = [getting to know your data before drawing conclusions]{.orange}, often through summarization and/or visualization
@@ -605,26 +628,6 @@ Exploring Our Data & Performing Quality Control
 ::: notes
 :::
 
-##  {.small}
-
-#### Frank and Stein the Wildlife Biologists
-
-[*Roles: field work, data recording*]{.small}
-
-![](images/frank_stein_graphic.png){fig-align="left"}
-
-#### Casper the friendly Biotech
-
-[*Role: data entry/digitization*]{.small}
-
-![](images/casper_graphic.png){fig-align="left"}
-
-![](images/qc_6.jpg){.absolute top="360" right="280" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="360" right="170" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="360" right="60" width="100" height="100"}
-
-::: notes
-none
-:::
-
 ## Exploring Our Data (EDA)
 
 Let's [rewind {{< fa backward-fast >}}]{.orange} and take a closer look at our starting data
@@ -649,15 +652,34 @@ Let's [rewind {{< fa backward-fast >}}]{.orange} and take a closer look at our s
 
 -   Then, with `summary()`
 
-    ```{r}
-    #| echo: true
-    #| eval: true
-    #| code-block-height: 300px
-    #| class-output: highlight
-    #| output-line-numbers: "|3|10|17|14"
-    #Summary of dataset, including summary stats
-    summary(witch_data)
-    ```
+```{r}
+#| echo: true
+#| eval: true
+#| class-output: highlight
+#| output-line-numbers: "|3|10|17|14"
+#Summary of dataset, including summary stats
+summary(witch_data)
+```
+
+::: notes
+let me see what might be the cause
+:::
+
+##  {.small}
+
+#### Frank and Stein the Wildlife Biologists
+
+[*Roles: field work, data recording*]{.small}
+
+![](images/frank_stein_graphic.png){fig-align="left"}
+
+#### Casper the friendly Biotech
+
+[*Role: data entry/digitization*]{.small}
+
+![](images/casper_graphic.png){fig-align="left"}
+
+![](images/qc_6.jpg){.absolute top="360" right="280" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="360" right="170" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="360" right="60" width="100" height="100"}
 
 ::: notes
 none
@@ -743,7 +765,7 @@ not necessary for our simple dataset but a great, customizable option
 
 # Preservation
 
-\[insert photo\]
+![But don't do it this way\...](images/witch_preserve.jpg){fig-align="center"}
 
 ## Preserving Data and Data Assets {.small}
 
@@ -796,7 +818,7 @@ Preserving Our Data
 A step further...
 
 ::: center
-Tidy, compile, and preserve all 20 years of data
+Tidy, QC, compile, and preserve all 20 years of data
 :::
 :::
 
@@ -804,6 +826,7 @@ Tidy, compile, and preserve all 20 years of data
 -   Write machine-readable metadata for the tidied data file, including a data dictionary defining each of the variables (columns) and their domains
 -   Preserve data, script files, and reports
     -   In ServCat, create separate reference for each and link all to the project reference corresponding to our witch survey
+-   Feeling ambitious...
 :::
 
 ## Preserve Data Assets
@@ -835,7 +858,7 @@ Wrapping the script into a function makes this even more streamlined (*optional*
 
 Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step
 
-```{r .custom-code-block-1}
+```{r}
 #| echo: true
 #| eval: false
 
@@ -845,7 +868,7 @@ library(readxl)
 library(janitor)
 
 #Import raw data
-witch_data <- read_excel("witch_survey.xlsx", sheet = 1)
+witch_data <- read_excel("data/witch_survey.xlsx", sheet = "2024")
 
 #Tidy data structure
 tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -876,10 +899,6 @@ OR wrap script into function
 clean_witch_data <- function(year){
   #Import raw data
   observation_data <- read_excel("witch_survey.xlsx", sheet = paste0(year))
-  site_data <- read_excel("witch_survey.xlsx", sheet = "Site Info")
-  
-  #Relate tables: observation data and site data
-  witch_data <- left_join(observation_data, site_data)
   
   #Tidy data structure
   tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
