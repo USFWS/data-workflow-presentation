@@ -1,7 +1,4 @@
 ---
-title: "Why you should use a script-based workflow for your survey"
-
-author: McCrea Cobb | Emma Schillerstrom | Jonah Withers
 format: 
   revealjs:
     theme: scss/custom-dark.scss
@@ -14,6 +11,7 @@ format:
       buttons: false
     embed-resources: false
     code-block-height: 500px
+    width: 1280
 filters:
   - output-line-highlight.lua
 editor: source
@@ -29,100 +27,21 @@ knitr::opts_chunk$set(warning = FALSE,
                       fig.align = "center")
 ```
 
-::: columns
-::: {.column width="50%"}
-Left column
-:::
-
-::: {.column width="50%"}
-Right column
-:::
-:::
-
-## Blank Slide
-
-Content
-
-::: notes
-:::
-
-# Data Clean-Up
-
-![](images/witch_data_cleanup.png){fig-align="center"}
-
-## Why Clean Up Data in R? {.incremental .smaller}
-
-::: columns
-::: {.column width="50%"}
-#### [Limitations of]{.cursive} {.center}
-
-#### [Manual Workflow]{.cursive .extrabold .yellow} {.center}
-
-::: incremental
--   Messy
-
--   Prone to human error
-
--   Difficult to correct or reverse changes
-
--   Inefficient
-
--   Not reusable
-:::
-:::
-
-::: {.column width="50%"}
-#### [Advantages of]{.cursive} {.center}
-
-#### [Scripted Workflow]{.cursive .extrabold .yellow} {.center}
-
-::: incremental
--   Can iterate through large datasets
-
--   Can manipulate data without overwriting it
-
--   Can easily undo or reapply changes
-
--   Changes are documented
-
--   Avoids repeating steps
-
--   Allows for automated workflows/pipelines
-
--   Eliminates future QC workload
-:::
-:::
-:::
-
-::: notes
--   efficient, reusable, not prone to error, and on top of that...
-
--   working outside of original file
-
--   can apply change to hundreds of thousands of rows of data in a single step - without ever even having to scroll through the rows
-
--   great for apps or lab data that comes in a set, untidy format
-
--   Requires medium initial effort for a future of no effort
-
--   can apply changes to all rows, all sheets, all files at once
-:::
-
 # 
 
 ::: scary
-Witch Survey
+The Tetlin Witch Project
 :::
 
 ::: {.cursive .center .larger}
-Intro to the Data
+An Introduction
 :::
 
 ::: notes
 what data are we cleaning up? let me introduce you to the tetlin witch project
 :::
 
-## Tetlin Witch Survey {.smaller}
+## The Survey {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
@@ -225,6 +144,80 @@ I am the survey coordinator, but this is my first year on the survey. For the la
 ::: notes
 none
 :::
+
+# Data Wrangling
+
+![](images/witch_data_cleanup.png){fig-align="center"}
+
+## Why Wrangle Data in R? {.incremental .smaller}
+
+::: columns
+::: {.column width="50%"}
+#### [Limitations of]{.cursive} {.center}
+
+#### [Manual Workflow]{.cursive .extrabold .yellow} {.center}
+
+::: incremental
+-   Messy
+
+-   Prone to human error
+
+-   Difficult to correct or reverse changes
+
+-   Inefficient
+
+-   Not reusable
+:::
+:::
+
+::: {.column width="50%"}
+#### [Advantages of]{.cursive} {.center}
+
+#### [Scripted Workflow]{.cursive .extrabold .yellow} {.center}
+
+::: incremental
+-   Can iterate through large datasets
+
+-   Can manipulate data without overwriting it
+
+-   Can easily undo or reapply changes
+
+-   Changes are documented
+
+-   Avoids repeating steps
+
+-   Allows for automated workflows/pipelines
+
+-   Eliminates future QC workload
+:::
+:::
+:::
+
+::: notes
+-   efficient, reusable, not prone to error, and on top of that...
+
+-   working outside of original file
+
+-   can apply change to hundreds of thousands of rows of data in a single step - without ever even having to scroll through the rows
+
+-   great for apps or lab data that comes in a set, untidy format
+
+-   Requires medium initial effort for a future of no effort
+
+-   can apply changes to all rows, all sheets, all files at once
+:::
+
+## What is Data Wrangling?
+
+*Definition*
+
+Our Workflow:
+
+1.  Importing Data
+
+2.  Tidying Data
+
+3.  Exploratory Data Analysis & Quality Control
 
 # 
 
@@ -738,7 +731,7 @@ applies change to all 800 lines of data in one line of code
 ::: columns
 ::: {.column width="50%"}
 -   Use `DataExplorer` to generate a comprehensive report
-    -   Includes summary statistics, distributions, missing data, PCA, qq plots, and more
+    -   Includes summary statistics, distributions, missing data, correlations, PCA, qq plots, and more
 
 ```{r}
 #| echo: true
@@ -851,12 +844,10 @@ Wrapping the script into a function makes this even more streamlined (*optional*
 -   Would be a nightmare to manually fix, but we can reuse the script we just created
 :::
 
-## Preserve Data Assets {.scrollable}
+## [Preserve Data Assets]{.small}
 
 ::: panel-tabset
 ### [Basic: Script]{.smaller}
-
-Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step
 
 ```{r}
 #| echo: true
@@ -890,8 +881,6 @@ write.csv(tidy_data, file = "tidy_witch_data.csv", row.names = FALSE)
 
 ### [Advanced: Function]{.smaller}
 
-OR wrap script into function
-
 ```{r}
 #| echo: true
 #| eval: false
@@ -920,8 +909,6 @@ clean_witch_data <- function(year){
 ```
 
 ### [Advanced: Documented Function]{.smaller}
-
-Make sure to add proper documentation!
 
 ```{r}
 #| echo: true
@@ -965,7 +952,7 @@ clean_witch_data <- function(year){
 :::
 
 ::: notes
-none
+[Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step]{.smaller} [OR wrap script into function]{.smaller} [Make sure to add proper documentation!]{.smaller}
 :::
 
 ## Preserve Data Assets
