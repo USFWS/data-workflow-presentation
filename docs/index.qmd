@@ -69,5 +69,8 @@ Fisheries and Ecological Services
 
 :::
 
+{{< include _jonah.qmd >}}
+
+{{< include _emma.qmd >}}
 
 {{< include _mccrea.qmd >}}
