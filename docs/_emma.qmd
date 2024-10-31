@@ -2,9 +2,9 @@
 format: 
   revealjs:
     theme: scss/custom-dark.scss
-    code-overflow: wrap
+    code-overflow: scroll
     logo: images/FWS-logo.png
-    footer: "Alaska Data Week"
+    footer: "![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
@@ -12,8 +12,9 @@ format:
     embed-resources: false
     code-block-height: 500px
     width: 1280
+    height: 720
 filters:
-  - output-line-highlight.lua
+  - lua/output-line-highlight.lua
 editor: source
 highlight-style: a11y
 ---
@@ -33,27 +34,23 @@ knitr::opts_chunk$set(warning = FALSE,
 The Tetlin Witch Project
 :::
 
-::: {.cursive .center .larger}
-An Introduction
-:::
-
 ::: notes
-what data are we cleaning up? let me introduce you to the tetlin witch project
+going to introduce the tetlin witch project, not to be confused with the horror movie the Blair witch project
 :::
 
 ## The Survey {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
-\[Insert Map\]
+![Site Map](images/base_map.png){fig-align="center"}
 :::
 
 ::: {.column width="50%"}
 <br>
 
-[Type:]{.extrabold .orange} Annual occurrence survey
+[**Type:**]{.extrabold .orange} Annual occurrence survey
 
-[Logistics:]{.extrabold .orange}
+[**Logistics:**]{.extrabold .orange}
 
 -   Completed over 8 days in August
 
@@ -61,14 +58,20 @@ what data are we cleaning up? let me introduce you to the tetlin witch project
 
 -   Conducted for 20 years at Tetlin NWR
 
-[Goal:]{.extrabold .orange} Estimate probability of witch occurrence across the refuge
+[**Goal:**]{.extrabold .orange} Estimate probability of witch occurrence across the refuge
 :::
 :::
 
 ::: notes
-the Tetlin Witch project, not the same as the Blair witch project
+survey we conduct annually
 
-lots of biotechs - obviously national funding for witch conservation
+each year in the late summer, we spend 8 days in the field
+
+go out to the same 100 sites each day, recording whether a witch is detected there or not - 0 recorded if not detected, 1 recorded if detected
+
+this survey has been going on...
+
+and the goal of the project...
 :::
 
 ## Witch Background
@@ -77,30 +80,36 @@ lots of biotechs - obviously national funding for witch conservation
 ::: {.column .center width="50%"}
 Do NOT like water
 
-![](images/witch_melting.png){fig-align="center"}
+![](images/witch_melting.png){fig-align="center" height="500"}
 :::
 
 ::: {.column .center width="50%"}
 DO favor forest
 
-![](images/witch_broom.png){fig-align="center"}
+![](images/witch_broom.png){fig-align="center" height="500"}
 :::
 :::
 
 ::: notes
-Can use to characterize and predict their distribution
+I am sure you all already know everything about the North American Witch because witch conservation is a national priority
 
-Species Background - North American Witch
+but I'll provide some species background
 
 Began inhabiting Tetlin NWR during the early modern period when widespread witch trials shifted their range northward
 
 Started monitoring them due to concerns surrounding the threat of deforestation, impacting their ability to construct broomsticks
+
+As I am sure you know from the W of Oz,
+
+...because of the shelter it provides and the resources it offers for broomstick crafting
+
+Can use this information to characterize and predict their distribution
 :::
 
 ## Where We Are
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="35%"}
 **Completed:**
 
 -   Data collection ✓
@@ -109,18 +118,22 @@ Started monitoring them due to concerns surrounding the threat of deforestation,
 
 **Next:**
 
--   Data clean-up ☐
+-   Data wrangling ☐
 :::
 
-::: {.column width="50%"}
-::: {layout="[[-1], [1], [-1]]"}
+::: {.column width="65%"}
 ![Excel workbook with all years of data](images/workbook_sc.png){fig-align="center"}
-:::
 :::
 :::
 
 ::: notes
-I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it. No automated data processing workflow exists for this dataset, so let's create one!
+finished our data collection and data entry for the season
+
+on to data wrangling - or getting our data whipped into shape
+
+in an ideal world, we would have used a data collection app or an entry form with data validation or otherwise performed quality assurance prior to this step, but in this case, we did not
+
+I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook (shown here) with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it. No automated data processing workflow exists for this dataset, so let's create one!
 :::
 
 ## Photos from the Field
@@ -142,12 +155,44 @@ I am the survey coordinator, but this is my first year on the survey. For the la
 :::
 
 ::: notes
-none
+but first,
+
+what's a trip to the field without sharing photos?
+
+I brought my good camera out this time
 :::
 
-# Data Wrangling
+## [Data Wrangling]{.cursive}
 
-![](images/witch_data_cleanup.png){fig-align="center"}
+![](images/witch_data_cleanup.png){.absolute top="100" right="150" height="600"} ![](images/workflow_data_wrangling.png){.absolute top="80" left="300" height="650"}
+
+## What is Data Wrangling?
+
+::: center
+*the process of transforming raw data into a usable form*
+:::
+
+<br>
+
+### Our Workflow:
+
+::: small
+1.  Importing Data [➝ Obtain]{.orange .fragment}
+
+2.  Tidying Data [➝ Restructure]{.orange .fragment}
+
+3.  Exploratory Data Analysis & Quality Control [➝ Clean, Correct, and Understand]{.orange .fragment}
+
+![](images/data_wrangle.jpg){fig-align="center" height="200"}
+:::
+
+::: notes
+can consist of a lot of different types of data manipulation
+
+...
+
+goal is for our data to be interpretable, machine readible, error-free, and ready for analyses
+:::
 
 ## Why Wrangle Data in R? {.incremental .smaller}
 
@@ -188,57 +233,36 @@ none
 
 -   Allows for automated workflows/pipelines
 
--   Eliminates future QC workload
+-   Eliminates future workload
 :::
 :::
 :::
 
 ::: notes
--   efficient, reusable, not prone to error, and on top of that...
+-   not just slow, but tedious and tiring
 
--   working outside of original file
+-   IS efficient, reusable, not prone to error, and on top of that...
+
+-   working outside of original file...
 
 -   can apply change to hundreds of thousands of rows of data in a single step - without ever even having to scroll through the rows
 
--   great for apps or lab data that comes in a set, untidy format
-
--   Requires medium initial effort for a future of no effort
-
--   can apply changes to all rows, all sheets, all files at once
+-   requires medium initial effort for a future of no effort
 :::
 
-## What is Data Wrangling?
-
-*Definition*
-
-Our Workflow:
-
-1.  Importing Data
-
-2.  Tidying Data
-
-3.  Exploratory Data Analysis & Quality Control
-
-# 
-
-::: scary
-Witch Survey
-:::
-
-::: {.cursive .center .larger}
-Starting Our Script
-:::
-
-::: notes
-:::
-
-## Getting Set Up
+## Getting Started
 
 <br>
 
 ✓ Created a new R project
 
 ✓ Set up a standard file directory structure
+
+✓ Set up version control (*optional, good practice*)
+
+✓ Initialized a new R script file (.R)
+
+✓ Installed and loaded our packages
 
 <br>
 
@@ -247,102 +271,14 @@ Starting Our Script
 :::
 
 ::: notes
-following Jonah's guidance... open a new blank R script file and...
+with the help of Jonah, we've already...
+
+which means it is time to import our data
 :::
 
-## Starting a New Script
+# Data Wrangling: [Importing]{.orange}
 
--   Install packages
-
-    ```{r}
-    #| echo: true
-    #| eval: false
-    install.packages(c("tidyverse","readxl","janitor"))
-    ```
-
-    -   For non-CRAN packages, use `devtools::install_github("author/package_name")`
-
--   Use `library()` to load
-
-    -   Sits at top of script and updated as you go
-
-    ```{r}
-    #| echo: true
-    #Load packages
-    library(tidyverse)
-    library(readxl)
-    library(janitor)
-    ```
-
-::: notes
-To use external functions, we need to load their packages
-
-these packages are all in the CRAN (comprehensive R archive network) repository
-
-you can also install non-CRAN packages, such as those developed by your regional biometrician, directly from GitHub using a package called devtools
-
-once we... can go ahead and load them. only have to install once (so we can remove the installation code), but need to reload in every script
-
-sits at top of script -
-
-tells user what packages they need to have installed
-:::
-
-## Starting a New Script
-
-This is called a [*comment*]{.yellow}.
-
-```{r}
-#| echo: true
-#| eval: false
-#| code-line-numbers: "1"
-#Load packages
-library(tidyverse)
-library(readxl)
-library(janitor)
-```
-
-A comment precedes [machine-readable language]{.yellow} and supplies a translation to [human-readable language]{.yellow}.
-
-::: center
-[Human Readability]{.orange .extrabold} {{< fa handshake >}} [Reusability]{.orange .extrabold}
-:::
-
-::: callout-tip
-## Best Practice
-
-Document every line to few lines of code with a comment.
-:::
-
-::: notes
-none
-:::
-
-## Starting a New Script
-
-Basic documentation is as easy as a "`#`" (shortcut: `CTRL-SHIFT-C`)
-
-```{r}
-#| echo: true
-#| eval: false
-# Any code or text that is commented will not be executed,
-but if it is not commented, R will treat it as code,
-so this will return an ERROR.
-```
-
-::: callout-tip
-## Tip!
-
-The `#` can also be used to temporarily disable lines of code for testing purposes.
-:::
-
-::: notes
-It serves as a reminder for what your code accomplishes and why it was included.
-
-Translating coding language to human language is critical for yourself AND others.
-:::
-
-# Data Clean-Up: [Importing]{.orange}
+<br>
 
 ![](images/witch_import.jpg){fig-align="center"}
 
@@ -381,28 +317,38 @@ my_data <- GET(url = "api-url.com/input-id", body = list("parameter1","parameter
 ```
 
 ::: notes
-Built-in and installable functions exist for reading data from various sources Like a link to the online authoritative source for a dataset
+Built-in and installable functions exist for reading data from various sources
+
+...
+
+Like a link to the online authoritative source for a dataset or maybe an online database
 :::
 
 ## Importing Data
 
-Extra Step: merge multiple tables
+Extra step: merge multiple tables, if necessary
 
 ```{r}
 #| echo: true
 #| eval: false
 #Join tables by common variables
-all_data <- left_join(observation_data, site_data)
+all_data <- left_join(observation_data, site_data, join_by(c("lat", "lon")))
 ```
 
 ::: callout-note
 ## Suggestion
 
-You can often replace complex MS Access databases with R scripts. Using R to join related tables also ensures your files are all in an open format.
+You can sometimes replace the need for MS Access databases through R scripts, depending on the functionality you desire. Using R to join related tables allows for automation and ensures your files are in an open format.
 :::
 
 ::: notes
-none
+when you first bring in your data, you may want to include the extra step of merging multiple tables if you have relational data
+
+in this example,...
+
+I briefly want to mention that you can replicate some of the functionality of a survey Access database in R
+
+databases for surveys...w/o relying on a
 :::
 
 # 
@@ -416,6 +362,7 @@ Importing Our Data
 :::
 
 ::: notes
+let's go ahead and import the data for our survey
 :::
 
 ## Importing Our Data
@@ -423,6 +370,14 @@ Importing Our Data
 Use `read_excel()` to import data from a specific sheet in a workbook
 
 -   Set new "dataframe" as a [*variable*]{.yellow}
+
+```{r}
+#| echo: false
+#Load packages
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
 
 ```{r}
 #| echo: true
@@ -437,12 +392,22 @@ Variables are the basis of reusability!
 :::
 
 ::: notes
-Variables allow us to easily reference complex expressions and enable reusability. If I write all my code referencing the "witch_data" variable and I decide I want to change the input file, I can easily do that in this one line and not have to tamper with any of the rest of my code.
+To import our data, we can use a function to read a specific sheet from our workbook and convert it to a "dataframe", which is just a datatable in R
+
+We are also going to create a "witch_data" variable and define it as this dataframe
+
+Variables allow us to easily reference complex expressions and enable reusability. If I write all my code referencing the "witch_data" variable and I decide I want to change the input file, I can easily do that in this one line and do not have to tamper with any of the rest of my code.
 :::
 
-# Data Clean-Up: [Tidying]{.orange}
+# Data Wrangling: [Tidying]{.orange}
+
+<br>
 
 ![](images/witch_tidying.jpg){fig-align="center"}
+
+::: notes
+and with that one line of code, we are already onto tidying
+:::
 
 ## Tidy Data
 
@@ -451,7 +416,7 @@ Variables allow us to easily reference complex expressions and enable reusabilit
 :::
 
 ::: notes
-none
+is a rectangular format for a dataset, specifically where
 :::
 
 ## Why Tidy Data?
@@ -479,7 +444,11 @@ none
 :::
 
 ::: notes
-By keeping data in a standardized format with clear attributes and values, the data can be easily interpreted by humans and manipulated through computers
+...really great for...
+
+Related to interpretability - but how can i make a data dictionary defining my columns if my columns aren't variables?
+
+We tidy data because, by keeping data in a standardized format with clear attributes and values, the data can be easily interpreted by humans and manipulated through computers
 :::
 
 # 
@@ -503,12 +472,12 @@ Let's take a peak at what we are working with:
 #| echo: false
 #| eval: true
 library(gt)
-gt(head(witch_data, 6)) %>% opt_stylize(style = 6, color = 'cyan')
+gt(head(witch_data, 6)) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 20) %>% cols_align(align = "right", columns = everything())
 #%>% tab_caption("First 6 lines of dataset")
 ```
 
 ::: center
-[*First 6 lines of dataset*]{.smaller}
+[*First few lines of dataset*]{.smaller}
 :::
 
 ::: callout-caution
@@ -518,7 +487,15 @@ gt(head(witch_data, 6)) %>% opt_stylize(style = 6, color = 'cyan')
 :::
 
 ::: notes
--   This means we need to restructure our data
+...these are the first few lines of our dataset - let's go through it column by column
+
+First, we have "Site Number" which is a variable, and all the cells in that column are values of that variable. So that looks good
+
+Same with longitude and latitude
+
+But then we get to... that's not a variable. That's a value of the variable "Date", and it does not tell us anything about what these 0s and 1s are values of - we are missing the variable "presence"
+
+This means we need to restructure our data
 :::
 
 ## Tidying Our Data
@@ -542,12 +519,18 @@ Updated dataframe:
 ::: {style="height:320px; overflow-y: scroll"}
 ```{r}
 #| echo: false
-gt(tidy_data) %>% opt_stylize(style = 6, color = 'cyan')
+gt(tidy_data) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 22, table.width = "60%") %>% cols_align(align = "right", columns = everything())
 ```
 :::
 
 ::: notes
-none
+Conveniently, R has package (it's actually a package of packages, so super comprehensive) called "tidyverse" made for all things "data tidying"
+
+Instead of manually transforming the presence data column by column and entering 800 lines of dates, we can tidy our data in one line of code
+
+and BAM, here is our organized, interpretable, and skinnier but longer dataset
+
+*scroll*
 :::
 
 ## Tidying Our Data {.scrollable}
@@ -571,30 +554,40 @@ tidy_data <- clean_names(tidy_data)
 
 ```{r}
 #| echo: false
-gt(head(tidy_data,1)) %>% opt_stylize(style = 6, color = 'cyan')
+gt(head(tidy_data,0)) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 25, table.width = "60%") %>% cols_align(align = "right", columns = everything())
 ```
 
 ::: {.smaller .center}
-*New column headers*
+*New column headers: spaces removed and snake case used*
 :::
 
 ::: notes
-none
+...
+
+Our column names are fairly tidy, but we do have a space in our "Site Number" header, and you cannot have spaces in a variable name because that is not machine readable
+
+Typically, you want to follow one the common variable naming conventions, such as camel case or snake case demonstrated below
+
+And we can convert all of our columns to snake case in one line using a package conveniently designed to do so - and these are our new column headers
 :::
 
-# Data Clean-Up: [Exploratory Data Analysis (EDA)]{.orange}
+# Data Wrangling: [Exploratory Data Analysis (EDA)]{.orange}
 
 ![](images/witch_eda.jpg){fig-align="center"}
+
+::: notes
+moving on to ex...
+:::
 
 ## What is EDA? {.small}
 
 Exploratory Data Analysis (EDA) = [getting to know your data before drawing conclusions]{.orange}, often through summarization and/or visualization
 
-*Example packages:* `skimr`, `corrplot`, `summary_tools`, `DataExplorer`, `assertr`
+*Example packages:* `skimr`, `corrplot`, `summarytools`, `DataExplorer`, `assertr`
 
 <br>
 
-::: {.cursive .small}
+::: {.cursive .small .center}
 [Are there errors in my data?]{.fragment} [Are there outliers?]{.fragment} [How variable is my data?]{.fragment}
 
 [Are my data within their expected range of values?]{.fragment}
@@ -605,7 +598,15 @@ Exploratory Data Analysis (EDA) = [getting to know your data before drawing conc
 :::
 
 ::: notes
-Lends itself to quality control
+...
+
+though there are many, many options
+
+EDA can look a LOT of different ways, and can help us answer quite a few different types of questions, including (but not limited to)
+
+, and are the assumptions...
+
+Exploring these questions lends itself to quality control, which is what we are going to use EDA for
 :::
 
 # 
@@ -619,6 +620,7 @@ Exploring Our Data & Performing Quality Control
 :::
 
 ::: notes
+let's go ahead and apply this to our survey
 :::
 
 ## Exploring Our Data (EDA)
@@ -631,31 +633,43 @@ Let's [rewind {{< fa backward-fast >}}]{.orange} and take a closer look at our s
     #| echo: true
     #| eval: true
     #| class-output: highlight
-    #| output-line-numbers: "|5|9|11"
+    #| output-line-numbers: "|6|7|12"
     #Glimpse of dataset,including datatypes of columns
     str(witch_data)
     ```
 
 ::: notes
--   (Restructing our data requires a little bit more knowledge on the state of the data because we are going to have to combine columns, and columns of different types cannot be combined)
--   using some R built-in functions
+let's take a few steps back and look at our original data, so the "witch_data" variable instead of our "tidy_data" variable
+
+can use the str() function to get a quick snapshot of our data
+
+and looking at the output here, I notice a few things
+
+str() shows us the datatypes of our columns
 :::
 
 ## Exploring Our Data (EDA) {.scrollable chalkboard-buttons="true"}
 
 -   Then, with `summary()`
 
+::: small
 ```{r}
 #| echo: true
 #| eval: true
 #| class-output: highlight
-#| output-line-numbers: "|3|10|17|14"
+#| output-line-numbers: "|10|17|14|21"
 #Summary of dataset, including summary stats
 summary(witch_data)
 ```
+:::
 
 ::: notes
-let me see what might be the cause
+
+something is going on here
+
+(*turn off pen*)
+
+and I may know the cause
 :::
 
 ##  {.small}
@@ -664,18 +678,18 @@ let me see what might be the cause
 
 [*Roles: field work, data recording*]{.small}
 
-![](images/frank_stein_graphic.png){fig-align="left"}
+![](images/frank_stein_graphic.png){fig-align="left" height="200"}
 
 #### Casper the friendly Biotech
 
 [*Role: data entry/digitization*]{.small}
 
-![](images/casper_graphic.png){fig-align="left"}
+![](images/casper_graphic.png){fig-align="left" height="200"}
 
-![](images/qc_6.jpg){.absolute top="360" right="280" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="360" right="170" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="360" right="60" width="100" height="100"}
+![](images/qc_6.jpg){.absolute top="300" right="580" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="300" right="470" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="300" right="360" width="100" height="100"}
 
 ::: notes
-none
+Here are a few observations I have had of my team. I work with...
 :::
 
 ## EDA for Quality Control
@@ -689,6 +703,8 @@ See why our presence data is non-numeric
 tidy_data$presence[which(is.na(as.numeric(tidy_data$presence)))]
 ```
 
+<br>
+
 Replace all instances of `"none"` with `0`
 
 ```{r}
@@ -699,10 +715,14 @@ tidy_data$presence <- as.integer(tidy_data$presence)
 ```
 
 ::: notes
-and convert the column back to a numeric type
+let's go back to our tidy data and see which values in our presence column are non-numeric
+
+we can see that there are 3 "none"s in our presence/absence data. Thanks, Frank.
+
+I know these are supposed to be 0, so I am going to go ahead and convert all "none" values to 0, without having to worry about tracking down each error manually
 :::
 
-## EDA for Quality Control {.scrollable}
+## EDA for Quality Control
 
 Explore distribution
 
@@ -723,7 +743,15 @@ tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))]
 ```
 
 ::: notes
-applies change to all 800 lines of data in one line of code
+now that our data is numeric, I can use a super simple built-in function to plot a histogram
+
+we know that all of the data should be either 0 or 1, but we have some values outside of the expected range
+
+I see some 2's, 6's, and 7's and know Stein's handwriting is most likely the root cause
+
+I know those 6's are supposed to be...
+
+so I can go ahead and convert those to the correct values and apply the changes to all 800 lines of data with just these 2 lines of code
 :::
 
 ## More EDA Options {.small}
@@ -731,7 +759,7 @@ applies change to all 800 lines of data in one line of code
 ::: columns
 ::: {.column width="50%"}
 -   Use `DataExplorer` to generate a comprehensive report
-    -   Includes summary statistics, distributions, missing data, correlations, PCA, qq plots, and more
+    -   Includes summary statistics, distributions, missing data insights, correlation analysis, PCA, qq plots, and more
 
 ```{r}
 #| echo: true
@@ -748,17 +776,23 @@ library(DataExplorer)
 :::
 
 ::: {.column width="50%"}
-{{< pdf report.pdf width=100% height=500 >}}
+{{< pdf images/report.pdf width=100% height=500 >}}
 :::
 :::
 
 ::: notes
-not necessary for our simple dataset but a great, customizable option
+While I got away with just a few built in functions, there are many more advanced packages for EDA. One cool example is...
+
+which can generate...
+
+not really necessary for our simple dataset, but a great, customizable option that can be used for any data with no work required
+
+The point I really want to make here...
 :::
 
-# Preservation
+## [Preservation]{.cursive}
 
-![But don't do it this way\...](images/witch_preserve.jpg){fig-align="center"}
+![But don't do it this way\...](images/witch_preserve.jpg){.absolute top="100" right="150" height="600"} ![](images/workflow_preserve_data.png){.absolute top="80" left="300" height="650"}
 
 ## Preserving Data and Data Assets {.small}
 
@@ -783,7 +817,13 @@ Contact your program's data manager for program-specific preservation guidelines
 [Reminder:]{.yellow} Reproducibility and reuse are impossible without *findability*
 
 ::: notes
--   In the FWS, we must preserve our data and data assets in a Board approved repository, which is ServCat or ScienceBase
+Yes, we are already at this step
+
+...
+
+In the FWS, we must preserve our data and data assets in a Board approved repository, which means ServCat or ScienceBase. If you have questions about guidelines for your specific program, reach out to your data manager
+
+Why does this step matter in our reproducible workflow? Well, nothing can be reproduced or reused if it is not accessible, so this is arguably THE most important step
 :::
 
 # 
@@ -816,15 +856,16 @@ Tidy, QC, compile, and preserve all 20 years of data
 :::
 
 ::: notes
--   Write machine-readable metadata for the tidied data file, including a data dictionary defining each of the variables (columns) and their domains
--   Preserve data, script files, and reports
-    -   In ServCat, create separate reference for each and link all to the project reference corresponding to our witch survey
--   Feeling ambitious...
+-   ... for the tidied data file, including a data dictionary defining each of the variables and their domains
+
+...
+
+-   I am feeling ambitious so...
 :::
 
 ## Preserve Data Assets
 
-Uh Oh {{< fa face-frown >}}...
+Uh oh {{< fa face-frown >}}...
 
 -   All past workbook sheets are in the same untidy format
 
@@ -841,7 +882,9 @@ Wrapping the script into a function makes this even more streamlined (*optional*
 :::
 
 ::: notes
--   Would be a nightmare to manually fix, but we can reuse the script we just created
+-   Unfortunately, all of the 19 other sheets in the workbook are in the same untidy format, and because Frank has been around since the start of the survey,we have some of the same errors throughout
+
+-   This would be a nightmare to fix manually, but we can reuse the script we just created
 :::
 
 ## [Preserve Data Assets]{.small}
@@ -876,7 +919,7 @@ tidy_data$presence[which(tidy_data$presence == 6)] <- 0
 tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
 
 #Export tidy csv
-write.csv(tidy_data, file = "tidy_witch_data.csv", row.names = FALSE)
+write.csv(tidy_data, file = "data/tidy_witch_data.csv", row.names = FALSE)
 ```
 
 ### [Advanced: Function]{.smaller}
@@ -885,9 +928,9 @@ write.csv(tidy_data, file = "tidy_witch_data.csv", row.names = FALSE)
 #| echo: true
 #| eval: false
 
-clean_witch_data <- function(year){
+wrangle_witch_data <- function(year){
   #Import raw data
-  observation_data <- read_excel("witch_survey.xlsx", sheet = paste0(year))
+  witch_data <- read_excel("data/witch_survey.xlsx", sheet = paste0(year))
   
   #Tidy data structure
   tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -912,7 +955,7 @@ clean_witch_data <- function(year){
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 
 #' Tidy and QC witch data
 #'
@@ -923,13 +966,9 @@ clean_witch_data <- function(year){
 #'
 #' @examples
 #' clean_witch_data(year = 2024)
-clean_witch_data <- function(year){
+wrangle_witch_data <- function(year){
   #Import raw data
-  observation_data <- read_excel("witch_survey.xlsx", sheet = paste0(year))
-  site_data <- read_excel("witch_survey.xlsx", sheet = "Site Info")
-  
-  #Relate tables: observation data and site data
-  witch_data <- left_join(observation_data, site_data)
+  witch_data <- read_excel("data/witch_survey.xlsx", sheet = paste0(year))
   
   #Tidy data structure
   tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -952,7 +991,11 @@ clean_witch_data <- function(year){
 :::
 
 ::: notes
-[Can reuse and rerun script for other years simply by replacing sheet name in "Import Data" step]{.smaller} [OR wrap script into function]{.smaller} [Make sure to add proper documentation!]{.smaller}
+this is what our script look like up until this point. it seems like we did a lot, but we actually don't have too scary of a script here. I can go ahead and refresh you on the steps we followed
+
+...
+
+very feasible and realistic example of a simple, but super useful script a biologist could make (or request - if you want something like this, contact me)
 :::
 
 ## Preserve Data Assets
@@ -961,23 +1004,24 @@ Can run our function for each year and compile data as follows:
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 
-## Clean and compile all years of data
 #Tidy first year of data
-compiled_data <- clean_witch_data(2004)
+compiled_data <- wrangle_witch_data(2005)
 
 #Iterate through each year, tidy data for that year, and join with rest of tidy data
-for(val in 2005:2024){
-  compiled_data <- full_join(compiled_data, clean_witch_data(year = val))
+for(val in 2006:2024){
+  compiled_data <- full_join(compiled_data, wrangle_witch_data(year = val))
 }
 
 #Export
-write.csv(compiled_data, file = "compiled_witch_data.csv", row.names = FALSE)
+write.csv(compiled_data, file = "data/compiled_witch_data.csv", row.names = FALSE)
 ```
 
 ::: notes
-none
+Now, we can...
+
+The ability to use code for iteration is life changing because, now, in just 4 lines, we have iterated through 20 years of messy data and compiled 16000 lines of clean data
 :::
 
 ## Preserve Data Assets
@@ -991,7 +1035,7 @@ Tidy, compiled data ready to be preserved and shared
 ```{r}
 #| eval: TRUE
 library(DT)
-DT::datatable(tidy_data, options = list(
+DT::datatable(compiled_data, options = list(
   pageLength = 9,
   dom = 't',
   columnDefs = list(
@@ -1004,36 +1048,41 @@ DT::datatable(tidy_data, options = list(
 :::
 
 ::: notes
-none
+Here is our...
+
+If I sort the columns, you can see we have all years of data in this table now
+
+off screen, I am going to get this into ServCat as promised
 :::
 
 ## Preserve Data Assets
 
+::: small
 Eliminate input files through ServCat API requests!
+:::
 
 ```{r}
 #| eval: false
 #| echo: true
-library(httr)
+library(httr2)
 
-#' Pull complete Tetlin witch survey dataset from ServCat
+#' Pull complete Tetlin Witch Survey dataset from ServCat
 #'
-#' @return dataframe
+#' @return dataframe of all years witch observation data
 #' @export
 #'
 #' @examples
 #' pull_witch_data()
 pull_witch_data <- function(){
-  #Request
-  url <- "https://ecos.fws.gov/ServCatServices/servcat-secure/v4/rest/DownloadFile/1234"
-  response <- GET(url = url, config = authenticate(":",":","ntlm"), add_headers("Content-Type" = "application/json"), verbose())
+  #API request
+  url <- "https://ecos.fws.gov/ServCatServices/servcat/v4/rest/DownloadFile/1234"
+  response <- httr2::req_perform(request(url))
   
   #Extract file name from response header
-  header <- headers(response)
-  filename <- sub('.*filename="([^"]+)".*',"\\1", header$`content-disposition`)
+  filename <- sub('.*filename="([^"]+)".*',"\\1", response$headers$`content-disposition`)
   
   #Save file
-  writeBin(content(response,"raw"), paste0("data/",filename))
+  writeBin(response$body, paste0("data/",filename))
   
   #Import dataset
   return(read.csv(paste0("data/",filename)))
@@ -1041,28 +1090,14 @@ pull_witch_data <- function(){
 
 ```
 
+::: small
+From now on, get all data with just: `my_data <- pull_witch_data()`
+:::
+
 ::: notes
-none
+I can even go a step further and write a function to pull the authoritative copy of the dataset from servcat, so we can have a fully automated workflow for our subsequent steps - anyone wanted to run or reproduce analyses does not even need any inputs- they can just run "pull_witch_data()" shown at the bottom here, and have the most up-to-date copy
+
+and with that, everything is perfectly set up for analyses, and we will get to that after the break
 :::
 
 # Break Time
-
-## Reuse
-
-Like magic {{\< fa wand-sparkles \>}
-
--   Can now repeat all tidying, analyses, and visualizations next year with just the click of a button!
--   Medium to high initial investment for dramatically reduced future workload
-
-::: notes
-none
-:::
-
-## Resources
-
--   Available in the README.md
--   If you are in Refuges and interested in developing an automated workflow for your survey but need some assistance, submit an I&M Tech Request
-
-::: notes
-none
-:::
