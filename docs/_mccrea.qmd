@@ -7,7 +7,7 @@ format:
     width: 1280
     height: 720
     logo: images/FWS-logo.png
-    footer: "![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
+    footer: '![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){fig-alt="The US Fish and Wildlife Service logo" .author}'
 editor: source
 highlight-style: a11y
 ---
@@ -47,8 +47,9 @@ theme_fws <- function() {
 
 ## [Analysis]{.cursive}
 
-![](images/witch_analysis.png){.absolute top="100" right="150" height=600}
-![](images/workflow_analyze.png){.absolute top="80" left="300" height=650}
+![](images/witch_analysis.png){fig-alt="An AI generated image of a claymation witch sitting at a desk in the boreal forest writing code." .absolute top="100" right="150" height=600}
+
+![](images/workflow_analyze.png){.absolute top="80" left="300" fig-alt="A diagram of the data workflow from Project setup to Preserve Products. The Analyze step is highlighted." height=650}
 
 ::: notes
 - Thanks Emma. 
@@ -92,7 +93,7 @@ theme_fws <- function() {
 :::
 
 ::: {.column width="50%"}
-![](images/mark.png){.shadow width="100%" fig-align="center"}
+![](images/mark.png){fig-alt="An image of a stack of Microft windows from Program MARK." .shadow width="100%" fig-align="center"}
 :::
 
 :::
@@ -206,7 +207,7 @@ get_nlcd(tetlin, label = "tetlin", year = 2016, landmass = "AK")
 ```
 
 ::: {.fragment}
-![](images/nlcd.png){height=400}
+![](images/nlcd.png){fig-alt="A map show National Land Cover Data and the boundary of Tetlin Refuge." height=400}
 :::
 
 ::: notes
@@ -267,10 +268,10 @@ names(water) <- "water"
 
 ::: columns
 ::: {.column width="50%"}
-![](images/forest_distance.png)
+![](images/forest_distance.png){fig-alt="A map of Distance to Forest for Tetlin National Wildlife Refuge."}
 :::
 ::: {.column width="50%"}
-![](images/water_distance.png)
+![](images/water_distance.png){fig-alt="A map of Distance to Water in Tetlin National Wildlife Refuge."}
 :::
 :::
 
@@ -427,8 +428,8 @@ mod@estimates
 
 ## [Summarize Results]{.cursive}
 
-![](images/witch_summarize_results.png){.absolute top="100" right="150" height=600}
-![](images/workflow_summarize_results.png){.absolute top="80" left="300" height=650}
+![](images/witch_summarize_results.png){fig-alt="An AI generated image of a claymation witch sitting in front of a computer in the boreal forest. She has a thinking bubble over her head. In the bubble is a statistical plot." .absolute top="100" right="150" height=600}
+![](images/workflow_summarize_results.png){fig-alt="A data workflow diagram, starting at Project Setup and ending with Preserve Products. The Summarize Results step is highlighted." .absolute top="80" left="300" height=650}
 
 ::: notes
 As such, the next step in our workflow is to summarize our results.
@@ -951,8 +952,8 @@ map_se
 
 ## [Report]{.cursive}
 
-![](images/witch_report.png){.absolute top="100" right="150" height=600}
-![](images/workflow_report.png){.absolute top="80" left="300" height=650}
+![](images/witch_report.png){fig-alt="An AI generated image of a claymation style witch handing a man a report. They are in the boreal forest. A lynx is in the background" .absolute top="100" right="150" height=600}
+![](images/workflow_report.png){fig-alt="A data workflow diagram, starting with Project Setup and ending with Preserve Products. The Report step is highlighted." .absolute top="80" left="300" height=650}
 
 ::: notes
 -   The next step in the workflow is Reporting.
@@ -993,7 +994,7 @@ map_se
 :::
 
 ::: {.column width="50%"}
-![](images/copy_paste.png){.shadow width="100%" fig-align="center"}
+[![](images/copy_paste.png){fig-alt="An cartoon image of a man taking off his glasses. In the speech bubble, it say Wow! Copy/paste all day? I'm SOO lucky!" .shadow width="100%" fig-align="center"}](https://grit42.com/news/excel-hell)
 :::
 
 :::
@@ -1009,9 +1010,9 @@ map_se
 :::
 
 
-## Reporting in R: Quarto ![](images/quarto_logo.png){.center-inline height="60px"}
+## Reporting in R: Quarto ![](images/quarto_logo.png){fig-alt="An image of the Quarto logo." .center-inline height="60px"}
 
-![](images/quarto_illustration.png)
+[![](images/quarto_illustration.png){fig-alt="An image of a three step workflow for rendering a Quarto document. The first bubble has logos for R and other programming languages. The middle bubble says Quarto and the last bubble shows HTML, PDF and MS Word docs."}](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote)
 
 ::: notes
 - R has really grow when it comes to reporting 
@@ -1025,9 +1026,9 @@ map_se
 :::
 
 
-## Reporting in R: Shiny ![](images/shiny_logo.png){.center-inline height="60px"}
+## Reporting in R: Shiny ![](images/shiny_logo.png){fig-alt="The R Shiny logo." .center-inline height="60px"}
 
-![](images/shiny_app.png)
+![](images/shiny_app.png){fig-alt="An screenshot of a R Shiny app example."}
 
 ::: notes
 - As many of you know, you can also create application from R
@@ -1194,8 +1195,8 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 
 ## Prettier Witch Report 
 
-![](images/witch_report_pretty.png){.absolute top="100" left="50" width="35%"}
-![](images/witch_report_pretty2.png){.absolute top="100" left="600" width="35%"}
+![](images/witch_report_pretty.png){fig-alt="A screenshot of the cover page of a templated Word doc rendered from Quarto." .absolute top="100" left="50" width="35%"}
+![](images/witch_report_pretty2.png){fig-alt="A screenshot of another page of a templated Word doc rendered from Quarto." .absolute top="100" left="600" width="35%"}
 
 ::: notes
 - That's ok. You can output reports in Quarto as PDFs or in Word
@@ -1207,7 +1208,7 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 ## Quarto Templates
 
 ::: {.center}
-[![](images/akrreportr.png){width="70%"}](https://github.com/USFWS/akrreport)
+[![](images/akrreportr.png){fig-alt="A screenshot of the GitHub repository for the akrreportr R package." width="70%"}](https://github.com/USFWS/akrreport)
 :::
 
 ::: notes
@@ -1218,7 +1219,7 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 
 ## Share Products
 
-![](images/posit_connect.png){.center}
+![](images/posit_connect.png){fig-alt="An image showing the various R packages and programming languages that are compatable with Posit Connect." .center}
 
 ::: notes
 - I'll just briefly say that once you have written a report in Quarto or an application in Shiny, it is a straightforward step to making that product available as a website. You can even run it on a schedule to produce an updated report or email it regularly to a decision maker.
@@ -1229,8 +1230,8 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 
 ## [Preserve Products]{.cursive}
 
-![](images/witch_preserve.png){.absolute top="100" right="150" height=600}
-![](images/workflow_preserve_products.png){.absolute top="80" left="300" height=650}
+![](images/witch_preserve.png){fig-alt="An AI generated image of a claymation style witch. She is angry and writing on a paper at a desk in the boreal forest. There is a moose in the background." .absolute top="100" right="150" height=600}
+![](images/workflow_preserve_products.png){fig-alt="An image of a data workflow, starting with Project Setup and ending with Preserve Products. The Preserve Products step is highlighted." .absolute top="80" left="300" height=650}
 
 ::: notes
 - We can't skip the preservation step. 
@@ -1241,7 +1242,7 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 
 # Summary
 
-![](images/workflow_simple.png)
+![](images/workflow_simple.png){fig-alt="An image of a data workflow, starting with Project Setup and ending with Preserve Products."}
 
 ::: notes
 - We've throw a lot at you and your head might be spinning
