@@ -1039,7 +1039,7 @@ DT::datatable(compiled_data, options = list(
   pageLength = 9,
   dom = 't',
   columnDefs = list(
-      list(targets = "_all", className = "custom-header")
+      list(targets = "_all", className = "custom-header-big")
     )
   )
 )
