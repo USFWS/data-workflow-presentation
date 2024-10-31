@@ -2,6 +2,8 @@
 format: 
   revealjs:
     theme: scss/custom-dark.scss
+    width: 1280
+    height: 720
     logo: images/FWS-logo.png
     footer: "[Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
     mermaid: 
