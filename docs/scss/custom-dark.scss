@@ -5,9 +5,12 @@
 
 // $presentation-heading-font: "Gloria Hallelujah", cursive;
 $font-family-sans-serif: "Lato", sans-serif !default;
+$presentation-font-size-root: 40px;
+
+// Name fonts
 $Gloria: "Gloria Hallelujah", cursive;
 $Marker: "Permanent Marker", cursive;
-$Lato: "Lato", sans-serif !default;
+$Lato: "Lato", sans-serif;
 $Scary: "Eater", serif;
 
 // colors (https://doimspp.sharepoint.com/sites/fws-FF09R00000/SitePages/Comms-Visual-Identity-Landing.aspx)
@@ -33,9 +36,10 @@ $link-color: $light-blue;
 
 // code block styling
 $code-block-font-size: 0.5em;
-//$code-block-border-left: $light-blue;
-$code-block-color: $accent-orange;
-//$code-block-bg: $accent-orange;
+
+$code-block-border-left: $light-blue;
+// $code-block-bg: $accent-orange;
+// $code-block-color: $blue;
 // $code-block-bg-alpha: -.9;
 
 
@@ -72,6 +76,10 @@ $code-block-color: $accent-orange;
   margin: 0 auto;
   text-align: center;
 }
+
+/* center an inline image horizontally */
+.center-inline {
+  margin: 0!important;}
 
 /* center text vertically and horizontally */
 .center-xy {
@@ -163,6 +171,14 @@ $code-block-color: $accent-orange;
 }
 
 /* style datatable */
-.custom-header {
+.custom-header-big {
   background-color: white;
 }
+
+/* headers for DT::datatable() */
+.custom-header {
+  color: black;
+  background-color: white;
+  font-size: 0.5em;
+}
+
