@@ -382,7 +382,7 @@ library(janitor)
 ```{r}
 #| echo: true
 #Import raw data
-witch_data <- read_excel("data/witch_survey.xlsx", sheet = "2024")
+witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = "2024")
 ```
 
 ::: callout-note
@@ -902,7 +902,7 @@ library(readxl)
 library(janitor)
 
 #Import raw data
-witch_data <- read_excel("data/witch_survey.xlsx", sheet = "2024")
+witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = "2024")
 
 #Tidy data structure
 tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -930,7 +930,7 @@ write.csv(tidy_data, file = "data/tidy_witch_data.csv", row.names = FALSE)
 
 wrangle_witch_data <- function(year){
   #Import raw data
-  witch_data <- read_excel("data/witch_survey.xlsx", sheet = paste0(year))
+  witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = paste0(year))
   
   #Tidy data structure
   tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -968,7 +968,7 @@ wrangle_witch_data <- function(year){
 #' clean_witch_data(year = 2024)
 wrangle_witch_data <- function(year){
   #Import raw data
-  witch_data <- read_excel("data/witch_survey.xlsx", sheet = paste0(year))
+  witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = paste0(year))
   
   #Tidy data structure
   tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
@@ -1015,7 +1015,7 @@ for(val in 2006:2024){
 }
 
 #Export
-write.csv(compiled_data, file = "data/compiled_witch_data.csv", row.names = FALSE)
+write.csv(compiled_data, file = "data/csv/compiled_witch_data.csv", row.names = FALSE)
 ```
 
 ::: notes
