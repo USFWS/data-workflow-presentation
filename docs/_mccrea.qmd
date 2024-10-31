@@ -293,7 +293,7 @@ library(sf)
 library(terra)
 
 # Get witch observation data from ServCat
-sites <- pull_witch_data()
+sites <- pull_witch_data() %>% filter(year == 2024)
 
 # Reformat for `unmarked` package
 sites <- reformat(sites)
@@ -463,8 +463,8 @@ As such, the next step in our workflow is to summarize our results.
 ::: incremental
 1.   Import results and data into Excel, ArcGIS Pro, etc.
 2.   Create summary tables, plots, and maps.
-3.   Cut/paste into Word doc.
-4.   Reformat style to match document.
+3.   Reformat style to match document.
+4.   Export as images or Excel files.
 5. (Rinse and repeat...)
 :::
 :::
@@ -485,8 +485,8 @@ https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
 - We import our results that were outputted by our software and our data into another software.
 [click]
 - We create our tables, plots, and maps
-- We either cut/paste or import them as an image into Word or PP
 - We reformat them to match the document style
+- We export them as images or as Excel tables
 - We rinse and repeat.
 :::
 
@@ -954,6 +954,10 @@ map_se
 ![](images/witch_report.png){.absolute top="100" right="150" height=600}
 ![](images/workflow_report.png){.absolute top="80" left="300" height=650}
 
+::: notes
+-   The next step in the workflow is Reporting.
+:::
+
 
 ## [Report]{.cursive}
 
@@ -966,8 +970,10 @@ map_se
 :::
 
 ::: notes
--   R can output to many formats
--   Mention the Alaska Refuge reporting series Quarto and Rmarkdown templates
+- Criteria for best practices for reporting look a lot like the rest of the steps.
+- We wanting reports to be easy to update.
+- We want a clear link between the data and the report.
+- Finally, we want reports to be reproducible by your future self and others after you.
 :::
 
 
@@ -993,6 +999,13 @@ map_se
 :::
 
 ::: notes
+- We are all familiar with the traditional workflow steps for generating reports.
+[click]
+- We copy/paste the tables, figures, and maps 
+[click]
+- We calculate inline statistics and then manually type them into our Word doc
+- We update the formatting until it looks good
+- We rinse and repeat for other formats like PowerPoint.
 :::
 
 
@@ -1001,12 +1014,31 @@ map_se
 ![](images/quarto_illustration.png)
 
 ::: notes
+- R has really grow when it comes to reporting 
+- Quarto was discussed in some detail during the Posit Connect presentation this week.
+-   Quarto is an open source scientific publishing system
+-   Next generation of R Markdown
+-   Supports multiple programming languages (R, Python, Julia, Observable)
+-   Can create articles, reports, presentations, websites
+- Mix text with in-line code to update statistics in the text 
+-   Can output in HTML, PDF, Word and other formats
 :::
 
 
 ## Reporting in R: Shiny ![](images/shiny_logo.png){.center-inline height="60px"}
 
 ![](images/shiny_app.png)
+
+::: notes
+- As many of you know, you can also create application from R
+-   Shiny is an R package
+-   Enables building interactive web applications that execute R
+    -   Standalone websites
+    -   Embed interactive charts in Quarto docs
+    -   Build dashboards
+- Primary advantage of a Shiny app is that decision makers can interact with the data.
+:::
+
 
 #
 ::: {.scary}
@@ -1017,6 +1049,7 @@ Witch Survey
 :::
 
 ::: notes
+Let's look at reporting our witch survey results.
 :::
 
 
@@ -1151,6 +1184,11 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 ::: notes
+- On the left is the Quarto code for our witch survey
+- What I want you come away with is that this file includes the code that we already wrote, along with some text and in-line code to create summary statistics. 
+- We are reusing our code to generate the plots and maps. 
+- That all good, but you might be thinking that that report looks like garbage and the reports that I currently produce look good
+- Or maybe your manager isn't comfortable with HTML reports. We do Word docs.
 :::
 
 
@@ -1160,8 +1198,6 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 ![](images/witch_report_pretty2.png){.absolute top="100" left="600" width="35%"}
 
 ::: notes
-- That all good, but you might be thinking that that report looks like garbage and the reports that I currently produce look good
-- Or maybe your manager isn't comfortable with HTML reports. We do Word docs.
 - That's ok. You can output reports in Quarto as PDFs or in Word
 - You can create a report that has the same look and feel as your current report
 - Here's an example of that. The same information as the previous HTML report, but saves as a Word doc with the look and feel of a AK Refuge Report.
@@ -1185,6 +1221,9 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 ![](images/posit_connect.png){.center}
 
 ::: notes
+- I'll just briefly say that once you have written a report in Quarto or an application in Shiny, it is a straightforward step to making that product available as a website. You can even run it on a schedule to produce an updated report or email it regularly to a decision maker.
+- This can all be done using Posit Connect, a publishing service available to FWS.
+- Check out the presentation on Posit Connect for more details.
 :::
 
 
@@ -1193,12 +1232,28 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 ![](images/witch_preserve.png){.absolute top="100" right="150" height=600}
 ![](images/workflow_preserve_products.png){.absolute top="80" left="300" height=650}
 
-
+::: notes
+- We can't skip the preservation step. 
+- Although there are some options for preserving data products using web services in R, they are currently a little clunky
+- Therefore, the workflow is best done manually at the moment.
+- Hopefully we can make improvement to that!
+:::
 
 # Summary
 
 ![](images/workflow_simple.png)
 
+::: notes
+- We've throw a lot at you and your head might be spinning
+- We covered what script based workflows are.
+- Some trick and tips to using them
+- We hope that you have come away with an appreciate for the advantages of a script-based workflow
+- If you aren't using a script based workflow now, we hope that we have helped convince you that the time invested in moving to this approach are worth the effort.
+:::
+
 
 # Questions {background-image="images/witch_flying.png" background-size=contain}
 
+::: notes
+Thank you and we will take questions if there is time.
+:::
