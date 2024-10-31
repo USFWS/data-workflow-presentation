@@ -24,6 +24,7 @@ library(tidyverse)
 library(RColorBrewer)
 library(sf)
 library(leaflet)
+library(DT)
 ```
 
 ```{r}
@@ -44,9 +45,16 @@ theme_fws <- function() {
 ```
 
 
-# Analysis
+## [Analysis]{.cursive}
 
-![](images/witch_analysis.png)
+![](images/witch_analysis.png){.absolute top="100" right="150" height=600}
+![](images/workflow_analyze.png){.absolute top="80" left="300" height=650}
+
+::: notes
+- Thanks Emma. 
+- We've now provided an overview of the first three steps of a script-based workflow: project setup, data wrangling and data preservation. I'll now cover data analysis.
+:::
+
 
 ## [Analysis]{.cursive}
 
@@ -56,6 +64,14 @@ theme_fws <- function() {
 -   The steps are clear
 -   The workflow is reproducible
 -   Limited opportunities for human error
+:::
+
+::: notes
+- Every ecological data analysis is unique, so it would be challenging to provide a workflow that works in all situations.
+- That said, there are some criteria that can be applied to evaluate whether a workflow is following best practices
+- In general, the step of an analysis should be clear. Not only to future you but to others that might want to better understand the tools and decisions made related to how you performed an analysis.
+- Similarly, the analysis should be reproducible. At a minimum, the steps should be documented, but ideally, someone should be able to pick up your work and reproduce it without any additional tools or knowledge.
+- Finally, we should strive to limit introducing human error into an analysis. Much of this originates from steps in processing the data just prior to analysis.
 :::
 
 
@@ -82,7 +98,18 @@ theme_fws <- function() {
 :::
 
 ::: notes
-:::
+- In a traditional manual workflow, the analytical steps might look something like this.
+[click]
+- First, observation data are reformated. This might be done by copying the raw data into another Excel tab and moving columns, calculating values, or pivoting the structure of the spreadsheet.
+[click]
+- Second, spatial covariates are often needed. To get these, one might go online to a GIS data repository, download the data, and load these into a GIS software like ArcGIS Pro. Or better, one might get the data into ArcGIS Pro directly through a web service. Then, the data are processed and associated with the observation data, typically using the tools available in ArcGIS Pro by searching through the toolbox, clicking boxes and saving the output locally.
+[click]
+- Then all these data might be loaded into an analytical software, such as PRESENCE or Mark.
+[click]
+- In the software, the user selects the desired statistical analysis, typically though a point and click menu.
+[click]
+- Finally, one would run the analysis (and rerun, and rerun) and then export the output to a local directory.
+::: 
 
 
 ## Compare Workflows
@@ -136,6 +163,15 @@ theme_fws <- function() {
 :::
 
 ::: notes
+- Let's compare the features of this workflow to a scripted workflow
+[click]
+- In a manual workflow, we are restricted to functions the software package. Typically, they cover many of the most commonly used statistical analyses, but there will come a time when you want to do something that it cannot do. Alterately, in a scripted workflow in R, the sky in the limit. As Jonah mentioned, there are tens of thousands of custom packages and many specific to ecological data analysis. If it doesn't exist, you could create a new one.
+[click]
+- Many statistical software are a black box. Do we really know what is happening under the hood? In contrast, even functions in R packages can be examined, and if you want, customized. There is complete transparency. In addition, most package are well documented with vignettes, READMEs and help files.
+[click]
+- Describing the steps of a manual workflow can take work and time. There are a surprising number of decisions that you make when you click through software. On the other hand, the code that you write to perform an analysis is like a roadmap on what you did. It's out there for the world to see.
+[click]
+- Finally, to create publication quality figures and tables from results outputted from software like PRESENCE can be a chore. The raw output needs to be imported into something like Excel and manually reformatted. Each time the analysis is rerun, for example with new data, this process needs to be repeated. Alternatively, the analysis step in R is contained with the other steps of data workflow, so the the entire workflow can be rerun easily. 
 :::
 
 
@@ -149,6 +185,7 @@ Analysis
 :::
 
 ::: notes
+Let's walk through a scripted-based analysis using our witch survey example.
 :::
 
 
@@ -157,7 +194,7 @@ Analysis
 ``` {r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "|1-3|5-7"
+#| code-line-numbers: "1-3|5-7"
 
 # Refuge boundary
 source("./R/spatial_helpers.R")
@@ -173,6 +210,13 @@ get_nlcd(tetlin, label = "tetlin", year = 2016, landmass = "AK")
 :::
 
 ::: notes
+- Emma described the data wrangling and preservation steps for our observation data. Often, however, we need to use other people's data as covariates in a model. 
+- Since witches are thought to avoid water but are attracted to forests, we want to acquire these spatial covariates to examine whether our prediction is supported.
+- To do that, I created a function to get the Tetlin Refuge boundary from the FWS cadastral data layer on AGOL using web services. I run the function, called get_refuge.
+[click]
+- Next, I want to forest and water cover within the refuge. To do this, I download the National Land Cover Database (NLCD) data using the get_nlcd function from the FedData package.
+[click]
+- The output looks like this. A tile of NLCD data that encompasses Tetlin refuge.
 :::
 
 
@@ -181,7 +225,7 @@ get_nlcd(tetlin, label = "tetlin", year = 2016, landmass = "AK")
 ``` {r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "|1|3-12|14-22"
+#| code-line-numbers: "1|3-12|14-22"
 
 library(terra)
 
@@ -209,6 +253,13 @@ names(water) <- "water"
 ```
 
 ::: notes
+- But wait!
+- That looked like a lot of other stuff that I don't need. Plus, I want to look like how witches response to distance to water and forest. So I need to do a little more work.
+- First, I load the terra package, which is used to work with raster data in R.
+[click]
+- Then I run a few lines of code to extract the forest layer from the NLCD, reclassify it as 1 or 0, and then for each cell, calculate distance to the nearest forest cell. I then reproject the raster to match the Tetlin boundary, and crop/mask the distance to forest layer to the refuge.
+[click]
+- I repeat the same steps to calculate a distance to water raster.
 :::
 
 
@@ -216,46 +267,86 @@ names(water) <- "water"
 
 ::: columns
 ::: {.column width="50%"}
-![](images/water_distance.png)
-:::
-
-::: {.column width="50%"}
 ![](images/forest_distance.png)
 :::
+::: {.column width="50%"}
+![](images/water_distance.png)
+:::
+:::
 
+::: notes
+- Here's the output. A raster of distance to forest on the left and distance to water on the right. Great! We're getting somewhere. Note that they appear somewhat spatial correlated, which is something that should be addressed in an analysis, but for our simple example, we will ignore that fact.
 :::
 
 
 ## Extract Covariates to Sites
 
+::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
+#| code-line-numbers: "1-3|5-6|8-10|12-15"
 
+# Required packages
 library(sf)
 library(terra)
 
-sites <- data.frame(sf::st_coordinates(sites),
+# Get witch observation data from ServCat
+sites <- pull_witch_data()
+
+# Reformat for `unmarked` package
+sites <- reformat(sites)
+
+# Extract covariates to sites
+sites <- data.frame(sites,
                     forest = terra::extract(forest, sites)$forest,
                     water = terra::extract(water, sites)$water)
-
-
 ```
+:::
 
-
+::: {.column width="50%"}
+::: fragment
 ```{r}
 #| echo: false
+#| cache: true
 
 dat <- read.csv("data/csv/dat.csv")
+
+sc <- scale(dat[,4:5])
+
 dat[,2:3] <- round(dat[2:3], 4)
 dat[,4:5] <- round(dat[,4:5], 2)
+dat <- dat |>
+  rename("site_number" = X.1, 
+         "lat" = Y, 
+         "long" = X)
 
-library(gt)
-dat[1:12,2:13] %>%
-  gt()
+dat_tbl <- DT::datatable(dat,
+              options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header")
+                  )))
+dat_tbl
 ```
+:::
+:::
+:::
 
 ::: notes
+- The next step is to extract these raster data to our observations.
+- We also load the sf package, which provides general spatial data management tools
+[click]
+- We get our witch data that Emma preserved on ServCat using her cool custom function, pull_witch_data and name it "sites".
+[click]
+- Next we reformat the tidy "sites" data into a wide format that is needed for analysis. For simplicity sake here, we use a custom function.
+[click]
+- Finally, we append our sites data with the distance to forest and water values at each site.
+[click]
+- Here's what it looks like.
 :::
 
 
@@ -267,22 +358,23 @@ dat[1:12,2:13] %>%
 ``` {r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "|1-2|4-5|7-10|12-13"
+#| code-line-numbers: "1-2|4-8|10-13|15-16"
 
 # Required package
 library(unmarked)
 
-# Create an unmarked data frame
-unmarked_df <- unmarkedFrameOccu(y = y, siteCovs = site_covs)
-sc <- scale(site_covs)
-siteCovs(unmarked_df) <- sc
+# Create an unmarked data frame (scaled covariates)
+unmarked_df <- unmarkedFrameOccu(y = sites[,5:13], # observations
+                                 siteCovs = sites[,4:5]) # covariates
+sc <- scale(site_covs)  # scale them
+siteCovs(unmarked_df) <- sc  # add back
 
-# Fit a single-season occupancy model
+# Fit single-season occupancy model
 mod <- unmarked::occu(formula = ~forest ~ water + 
                                 forest, 
                         data = unmarked_df[[1]])
 
-# Look at the estimates
+# Look at estimates
 mod@estimates
 ```
 
@@ -293,6 +385,7 @@ mod@estimates
 ::: {.fragment}
 ``` {r}
 #| echo: false
+#| cache: true
 
 # Required package
 library(unmarked)
@@ -313,17 +406,33 @@ mod@estimates
 :::
 
 ::: notes
-- Estimate occupancy and accounts for imperfect detection
-- Occupancy predictions:
-  - Higher near forests
-  - Lower near water
-- `unmarked` R Package
+- Phew! That was a look of steps, even before running a model!
+- But, the great thing is now that we have the code, we can just rerun that code whenever we get new data.
+- An upfront cost and a long-term saving!
+- For our witch survey, we want to estimate the occurrence of witches across Tetlin.
+- A common statistical method for do this is called occupancy modeling.
+- Without getting into too much detail, a great thing about this family of models is the ability to simultanuously estimate occupancy and detection probability. Given how sneaky those witches are, this could be important. We're probably not detecting all of them.
+- To do this, we load the `unmarked` R Package that includes functions for running occupancy models.
+[click]
+- We then use our sites data from the previous step to create a unmarked data frame that is needed as input data for the unmarked package.
+- We also center and scale our covariate data, which is often needed.
+[click]
+- Hooray! In this step, we run the single-season occupancy model. WWe specify occupancy as a function of forest and water distance and detection as a function of forest distance.
+[click]
+- Finally, we look at the output.
+[click]
+- On the right is the summary of the model estimates, showing the estimates for how occupancy and detection vary with water and forest distance. While this might make sense to a biologist or biometrician, this is not a product that you would share with a decision maker. So, the next step is to translate this into something more digestible. 
 :::
 
 
-# Summarize Results
+## [Summarize Results]{.cursive}
 
-![](images/witch_summarize_results.png)
+![](images/witch_summarize_results.png){.absolute top="100" right="150" height=600}
+![](images/workflow_summarize_results.png){.absolute top="80" left="300" height=650}
+
+::: notes
+As such, the next step in our workflow is to summarize our results.
+:::
 
 
 ## [Summarize Results]{.cursive}
@@ -337,9 +446,10 @@ mod@estimates
 :::
 
 ::: notes
-- Customizable: Flexible enough to create unique visualizations that look good and clearly communicate results. 
-- Products can be regenerated or updated efficiently and without a lot of work
-- A standard "look and feel"
+- Like with the analytical step, there are criteria that we can use to evaluate our summarize results steps of the workflow. Here are a few examples. 
+- This step should be customizable. It should be flexible enough to create unique visualizations that look good and clearly communicate results. 
+- It should be updatable, meaning that products can be regenerated or updated efficiently and without a lot of work. In other words, reproducible.
+- Finally, it should be standardized. The products should have a standard "look and feel" that is professional.
 :::
 
 
@@ -351,11 +461,11 @@ mod@estimates
 ### Steps {.center}
 
 ::: incremental
-1.   Import results and data into Excel
-2.   Create summary tables and plots
-3.   Cut/paste into Word doc
-4.   Reformat style to match document
-5. (Repeat...)
+1.   Import results and data into Excel, ArcGIS Pro, etc.
+2.   Create summary tables, plots, and maps.
+3.   Cut/paste into Word doc.
+4.   Reformat style to match document.
+5. (Rinse and repeat...)
 :::
 :::
 
@@ -370,9 +480,14 @@ https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
 :::
 
 ::: notes
--   Tons of options, R packages
--   Static versus dynamic visualizations
--   Depends on output file type (html vs. Word)
+-   A typical manual workflow might look something like this:
+[click]
+- We import our results that were outputted by our software and our data into another software.
+[click]
+- We create our tables, plots, and maps
+- We either cut/paste or import them as an image into Word or PP
+- We reformat them to match the document style
+- We rinse and repeat.
 :::
 
 
@@ -402,11 +517,26 @@ https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
 ::: {.fragment fragment-index=1}
 - Self-contained workflow
 :::
+
+::: {.fragment fragment-index=2}
+- Endless options for visualizations
 :::
 
+::: {.fragment fragment-index=3}
+- Options for static, dynamic, and interactive outputs
+:::
+
+:::
 :::
 
 ::: notes
+- How does this compare to a scripted workflow for summarizing results?
+[click]
+- The manual workflow contains many manual steps that often introduce quality issues. The R workflow is free of such errors.
+[click]
+- The manual workflow has limited plotting functions. Excel can only do so much! Alternatively, if you can dream it, you can create it in R.
+[click]
+- The manual workflow is generally limited to static output. Figures are images. Tables are just to look at. Alteratively, a scripted workflow allows for static and dynamic outputs. Decision makers can interactive with plots and tables.
 :::
 
 
@@ -419,11 +549,12 @@ Witch Survey
 :::
 
 ::: notes
+Ok, back to our witch survey example. Let's summarize some of our results!
 :::
 
 
 ## Witch Survey Results 
-### Occupancy {.center}
+### Occupancy ($\psi$) {.center}
 
 ::: columns
 
@@ -431,29 +562,126 @@ Witch Survey
 ```{r}
 #| eval: false
 #| echo: true
-#| code-line-numbers: "|1-9|11-12|14-26"
+#| code-line-numbers: "1-3|4-7"
 
-# Load site data and scale them
-load("./data/rdata/unmarked_df.Rdata")
+# Calculate predicted occupancy
+pred <- rbind(unmarked::plotEffectsData(mod, "state", "forest"), 
+              unmarked::plotEffectsData(mod, "state", "water")) |>
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+```
+:::
 
-sc <- read.csv("./data/csv/sites.csv") |>
-    dplyr::select(forest, water) |>
-    scale()
+::: {.column width="50%"}
+::: {.fragment}
+``` {r}
+#| out-height: "100%"
+#| cache: true
 
-# Fit single season occupancy model
-mod <- fit_model(unmarked_df)
+# Calculate predicted occupancy (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), 
+              plotEffectsData(mod, "state", "water")) |>
+  dplyr::mutate(covariateValue = dplyr::case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
 
-# Calculate predicted values
-pred <- predict_occ(mod, sc)
+pred_tbl <- pred |> 
+  mutate_if(is.numeric, round, digits = 2) |>
+  DT::datatable(options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header"))))
+pred_tbl
+```
+:::
+:::
+
+:::
+
+::: notes
+- Our witch model output contained a lot of information, but it was not useable by a decision-maker. 
+- Our first step is to use the model output to generate some predictions of occupancy.
+- The R code shown here takes our model output in "mod" and creates a table of predicted values for each site.
+[click]
+- Since the model used scaled values of the covariates, we need to unscale them in the results to be more informative. We save the result as an object called "pred".
+[click]
+Here's what that table looks like.
+:::
+
+
+## Witch Survey Results 
+### Detection {.center}
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| echo: true
+
+# Calculate predicted detection
+pred_det <- unmarked::plotEffectsData(mod, "det", "forest") |>
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+```
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| out-height: "100%"
+#| cache: true
+
+# Calculate predicted detection (unscaled)
+pred_det <- plotEffectsData(mod, "det", "forest") |>
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+
+pred_det |> 
+  mutate_if(is.numeric, round, digits = 2) |>
+  DT::datatable(options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header"))))
+```
+:::
+:::
+
+:::
+
+::: notes
+This is the same step, but for predictions about detection probability.
+[click]
+- And here's what that table looks like.
+- This is all well and good, but it's still not something that you would typically hand a manager.
+- What we need are some visualizations of these results.
+:::
+
+
+## Witch Survey Results
+### Occupancy ($\psi$) {.center}
+
+::: columns
+
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+#| echo: true
+
+library(ggplot2)
 
 # Plot predicted values (psi)
-ggplot(pred, aes(x = covariateValue, 
-                 y = Predicted), 
-  group = covariate) + 
+ggplot(pred, aes(x = covariateValue, y = Predicted),
+  group = covariate) +
   geom_line() +
-  geom_ribbon(aes(ymin = lower, 
-                  ymax = upper), 
-              linetype = 2, 
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+              linetype = 2,
               alpha = 0.1) +
   xlab("Distance (m)") +
   ylab("Psi") +
@@ -465,33 +693,14 @@ ggplot(pred, aes(x = covariateValue,
 ::: {.column width="50%"}
 ::: {.fragment}
 ::: {layout="[[-1], [1], [-1]]"}
-``` {r}
-#| out-height: "100%"
-
-source("./R/simulate_data.R")
-
-# Load site data and scale them
-load("./data/rdata/unmarked_df.Rdata")
-sc <- read.csv("./data/csv/sites.csv") |>
-    dplyr::select(forest, water) |>
-    scale()
-
-# Fit single season occupancy model
-mod <- fit_model(unmarked_df)
-
-# Calculate predicted values (unscaled)
-pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
-  mutate(covariateValue = case_when(
-    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
-    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
-  ))
+```{r}
 
 # Plot predicted values (psi)
-ggplot(pred, aes(x = covariateValue, y = Predicted), 
-  group = covariate) + 
+ggplot(pred, aes(x = covariateValue, y = Predicted),
+  group = covariate) +
   geom_line() +
-  geom_ribbon(aes(ymin = lower, ymax = upper), 
-              linetype = 2, 
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+              linetype = 2,
               alpha = 0.1) +
   xlab("Distance (m)") +
   ylab("Psi") +
@@ -505,27 +714,15 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 ::: notes
-:::
-
-
-## Witch Survey Results
-
-```{r}
-
-# Get fit_model() function
-source("./R/simulate_data.R")
-
-# Load site data and scale them
-load("./data/rdata/unmarked_df.Rdata")
-sc <- read.csv("./data/csv/sites.csv") |>
-    dplyr::select(forest, water) |>
-    scale()
-
-# Fit single season occupancy model
-mod <- fit_model(unmarked_df)
-```
-
-::: notes
+- To do that, we take the tables of predicted values for each site and create some plots
+- We load the ggplot2 package, which allow us to make cool plots
+- We run the ggplot function, using the table of predicted values as input data
+[click]
+- Here's what that looks like.
+- Finally, we have something that a manager might be able to digest. 
+- The plot on the left clearly showed that witch occupancy at Tetlin is high overall. In forest cover, there is a 50% likelihood of witch occurrence. Yikes! As you move away from forest, you're like likely to encounter a witch.
+- Alternatively, witches are still surprisingly prevalent in water cover, but they are more likely to occur further from water.
+- Our predictions of witch occurrence hold true! Thanks Google!
 :::
 
 
@@ -535,7 +732,7 @@ mod <- fit_model(unmarked_df)
 ::: columns
 
 ::: {.column width="50%"}
-<br><br>
+<br>
 ```{r}
 #| eval: false
 #| echo: true
@@ -561,24 +758,8 @@ ggplot(pred, aes(x = covariateValue,
 #| out-width: "100%"
 #| fig-height: 8
 
-# Get fit_model() function
-source("./R/simulate_data.R")
-
-# Load site data and scale them
-load("./data/rdata/unmarked_df.Rdata")
-sc <- read.csv("./data/csv/sites.csv") |>
-    dplyr::select(forest, water) |>
-    scale()
-
-# Fit single season occupancy model
-mod <- fit_model(unmarked_df)
-
-# Calculate predicted values (unscaled)
-pred <- plotEffectsData(mod, "det", "forest") %>%
-  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
-
 # Plot predicted values (detection)
-ggplot(pred, aes(x = covariateValue, y = Predicted)) +
+ggplot(pred_det, aes(x = covariateValue, y = Predicted)) +
          geom_line() +
          geom_ribbon(aes(ymin = lower, ymax = upper), 
                      linetype = 2, 
@@ -594,10 +775,18 @@ ggplot(pred, aes(x = covariateValue, y = Predicted)) +
 :::
 
 ::: notes
+- Now lets do that same step for predictions of witch detection.
+- The code is basically the same, but the input data is the detection prediction data frame.
+[click]
+- Here we see that the probability of detecting a witch increases with distance to forest.
+- Again, the data support our a priori prediction that witches are harder to spot in forest cover.
+- Sneaky witches! 
+- This plots are great, but our original goal was to estimate witch occurrence across Tetlin. Wouldn't a map of these predictions be helpful?
 :::
 
 
 ## Witch Survey Results
+### Maps {.center}
 
 ```{r}
 #| eval: false
@@ -607,6 +796,21 @@ ggplot(pred, aes(x = covariateValue, y = Predicted)) +
 ```
 
 ::: notes
+- To do this, I wrote an R function to generate an interactive map, using a javascript plugin called leaflet.
+- Luckily, there is an R package (called leaflet) that makes this pretty easy.
+- What you are seeing here is the roxygen header for my function, to demostrate that we can document our functions with metadata.
+[click]
+- The first line is the title of the function and tells everyone what it does
+[click]
+- Next we have the list of parameters or arguments that you need to give the function. In this case, we need a raster of estimates of occupancy, point locations of our sites,  a refuge boundary layer, and other stuff. 
+[click]
+- Below that, we see what this function returns.
+[click]
+- We see what packages are required to run it
+[click]
+- And there's even an example of how to run it.
+[click]
+- Below all that is the actual function
 :::
 
 
@@ -618,16 +822,16 @@ ggplot(pred, aes(x = covariateValue, y = Predicted)) +
 ```{r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "|1-2|4-8|10-15"
+#| code-line-numbers: "|1-5|7-8|10-15"
+
+# Generate a raster of predicted occupancy
+ras <- c(water, forest)  # Combine our rasters
+psi <- unmarked::predict(mod, 
+                         type = "state", 
+                         newdata = ras)
 
 # Source the `create_map()` function
 source("./R/create_map.R")
-
-# Import data
-tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
-                      quiet = TRUE)
-sites <- read.csv("data/csv/sites.csv")
-psi <- terra::rast("data/raster/psi/psi.tif")
 
 # Create a map
 create_map(ras = psi, 
@@ -639,6 +843,7 @@ create_map(ras = psi,
 :::
 
 ::: {.column width="50%"}
+::: fragment
 ```{r}
 #| echo: false
 #| message: false
@@ -657,10 +862,22 @@ map_predict <- create_map(ras = psi, s = sites, r = tetlin, h = 600, w = 600)
 map_predict
 ```
 :::
+:::
 
 :::
 
 ::: notes
+- Ok, let's try it out.
+[click]
+- First, we combine the water and forest rasters.
+- Then we use a function in the unmarked package to predict values of occupancy at each cell
+[click]
+- Next we source our create_map function from the last slide
+[click]
+- And finally, we run it.
+[click]
+- Here's what we see. A map of the probability of witch occurrence across Tetlin Refuge. The red indicates higher probabilities, blue is lower.
+- From this map, it appears that there is a hot spot of witch activity in the west corner of the refuge. We might want to let the manager know about that!
 :::
 
 
@@ -694,6 +911,7 @@ create_map(ras = psi,
 :::
 
 ::: {.column width="50%"}
+::: fragment
 ```{r}
 #| echo: false
 #| message: false
@@ -716,19 +934,28 @@ map_se <- create_map(ras = psi,
 map_se
 ```
 :::
+:::
 
 :::
 
 ::: notes
+- Typically, this is all we would report, but wouldn't it be interesting to know about the precision of our estimates and whether that varies across the refuge. We could use that to update our sampling design to increase precision of future surveys.
+- Creating a map of the standard error of our occupancy estimates is straightforward.
+[click]
+- All that we need to do is change one argument in the function and...
+[click]
+- Our map updates to show how SEs vary across Tetlin.
+- We see that our estimates at the far western boundary of the refuge are more inprecise, probably because we don't have many sites that are really far from water. Maybe we could consider a change to our design to accomodate that. 
 :::
 
 
-# Report
+## [Report]{.cursive}
 
-![](images/witch_report.png)
+![](images/witch_report.png){.absolute top="100" right="150" height=600}
+![](images/workflow_report.png){.absolute top="80" left="300" height=650}
 
 
-# Report
+## [Report]{.cursive}
 
 ::: callout-tip
 ## Criteria for Best Practice
@@ -798,6 +1025,7 @@ Witch Survey
 
 ::: columns
 ::: {.column width="50%"}
+[Quarto Code]{.smaller}
 ````{{r}}
 ---
 title: "Tetlin Witch Report"
@@ -911,9 +1139,13 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 ::: {.column width="50%"}
+::: fragment
+[Rendered Report]{.smaller}
+
 ```{=html}
-<iframe width="780" height="650" src="qmd/witch_report.html" title="Example Report"></iframe>
+<iframe width="780" height="520" src="qmd/witch_report.html" title="Example Report"></iframe>
 ```
+:::
 :::
 
 :::
@@ -922,7 +1154,7 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 
-## Pretty Witch Report 
+## Prettier Witch Report 
 
 ![](images/witch_report_pretty.png){.absolute top="100" left="50" width="35%"}
 ![](images/witch_report_pretty2.png){.absolute top="100" left="600" width="35%"}
@@ -936,7 +1168,7 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 
-## Pretty Witch Report 
+## Quarto Templates
 
 ::: {.center}
 [![](images/akrreportr.png){width="70%"}](https://github.com/USFWS/akrreport)
@@ -948,15 +1180,24 @@ ggplot(pred, aes(x = covariateValue, y = Predicted),
 :::
 
 
-## Sharing Survey Products
+## Share Products
 
-![](images/posit_connect.png)
+![](images/posit_connect.png){.center}
 
 ::: notes
 :::
 
 
-## Summary
+## [Preserve Products]{.cursive}
+
+![](images/witch_preserve.png){.absolute top="100" right="150" height=600}
+![](images/workflow_preserve_products.png){.absolute top="80" left="300" height=650}
+
+
+
+# Summary
+
+![](images/workflow_simple.png)
 
 
 # Questions {background-image="images/witch_flying.png" background-size=contain}
