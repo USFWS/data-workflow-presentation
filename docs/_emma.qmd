@@ -80,13 +80,13 @@ and the goal of the project...
 ::: {.column .center width="50%"}
 Do NOT like water
 
-![](images/witch_melting.png){fig-align="center" height="500"}
+![](images/witch_melting.png){fig-alt="AI generated image of witch melting in water" fig-align="center" height="500"}
 :::
 
 ::: {.column .center width="50%"}
 DO favor forest
 
-![](images/witch_broom.png){fig-align="center" height="500"}
+![](images/witch_broom.png){fig-alt="AI generated image of witch creating a magical broom stick in the woods of Alaska" fig-align="center" height="500"}
 :::
 :::
 
@@ -122,7 +122,7 @@ Can use this information to characterize and predict their distribution
 :::
 
 ::: {.column width="65%"}
-![Excel workbook with all years of data](images/workbook_sc.png){fig-align="center"}
+![Excel workbook with all years of data](images/workbook_sc.png){fig-alt="Screenshot of Excel workbook with 20 years/sheets of witch detection data at 100 sites on Tetlin NWR" fig-align="center"}
 :::
 :::
 
@@ -142,15 +142,15 @@ I am the survey coordinator, but this is my first year on the survey. For the la
 
 ::: columns
 ::: {.column width="33%" layout="[[-1], [1], [-1]]"}
-![](images/witch_hiding.png){fig-align="center"}
+![](images/witch_hiding.png){fig-alt="AI generated image of a witch lurking in some woods" fig-align="center"}
 :::
 
 ::: {.column width="33%" layout="[[-1], [1], [-1]]"}
-![](images/witch_moose.png){fig-align="center"}
+![](images/witch_moose.png){fig-alt="AI generated image of a witch with red eyes riding a scary, red-eyed moose through woods" fig-align="center"}
 :::
 
 ::: {.column width="33%" layout="[[-1], [1], [-1]]"}
-![](images/witch_tetlin.png){fig-align="center"}
+![](images/witch_tetlin.png){fig-alt="AI generated image of a witch on a broomstick flying over Alaska mountains and watershed with Northern Lights in the sky" fig-align="center"}
 :::
 :::
 
@@ -164,7 +164,9 @@ I brought my good camera out this time
 
 ## [Data Wrangling]{.cursive}
 
-![](images/witch_data_cleanup.png){.absolute top="100" right="150" height="600"} ![](images/workflow_data_wrangling.png){.absolute top="80" left="300" height="650"}
+![](images/witch_data_cleanup.png){.absolute top="100" right="150" fig-alt="AI-generated image in claymation style of a witch sweeping up data-like tokens and looking at a computer screen with data and graphs on it" height="600"}
+
+![](images/workflow_data_wrangling.png){.absolute top="80" left="300" fig-alt="A data workflow flow chart with \"Project Setup\", \"Data Wrangling\", \"Preserve Data\", \"Analyze\", \"Summarize Results\", \"Report\", and \"Preserve Products\" connected unidirectionally by arrows, with the \"Data Wrangling\" box highlighted in yellow" height="650"}
 
 ## What is Data Wrangling?
 
@@ -183,7 +185,7 @@ I brought my good camera out this time
 
 3.  Exploratory Data Analysis & Quality Control [➝ Clean, Correct, and Understand]{.orange .fragment}
 
-![](images/data_wrangle.jpg){fig-align="center" height="200"}
+![](images/data_wrangle.jpg){fig-alt="black, messy, tangled, swirled doodle line that turns into a neat, white, swirled line, all on an orange background (sourced from: https://www.nciea.org/blog/data-data-everywhere-why-so-hard-to-use/)" fig-align="center" height="200"}
 :::
 
 ::: notes
@@ -280,7 +282,7 @@ which means it is time to import our data
 
 <br>
 
-![](images/witch_import.jpg){fig-align="center"}
+![](images/witch_import.jpg){fig-alt="AI-generated image in claymation style of a witch using a computer and magically importing information onto it" fig-align="center"}
 
 ## Importing Data
 
@@ -403,7 +405,7 @@ Variables allow us to easily reference complex expressions and enable reusabilit
 
 <br>
 
-![](images/witch_tidying.jpg){fig-align="center"}
+![](images/witch_tidying.jpg){fig-alt="AI-generated image in claymation style of a witch at a desk organizing 3D numbers into rows" fig-align="center"}
 
 ::: notes
 and with that one line of code, we are already onto tidying
@@ -412,7 +414,7 @@ and with that one line of code, we are already onto tidying
 ## Tidy Data
 
 ::: {layout="[[-1], [1], [-1]]"}
-![](images/tidy_graphic.png){fig-align="center"}
+![](images/tidy_graphic.png){fig-alt="Image with 3 subimages of datatables with captions showing that a data set is tidy iff: (1) each variabl is in its own column, (2) each observation is in its own row, and (3) each value is in its own cell" fig-align="center"}
 :::
 
 ::: notes
@@ -438,7 +440,7 @@ is a rectangular format for a dataset, specifically where
 
 ::: {.column width="50%"}
 ::: {layout="[[-1], [1], [-1]]"}
-![](images/why_tidy_data.jpg){fig-align="center"}
+![](images/why_tidy_data.jpg){fig-alt="Graphic made by Hadley Wickham stating, \"The standard structure of tidy data means that \"tidy datasets are all alike... but every messy dataset is messy in its own way,\" with anthropomorphized cartoons of tidy and messy datasets" fig-align="center"}
 :::
 :::
 :::
@@ -573,7 +575,7 @@ And we can convert all of our columns to snake case in one line using a package 
 
 # Data Wrangling: [Exploratory Data Analysis (EDA)]{.orange}
 
-![](images/witch_eda.jpg){fig-align="center"}
+![](images/witch_eda.jpg){fig-alt="AI-generated image in claymation style of a witch looking at graphs and numbers on a wall" fig-align="center"}
 
 ::: notes
 moving on to ex...
@@ -664,7 +666,6 @@ summary(witch_data)
 :::
 
 ::: notes
-
 something is going on here
 
 (*turn off pen*)
@@ -678,15 +679,19 @@ and I may know the cause
 
 [*Roles: field work, data recording*]{.small}
 
-![](images/frank_stein_graphic.png){fig-align="left" height="200"}
+![](images/frank_stein_graphic.png){fig-alt="Graphic of a man labeled \"Frank\" with the note \"Records 'none' rather than '0' on the data sheets,\" and a woman labeled \"Stein\" with the note \"has illegible handwriting (her 0's can look like 2's or 7's)\"" fig-align="left" height="200"}
 
 #### Casper the friendly Biotech
 
 [*Role: data entry/digitization*]{.small}
 
-![](images/casper_graphic.png){fig-align="left" height="200"}
+![](images/casper_graphic.png){fig-alt="Graphic of a boy labeled \"Casper\" with the note \"Enters data exactly as it is written on the datasheet\"" fig-align="left" height="200"}
 
-![](images/qc_6.jpg){.absolute top="300" right="580" width="100" height="100"} ![](images/qc_2.jpg){.absolute top="300" right="470" width="100" height="100"} ![](images/qc_7.jpg){.absolute top="300" right="360" width="100" height="100"}
+![](images/qc_6.jpg){.absolute top="300" right="580" fig-alt="Handwritten \"0\" on an orange background made to look similar to a \"6\"" width="100"}
+
+![](images/qc_2.jpg){.absolute top="300" right="470" fig-alt="Handwritten \"1\" on an orange background made to look similar to a \"2\"" width="100"}
+
+![](images/qc_7.jpg){.absolute top="300" right="360" fig-alt="Handwritten \"1\" on an orange background made to look similar to a \"7\"" width="100"}
 
 ::: notes
 Here are a few observations I have had of my team. I work with...
@@ -792,7 +797,9 @@ The point I really want to make here...
 
 ## [Preservation]{.cursive}
 
-![But don't do it this way\...](images/witch_preserve.jpg){.absolute top="100" right="150" height="600"} ![](images/workflow_preserve_data.png){.absolute top="80" left="300" height="650"}
+![](images/witch_preserve_data.png){.absolute top="100" right="150" fig-alt="AI-generated image in claymation style of a witch in a cottage putting documents into a vault to preserve them" height="600"}
+
+![](images/workflow_preserve_data.png){.absolute top="80" left="300" fig-alt="A data workflow flow chart with \"Project Setup\", \"Data Wrangling\", \"Preserve Data\", \"Analyze\", \"Summarize Results\", \"Report\", and \"Preserve Products\" connected unidirectionally by arrows, with the \"Preserve Data\" box highlighted in yellow" height="650"}
 
 ## Preserving Data and Data Assets {.small}
 
