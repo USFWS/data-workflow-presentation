@@ -1,34 +1,7 @@
----
-format: 
-  revealjs:
-    theme: scss/custom-dark.scss
-    code-block-height: 500px
-    code-overflow: wrap
-    width: 1280
-    height: 720
-    logo: images/FWS-logo.png
-    footer: '![](images/FWS-logo.png) [Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){fig-alt="The US Fish and Wildlife Service logo" .author}'
-editor: source
-highlight-style: a11y
----
 
-```{r setup_mccrea}
-knitr::opts_chunk$set(warning = FALSE, 
-                      message = FALSE, 
-                      fig.retina = 3, 
-                      fig.align = "center")
-library(emojifont)
-library(unmarked)
-library(terra)
-library(tidyverse)
-library(RColorBrewer)
-library(sf)
-library(leaflet)
-library(DT)
-```
-
-```{r}
+```{r ggplot-theme}
 #| cache: true
+#| echo: false
 
 theme_fws <- function() {
   theme_bw() +
