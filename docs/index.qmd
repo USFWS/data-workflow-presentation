@@ -125,8 +125,3241 @@ Or should I say, welcome to our spooky presentation on witch-proof’ workflows!
 :::
 
 
-{{< include _jonah.qmd >}}
 
-{{< include _emma.qmd >}}
+## Overview
 
-{{< include _mccrea.qmd >}}
+<br>
+
+- What is a script-based workflow?
+
+:::{.fragment}
+- Advantages to using a script-based workflow?
+:::
+
+:::{.fragment}
+- Why choose {{< fa brands "r-project" size=1x title="R project icon" >}}?
+:::
+
+:::{.fragment}
+- Our recommended workflow
+:::
+
+::: notes
+In this presentation, we are going to cover what script-based workflows are, 
+
+the advantages to using them over a traditional workflow, 
+
+and why you should consider using program R when developing them. 
+
+Then we will step you through some best practices to follow when creating and using script-based workflows. Our hope is that by the end of this presentation, you'll understand the advantages of using a script-based data workflow over a manual data workflow, you will be familiar with some best-practices and understand why they are important, and have a better understanding of resources and staff available to assist you with developing code-based workflows.
+:::
+
+# What is a Script-Based Workflow?
+
+::: notes
+So what is a script-based workflow? A script-based workflow is a structured process that utilizes code to automate tasks. This means we use code rather than manual processes to wrangle our data.
+:::
+
+## [Workflows]{.cursive}: Manual Workflow
+
+::: {.r-stack}
+
+![](images/traditional_workflow_1.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Project setup highlighted and pen, paper, and gps next to it pointing to microsoft access and excel icons."}
+
+![](images/traditional_workflow_2.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Data Wrangling highlighted with an image of an arrow pointing in both directions to a pen and paper and microsoft access and excel icons."}
+
+![](images/traditional_workflow_3.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Preserve Data highlighted with an image of the servcat and science base icons."}
+
+![](images/traditional_workflow_4.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Anylsis highlighted with an image of a R icon and ArcGIS online icon."}
+
+![](images/traditional_workflow_5.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Summarize Results highlighted with an image of microsoft access and excel icons, R icon, and ArcGIS online icon"}
+
+![](images/traditional_workflow_6.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Report highlighted with an image of microsoft word and power point icons."}
+
+![](images/traditional_workflow_7.png){.fragment height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with Preserve Data highlighted with an image of the servcat and science base icons."}
+
+:::
+
+::: notes
+So for example, in a traditional workflow we may be conducting a survey where, after we've developed a study plan and filed a data management plan, we go into the field and record observations of a given species on a datasheet and say a hand-held GPS unit. Then when we return from the field, we may transcribe those observations into an excel workbook or access database.
+
+From there we may do some manual quality control by comparing datasheets to the digital copy and visually reviewing data to find potential errors as well as some data cleaning and processing.
+
+Then we upload our raw and cleaned data on the Alaska Regional Data Repository so it can be archived on one of our approved repositories. 
+
+After which we may import the data into something like ArcGIS Pro to create some maps and do spatial analyses and import the data into statistical software like R to create figures and run analyses.
+
+Then we summarize our results in something like excel or R.
+
+Next we write a report in Microsoft Word and maybe make a presentation in Powerpoint.
+
+And finally we archive our products in an approved repository.
+:::
+
+## [Workflows]{.cursive}: Script-Based Workflow
+
+![](images/script_based_workflow.png){height=600 fig-align="center" fig-alt="An image of cascading boxes showing proposed workflow with R icons next to each step."}
+
+::: notes
+However, with a script-based workflow all these steps - from acquiring data through publishing reports and presentations - can all be done using code. Now, I want to take a moment here to explicitly point out that there's nothing wrong with using a traditional manual approach but there are some advantages to using a script based-workflow.
+:::
+
+## Why use Script-Based Workflow?
+
+![](images/advantages_of_script_based_workflow.png){fig-align="center" fig-alt="A witch-themed image with six scrolls. Each scroll is either labeled documented, reproducible, reduce errors, easily scaled, version control, or sharing. Image was generate by ChatGPT."}
+
+::: notes
+So why used script-based workflows? By using scripts, we create a paper trail that documents the steps we use to manage and process our data and documents. By documenting our steps in scripts, our workflow becomes replicable, reproducible, and more transparent to our future selves and others. Scripts also automate our processes which means we reduce our likelihood of introducing errors; such as transcription errors, cut and paste errors, or migration errors. By automating our workflow, we also make our steps very scalable so that whether we are processing a dataset with 10 rows or one with 10 million rows our script will handle the data in the exact same way and processing can happen with the click of a button. Script-based workflows can also enable version control to track and save changes we make to our scripts over time. By enabling version control, its easy to share our scripts with others and allow collaborators to contribute to them.
+:::
+
+# Why Choose {{< fa brands "r-project" size=1x title="R project icon" >}}?
+
+:::notes
+So why use R over other scripting languages when developing a script-based workflow?
+:::
+
+## Why Choose {{< fa brands "r-project" size=1x title="R project icon" >}}? 
+
+::: columns
+
+::: {.column width="50%"}
+
+<br>
+
+-   Open-source and free
+
+:::{.fragment}
+-   Flexible
+:::
+
+:::{.fragment}
+-   Widely used in ecology
+:::
+
+:::{.fragment}
+-   Statistically powerful
+:::
+
+:::{.fragment}
+-   Active community & tons of packages (`r prettyNum(round((nrow(available.packages()) / 1000) * 1000), big.mark = ",", scientific = FALSE)`!)
+:::
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+![](images/R_witch-themed_benefits.png){.shadow width="80%" fig-align="right" fig-alt="A witch-themed image displaying the power of R and why to use it. Image was generate by ChatGPT."}
+
+:::
+
+:::
+
+::: notes
+R is open-source and free. 
+
+Its extremely flexible, providing options for manipulation, analysis, and visualization among other things. 
+
+R is also widely used in ecology, 
+
+statistically powerful, 
+
+and has a very active community that has developed `r prettyNum(round((nrow(available.packages()) / 1000) * 1000), big.mark = ",", scientific = FALSE)` packages for you to use. Packages contain useful functions that will help you more easily perform tasks with limited amounts of coding.
+:::
+
+## [Project Setup]{.cursive}
+
+![](images/witch_starting_line.png){.absolute top="100" right="150" height=600 fig-alt="A witch on the starting line with moose in the background. Image was generate by ChatGPT."}
+![](images/workflow_project_setup.png){.absolute top="80" left="300" height=650}
+
+::: notes
+So now I'm going to transition into the part of the presentation where we step through our recommended workflow and best practices. Starting with project setup.
+:::
+
+# [Create RStudio Project]{.cursive}
+
+
+
+::: notes
+When we start a project, we begin developing our code-based workflow by creating an RStudio project.
+:::
+
+## Create RStudio Project
+
+::: columns
+
+::: {.column width="50%" .left}
+
+<br>
+
+::: {.fragment}
+- Root directory
+:::
+
+::: {.fragment}
+- Standard file paths
+:::
+
+::: {.fragment}
+- Self-contained, bundling
+:::
+
+::: {.fragment}
+- Version control
+:::
+
+::: {.fragment}
+- Collaboration
+:::
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+![](images/r_project_bundling_files.png){.shadow width="80%" fig-align="center" fig-alt="Image of witch themed letter R with files bundled inside it. Image was generate by ChatGPT."}
+
+:::
+
+:::
+
+::: notes
+An RStudio project serves as a project folder, or root directory, that houses all your project-related files and folders in one place. 
+
+By establishing an R project, you create a default working directory for your project, which helps minimize file path issues when sharing the project with others. 
+
+R projects also facilitate the bundling of all our project files, creating a self-contained package, much like a map package in ArcGIS, which allows us to easily share our code with others. 
+
+Lastly, R projects make is possible for us to implement version control, which we will discuss shortly.
+:::
+
+## Create R project
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+::: {.fragment}
+Manually
+
+![](images/r_project.png){.shadow width="80%" fig-align="center" fig-alt="Image of Rstudio project setup window."}
+:::
+
+:::
+
+::: {.column width="50%" .center}
+
+<br>
+
+::: {.fragment}
+Using Code 
+
+<br>
+
+::: {.small}
+```{r}
+#| echo: true
+#| eval: false
+
+library(makeProject)
+
+makeProject(name = "myProject", 
+            path = "C:/Users/jwithers/Presentations", 
+            force = FALSE, 
+            author = "Your Name", 
+            email = "yourfault@somewhere.net")
+```
+:::
+
+:::
+
+:::
+
+:::
+
+::: notes
+There are several ways to create an R project. You can do it manually through the RStudio IDE. You can setup a R project in an existing directory if forgot to do this step at the beginning, or you can create a new directory. You just need to provide a filepath and project name.
+
+Similarly, we can create an R project programmatically using code. Here's an example using the MakeProject function from  "makeProject" package to create an R project titled "myProject" in the presentations folder. 
+:::
+
+
+# [Standardized File Structure]{.cursive}
+
+![](images/witch_file_structure.png){.shadow width="100%" fig-align="center" fig-alt="Image of witch-themed organized binders. Image was generate by ChatGPT."}
+
+:::notes 
+After creating a R project, we will want to set up a logical, standardized file structure along with some documentation; such as a READMe file.
+:::
+
+## Standardized File Structure
+
+Why use a standardized file structure?
+
+::: columns
+
+::: {.column width="50%" .small}
+
+<br>
+
+- Easier to locate a file
+
+- Find similar files together
+
+- Reproducibility
+
+- Reduce risk of data loss
+
+- Moving files becomes much easier
+
+:::
+
+::: {.column width="50%" .small}
+
+<br>
+
+- Easy to identify where to store files
+
+- Keep organized in the long-run
+
+- Increases productivity
+
+- Projects can easily be understood by others
+
+- Consistency across projects
+
+:::
+
+:::
+
+::: notes
+Why? Standardized file structures help us keep our files organized and make it easier for us, our future selves, and others to navigate, find, and understand what and where our are files are. They reduce the risk of us losing data and increase our reproducibility and productivity.
+:::
+
+## Standardized File Structure
+
+What are some strategies for creating a good file structure?
+
+<br>
+
+::: columns
+
+::: {.column width="50%" .small .incremental}
+- Establish a system!
+
+- Develop naming convention
+
+  - Short-descriptive names
+
+  - Avoid special characters and spaces
+
+- Use folder hierarchy
+
+  - Subfolders are your friend!
+  
+:::
+
+::: {.column width="50%" .small .incremental}
+
+- Use consistent pattern
+
+- Avoid overlapping categories
+
+- Don't let folders get too deep
+
+- Document your system 
+
+- Stick to the plan! 
+
+:::
+
+:::
+
+::: {.small}
+::: aside
+For additional information on file structure guidance visit:
+[Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/file-organization-and-best-practices), [Alaska Data Week 2024 presentations](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/Lists/Alaska%20Data%20Week%202024/AllItems.aspx), or reach out to a [data manager](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Contacts.aspx)
+
+:::
+
+:::
+
+::: notes
+What are some strategies for creating a good file structure?
+We have several resources available on how to establish a good file structure but some main take-aways are to 
+
+start by establishing a system **before** you start the project. 
+
+Work with your team to ensure everyone is on-board with the structure and naming convention. 
+
+When creating file names and folder names use short-descriptive names and avoid using special characters and spaces
+
+Use a folder hierarchy. 
+
+Remember subfolders are your friend!
+
+Use consistent patterns. If you're naming files by a location, species, and date; does location come first, or date, or species?
+
+Avoid overlapping categories. Try to create distinct folders so there's no ambiguity around which folder a file should be stored in.
+
+Don't let folders get too deep
+
+Document your system with a readme file so new users and your future self can understand it
+
+And stick to your plan!
+:::
+
+## File Structure
+
+::: columns
+
+::: {.column width="55%" .left}
+
+<br>
+
+- Alaska Regional Data Repository ^[[Alaska Regional Data Repository](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/alaska-regional-data-repository)]
+
+<br>
+
+::: {.fragment}
+- Alaska National Wildlife Refuges ^[[Refugetools GitHub](https://github.com/USFWS/refugetools)]
+:::
+
+:::
+
+::: {.column width=45%}
+![](images/alaska_rdr.png){.shadow width="100%" fig-align="center" fig-alt="Image of alaska regional data repository folder structure."}
+:::
+
+:::
+
+::: notes
+There are a number of folder structure templates you can use but we would direct you to the region's existing templates. The first is the Alaska Regional Data Repository template and the second is the refuges template. I've linked resources to both of these templates if you're interested in using them or learning more about them.
+:::
+
+## File Structure
+
+::: columns
+
+::: {.column width="50%" .small .center}
+
+<br>
+
+Alaska Regional Data Repository ^[[Alaska Regional Data Repository](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide/alaska-data-management-101/alaska-regional-data-repository)]
+
+![](images/rdr_file_structure.png){.shadow width="30%" fig-align="center" fig-alt="Image of Alaska Regional Data Repository File Structure."}
+
+:::
+
+::: {.column width="50%" .small .center}
+
+<br>
+
+Alaska National Wildlife Refuges ^[[Refugetools GitHub](https://github.com/USFWS/refugetools)]
+
+![](images/refuges_file_structure.png){.shadow width="30%" fig-align="center" fig-alt="Image of Alaska Refuges program file structure."}
+
+:::
+
+:::
+
+:::notes
+I want to take a brief moment to highlight that both of these standardized file structures have designated folders for data and within these folders they have a raw subfolder. Its really important we preserve of our raw, unprocessed data. There are tons of things we can do with data in terms of processing and analyses but once raw data is changed its generally very difficult to get back to its original state unless its preserved somewhere.
+:::
+
+## [File Structure]{.cursive}: R
+
+::: columns
+
+::: {.column width="50%" .center .fragment}
+
+<br>
+
+<br>
+
+<br>
+
+Code
+
+::: {.small}
+```{r}
+#| echo: true
+#| eval: false
+
+library(refugetools)
+
+create.dir(proj.name = "myProject", 
+           dir.name = "C:/Users/jwithers/Presentations")
+
+```
+
+:::
+
+:::
+
+::: {.column width="50%" .center .fragment}
+
+Resulting Folder Structure
+
+![](images/refuges_file_structure.png){.shadow width="30%" fig-align="center" fig-alt="Image of Alaska Refuges program file structure."}
+:::
+
+:::
+
+:::notes
+So now that we've discussed some best practices for setting up a standardized file structure, how do we create one? In a manual workflow, we might create new folders in file explorer and rename them to create to file structure. Or maybe we have a folder structure template that we can copy and paste. 
+
+Alternatively with R, we can create folder structures with a few lines of code. Here's an example where we use the create.dir() function from refuges refugetools package. Once we run this code, our standardized file structure is created for us. And we heard from Hannah yesterday during the lightning talks, there's a new R package available that contains a function to create the Alaska RDR file structure. 
+:::
+
+## File Structure: README
+
+::: columns
+
+:::{.column width=33% .center}
+### Manually
+![](images/txt.png){.shadow width="100%" fig-align="center" fig-alt="Image of .txt file icon."}
+:::
+
+:::{.column width=33% .center .fragment}
+### Dublin core
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+
+refugetools:::dublin(project = "myProject",
+                     name = "jonah withers",
+                     email = "jonah_withers@fws.gov",
+                     office = "conservation genetics laboratory")
+```
+
+<br>
+
+```{r}
+
+# text <- readLines("C:/Users/jwithers/OneDrive - DOI/Presentations/DataManagementPresentations/DataWeek/data-workflow-presentation/docs/project_meta.txt")
+# cat(text, sep = "\n")
+
+```
+:::
+
+:::
+
+:::{.column width=33% .center .fragment}
+### Markdown
+
+:::{.smaller}
+```{r}
+#| echo: true
+#| eval: false
+# Hello, world!
+#
+# This is an example function named 'hello' 
+# which prints 'Hello, world!'.
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   https://r-pkgs.org
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Install Package:           'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
+
+hello <- function() {
+  print("Hello, world!")
+}
+```
+:::
+
+:::
+
+:::
+
+:::notes
+Once we've established our file structure we want to document it. When documenting your file structure with a readme its important to include 
+the 5 w’s or the who, what, when, where, and why. Start with a project title, contact information for a point of contact, a description of project, what files are in the folder structure, how they’re organized, and how they interaction. You can also include information on when files were added, deleted, or updated and who made the changes. You can do this manually in .txt file. 
+
+Or if you’d like to elevate your readme, consider following a standard such as Dublin Core. Here are a few lines of code that will generate a Dublin Core readme file template for you.
+
+We'll talk more about documenting our code and packages with Markdown later but know in addition to documenting our project file structure, there's a system for documenting code where we provide users with metadata at the top of our script explaining what the script is for, how it works, what packages are required to run it, and more. 
+:::
+
+
+# [Version Control]{.cursive}
+
+![](images/witch_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of witch with multiple versions of files. Image was generate by ChatGPT."}
+
+::: notes
+After we've created a R project and set up the project folder structure, we set up version control for our project.
+:::
+
+## {{< fa "code-branch" size=1x title="code branch icon" >}} Version Control 
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+- Manage and track changes
+- Provides documentation
+- Easily share and collaborate
+
+:::
+
+::: {.column width="50%" .center}
+
+<br>
+
+![](images/document_tracking.png){.shadow width="100%" fig-align="center" fig-alt="Image of scanner in front of files shelves full of folders."}
+
+:::
+
+:::
+
+::: notes
+Just like backing up your files on an external hard drive or in the cloud, we can enable version control for our scripts to manage, backup, and track changes to our code. Enabling version control also makes it easy to share our scripts with collaborators and allows others to contribute to our code. 
+:::
+
+## [Version Control]{.cursive}: Mannual Workflow
+
+::: columns
+
+::: {.column width="33%" .center}
+
+<br>
+
+### External hard drive
+
+![](images/external_hard_drive.png){.shadow width="100%" fig-align="center" fig-alt="Image of external hard drive."}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### Sharepoint
+
+![](images/sharepoint_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of sharepoint file version control."}
+:::
+
+::: {.column width="33%" .center}
+
+<br>
+
+### OneDrive
+
+![](images/OneDrive_version_control.png){.shadow width="100%" fig-align="center" fig-alt="Image of OneDrive file version control."}
+:::
+
+:::
+
+:::notes
+In a manual workflow we may copy and paste our documents from our computer to a network drive or external hard drive. Or maybe we've heard about the benefits of cloud storage and finally started using Microsoft OneDrive and Sharepoint to backup our files in the cloud. These are good practices; however, we gain some additional advantages when enabling version control with R.
+:::
+
+## {{< fa "code-branch" size=1x title="code branch icon" >}}  [Version Control]{.cursive}: R Workflow
+
+::: columns
+
+::: {.column width="50%" .center}
+
+<br>
+
+- Seamless integration with GIT
+- Line-by-line tracking
+- Others may contribute
+- Package versioning (renv)
+
+:::
+
+::: {.column width="50%" .center}
+
+<br>
+
+<br>
+
+![](images/git_tracking.png){.shadow width="100%" fig-align="center" fig-alt="Image of r git commit preview."}
+
+:::
+
+:::
+
+::: notes
+With R, we can set up version control and push and pull changes to and from the cloud as needed with the click of a button thanks to RStudio's seamless integration with Git platforms, which we'll talk about shortly. Some of the advantages of version control with R are that changes to our code are tracked line-by-line. This means if you make a few minor changes to your code its easy for others to pin point where and when these changes occurred; contrasting traditional backups where we're backing up entire documents rather than specific changes within a document. Additionally, enabling version control on our project allows others to not only track the updates and changes we're making to our code but it also enables others to submit proposed changes to our code; increasing the opportunities for collaboration and code improvement. Lastly, as I mentioned earlier when we code in R we regularly use functions that are made publicly available through packages to help us with our coding. These packages can be updated and have various versions so its important to know what version your code uses to avoid problems. renv is a nice package that essentially takes a snapshot of the versions of packages our code uses so that others who use our code will not run into problems.    
+:::
+
+## {{< fa "code-branch" size=1x title="code branch icon" >}} Version Control
+
+:::{.center}
+
+{{< fa brands github size=5x title="The GitHub octocat logo" >}}
+Github
+
+{{< fa brands gitlab size=5x title="The Gitlab tanuki logo" >}}
+Gitlab
+
+:::
+
+::: notes
+So I said Rstudio had seamless integration with Git platforms to make enabling version control easy. What is Git? Git is the most popular version control software used with code with GitHub and GitLab probably being the two most popular centrally managed Git hosting platforms. I'll give a very brief overview of these two platforms and how you may want to use them differently. 
+:::
+
+## {{< fa "code-branch" size=1x title="code branch icon" >}} Version Control: {{< fa brands github size=1x title="The GitHub octocat logo" >}} Github
+
+::: columns
+
+::: {.column width="60%"}
+ 
+<br>
+
+![](images/usfws_github.png){.shadow width="100%" fig-align="left" fig-alt="Screenshot of US fish and wildlife service github webpage."}
+
+:::
+
+::: {.column width="40%" .small}
+
+<br>
+
+- DOI GitHub Enterprise Cloud (DGEC) ^[[DGEC sharepoint site](https://doimspp.sharepoint.com/sites/ocio-DOI-GitHub-Enterprise/SitePages/Home.aspx)]
+- USFWS Organizational Account ^[[USFWS GitHub organization](https://www.github.com/usfws)]
+- USFWS Github Guidance ^[[USFWS Github sharepoint](https://doimspp.sharepoint.com/sites/fws-gis/SitePages/Using-Git-and-GitHub.aspx)]
+- Requires training
+- Must use if publishing source code
+
+:::
+
+:::
+
+::: aside
+Resources:
+:::
+
+:::notes
+Many of you may have experience working with GitHub and may even have a personal account; however, when we are creating code for the Service we need to ensure the code follows DOI guidelines and is preserved in a way that others can use the code after we have left the Service. 
+
+To accomplish this, the Department of the Interior has designated GitHub as the system of record for publishing source code for collaborating and sharing between agencies and with the public. DOI has created the "DOI GitHub Enterprise Cloud" or DGEC in an effort to organize and manage control of published source code. You can visit the DGEC sharepoint page and join their Microsoft Team's site for more information on the DGEC. 
+
+The U.S. Fish and Wildlife Service has created an organization account that is hosted under the DGEC umbrella. If you plan to share your code publicly, you're required to host it through the DGEC and encouraged to use the USFWS organizational account so your code is available after you leave the Service. To access the account you must create a USFWS user account using your FWS email address, complete one of the introductory DOI talent training modules for GitHub, and request access to the DGEC. For more information check out the sharepoint site linked below.
+:::
+
+## {{< fa "code-branch" size=1x title="code branch icon" >}} Version Control: {{< fa brands gitlab size=1x title="The Gitlab tanuki logo" >}} GitLab
+
+::: columns
+
+::: {.column width="60%" .center}
+ 
+<br>
+ 
+![](images/gitlab_screenshot.png){.shadow width="100%" fig-align="left" fig-alt="Screenshot of US fish and wildlife service gitlab account webpage."}
+
+:::
+
+::: {.column width="40%" .small}
+
+<br>
+
+- USFWS user Gitlab account ^[[USFWS Gitlab](https://gitlab.fws.doi.net/)]
+- Internal to DOI
+- All FWS staff have accounts
+
+:::
+
+:::
+
+::: aside
+Resources:
+:::
+
+::: notes
+Alternatively, if you'd like to enable version control for a project or code that you don't plan on sharing outside DOI, the service has set up a GitLab account for each of you under your MyAccount username. The Gitlab accounts are restricted to the DOI network meaning you can share code internally within DOI but cannot make your code publicly available through Gitlab. 
+:::
+
+# [Starting a New Script]{.cursive}
+
+![](images/create_r_script.png){.shadow width="40%" fig-align="center" fig-alt="Witch creating r script. Image was generate by ChatGPT."}
+
+::: notes
+Now that we have an R Project set up with a good file structure and version control enabled for our project, we can create our first script.
+:::
+
+## Starting a New Script
+
+<br>
+
+Basic documentation is as easy as a "`#`" (shortcut: `CTRL-SHIFT-C`)
+
+<br>
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1-3|5-7"
+
+# This script is meant to teach staff new to R about how to create comments in R scripts.
+# Created by Jonah Withers
+# Created on 20241031
+
+# Any code or text that is commented will not be executed,
+but if it is not commented, R will treat it as code,
+so this will return an ERROR.
+```
+
+<br>
+
+::: center
+[Human Readability]{.orange .extrabold} {{< fa handshake >}} [Reusability]{.orange .extrabold}
+:::
+
+::: notes
+R scripts are the files that contain our code. You can think of these as .txt files, that when run, R will read to determine what to do. Scripts contain code for all of the processing steps we take to wrangle our data; meaning we have a great paper trail that increases transparency around what we're doing and how we do it. 
+
+Once we open a new script, we generally write some metadata at the top of our script so others will know what the script is for. A simple way to do this is to insert a hashtag in front of the text we are entering. Hashtags in front of text, lets R know that these characters are a comment and should not be run as code. For more advanced users, Roxygen2 is used for writing metadata about a script.
+
+We can also use hashtags to create comments throughout our script to provide more clarity around what you're trying to do and why you're doing it that way. Just note, if text is not commented out, R will treat it as code and will return an error. 
+:::
+
+## Starting a New Script
+
+<br>
+
+Stay organized with [sections]{.orange .extrabold} (shortcut: `CTRL-SHIFT-R`)
+
+<br>
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|5"
+
+
+# This script is meant to teach staff new to R about how to create comments in R scripts.
+# Created by Jonah Withers
+# Created on 20241031
+
+# Install packages --------------------------------------------------------
+install.packages(c("tidyverse","readxl","janitor"))
+```
+
+<br>
+
+::: {.fragment}
+![](images/r_outline.png){.shadow width="60%" fig-align="center" fig-alt="RStudio script highlighting outline button."}
+:::
+
+::: notes
+In addition to commenting our script, we can also organize our script with section headers. You can insert section headers manually or use the hot keys control, shift, R to insert a section header into your script. 
+
+Lets create a new section after our scripts metadata header titled "Install packages". 
+
+We can view our section headers in the outline section of RStudio. By clicking on the section headers, we can jump to specific sections of our code; just like using a table of contents. 
+:::
+
+## Starting a New Script
+
+<br>
+
+Installing packages
+
+<br>
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "7-8"
+
+
+# This script is meant to teach staff new to R about how to create comments in R scripts.
+# Created by Jonah Withers
+# Created on 20241031
+
+# Install packages --------------------------------------------------------
+install.packages(c("tidyverse","readxl","janitor"))
+```
+
+<br>
+
+
+:::{.small .fragment}
+For non-CRAN packages use 
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Install packages --------------------------------------------------------
+devtools::install_github("author/package_name")
+```
+:::
+
+::: notes
+As stated several times, R has a number of publicly accessible packages available that 
+have numerous useful functions. The first time we use a package we need to install it on our machine. Let's install the tidyverse, readxl, and janitor packages from the CRAN (or comprehensive R archive network) repository. 
+
+You can also install non-CRAN packages, such as those developed by your regional biometrician, directly from GitHub using a package called devtools
+:::
+
+## Starting a New Script
+
+<br>
+
+Use `library()` to load packages
+
+<br>
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|8|9-11"
+
+
+# This script is meant to teach staff new to R about how to create comments in R scripts.
+# Created by Jonah Withers
+# Created on 20241031
+
+# Install packages --------------------------------------------------------
+install.packages(c("tidyverse","readxl","janitor"))
+
+# Load packages -----------------------------------------------------------
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+::: notes
+After these packages have been installed on our machine, we need to load them into our working environment. 
+
+Let's create a new section called load packages. 
+
+Now we can load these packages into our working environment.
+
+So we covered a lot and you're all pretty sick of hearing me talk. So lets take a 5 minute break before I hand it over to Emma who will pick up the workflow and tell you about a spooky case study.
+:::
+
+# Break Time
+
+![](images/invasive_moose.png){.shadow width="40%" fig-align="center" fig-alt="Witch riding moose past ranger. Image was generate by ChatGPT."}
+
+
+# 
+
+::: scary
+The Tetlin Witch Project
+:::
+
+::: notes
+going to introduce the tetlin witch project, not to be confused with the horror movie the Blair witch project
+:::
+
+## The Survey {.smaller}
+
+::: columns
+::: {.column width="50%"}
+![Site Map](images/base_map.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+<br>
+
+[**Type:**]{.extrabold .orange} Annual occurrence survey
+
+[**Logistics:**]{.extrabold .orange}
+
+-   Completed over 8 days in August
+
+-   Detection (0, 1) recorded at 100 sites/day
+
+-   Conducted for 20 years at Tetlin NWR
+
+[**Goal:**]{.extrabold .orange} Estimate probability of witch occurrence across the refuge
+:::
+:::
+
+::: notes
+survey we conduct annually
+
+each year in the late summer, we spend 8 days in the field
+
+go out to the same 100 sites each day, recording whether a witch is detected there or not - 0 recorded if not detected, 1 recorded if detected
+
+this survey has been going on...
+
+and the goal of the project...
+:::
+
+## Witch Background
+
+::: columns
+::: {.column .center width="50%"}
+Do NOT like water
+
+![](images/witch_melting.png){fig-alt="AI generated image of witch melting in water" fig-align="center" height="500"}
+:::
+
+::: {.column .center width="50%"}
+DO favor forest
+
+![](images/witch_broom.png){fig-alt="AI generated image of witch creating a magical broom stick in the woods of Alaska" fig-align="center" height="500"}
+:::
+:::
+
+::: notes
+I am sure you all already know everything about the North American Witch because witch conservation is a national priority
+
+but I'll provide some species background
+
+Began inhabiting Tetlin NWR during the early modern period when widespread witch trials shifted their range northward
+
+Started monitoring them due to concerns surrounding the threat of deforestation, impacting their ability to construct broomsticks
+
+As I am sure you know from the W of Oz,
+
+...because of the shelter it provides and the resources it offers for broomstick crafting
+
+Can use this information to characterize and predict their distribution
+:::
+
+## Where We Are
+
+::: columns
+::: {.column width="35%"}
+**Completed:**
+
+-   Data collection ✓
+
+-   Data entry ✓
+
+**Next:**
+
+-   Data wrangling ☐
+:::
+
+::: {.column width="65%"}
+![Excel workbook with all years of data](images/workbook_sc.png){fig-alt="Screenshot of Excel workbook with 20 years/sheets of witch detection data at 100 sites on Tetlin NWR" fig-align="center"}
+:::
+:::
+
+::: notes
+finished our data collection and data entry for the season
+
+on to data wrangling - or getting our data whipped into shape
+
+in an ideal world, we would have used a data collection app or an entry form with data validation or otherwise performed quality assurance prior to this step, but in this case, we did not
+
+I am the survey coordinator, but this is my first year on the survey. For the last 20 years, the data has been stored in an excel workbook (shown here) with each year's data on a separate sheet. I inherited a bit of a messy dataset, but I can work with it. No automated data processing workflow exists for this dataset, so let's create one!
+:::
+
+## Photos from the Field
+
+{{< fa camera >}} Coming soon to your Wild Weekly...
+
+::: columns
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_hiding.png){fig-alt="AI generated image of a witch lurking in some woods" fig-align="center"}
+:::
+
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_moose.png){fig-alt="AI generated image of a witch with red eyes riding a scary, red-eyed moose through woods" fig-align="center"}
+:::
+
+::: {.column width="33%" layout="[[-1], [1], [-1]]"}
+![](images/witch_tetlin.png){fig-alt="AI generated image of a witch on a broomstick flying over Alaska mountains and watershed with Northern Lights in the sky" fig-align="center"}
+:::
+:::
+
+::: notes
+but first,
+
+what's a trip to the field without sharing photos?
+
+I brought my good camera out this time
+:::
+
+## [Data Wrangling]{.cursive}
+
+![](images/witch_data_cleanup.png){.absolute top="100" right="150" fig-alt="AI-generated image in claymation style of a witch sweeping up data-like tokens and looking at a computer screen with data and graphs on it" height="600"}
+
+![](images/workflow_data_wrangling.png){.absolute top="80" left="300" fig-alt="A data workflow flow chart with \"Project Setup\", \"Data Wrangling\", \"Preserve Data\", \"Analyze\", \"Summarize Results\", \"Report\", and \"Preserve Products\" connected unidirectionally by arrows, with the \"Data Wrangling\" box highlighted in yellow" height="650"}
+
+## What is Data Wrangling?
+
+::: center
+*the process of transforming raw data into a usable form*
+:::
+
+<br>
+
+### Our Workflow:
+
+::: small
+1.  Importing Data [➝ Obtain]{.orange .fragment}
+
+2.  Tidying Data [➝ Restructure]{.orange .fragment}
+
+3.  Exploratory Data Analysis & Quality Control [➝ Clean, Correct, and Understand]{.orange .fragment}
+
+![](images/data_wrangle.jpg){fig-alt="black, messy, tangled, swirled doodle line that turns into a neat, white, swirled line, all on an orange background (sourced from: https://www.nciea.org/blog/data-data-everywhere-why-so-hard-to-use/)" fig-align="center" height="200"}
+:::
+
+::: notes
+can consist of a lot of different types of data manipulation
+
+...
+
+goal is for our data to be interpretable, machine readible, error-free, and ready for analyses
+:::
+
+## Why Wrangle Data in R? {.incremental .smaller}
+
+::: columns
+::: {.column width="50%"}
+#### [Limitations of]{.cursive} {.center}
+
+#### [Manual Workflow]{.cursive .extrabold .yellow} {.center}
+
+::: incremental
+-   Messy
+
+-   Prone to human error
+
+-   Difficult to correct or reverse changes
+
+-   Inefficient
+
+-   Not reusable
+:::
+:::
+
+::: {.column width="50%"}
+#### [Advantages of]{.cursive} {.center}
+
+#### [Scripted Workflow]{.cursive .extrabold .yellow} {.center}
+
+::: incremental
+-   Can iterate through large datasets
+
+-   Can manipulate data without overwriting it
+
+-   Can easily undo or reapply changes
+
+-   Changes are documented
+
+-   Avoids repeating steps
+
+-   Allows for automated workflows/pipelines
+
+-   Eliminates future workload
+:::
+:::
+:::
+
+::: notes
+-   not just slow, but tedious and tiring
+
+-   IS efficient, reusable, not prone to error, and on top of that...
+
+-   working outside of original file...
+
+-   can apply change to hundreds of thousands of rows of data in a single step - without ever even having to scroll through the rows
+
+-   requires medium initial effort for a future of no effort
+:::
+
+## Getting Started
+
+<br>
+
+✓ Created a new R project
+
+✓ Set up a standard file directory structure
+
+✓ Set up version control (*optional, good practice*)
+
+✓ Initialized a new R script file (.R)
+
+✓ Installed and loaded our packages
+
+<br>
+
+::: center
+[Time to get coding!]{.large .yellow}
+:::
+
+::: notes
+with the help of Jonah, we've already...
+
+which means it is time to import our data
+:::
+
+# Data Wrangling: [Importing]{.orange}
+
+<br>
+
+![](images/witch_import.jpg){fig-alt="AI-generated image in claymation style of a witch using a computer and magically importing information onto it" fig-align="center"}
+
+## Importing Data
+
+Can read data from a...
+
+1.  [Locally stored file]{.orange} (*.csv, .xlsx, etc.*)
+
+::: small
+*Example:*
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+my_data <- read.csv("path/to/filename.csv")
+```
+
+2.  [Online source]{.orange} (*download link, API, ServCat, etc.*)
+
+::: small
+*Examples:*
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+my_data <- read.csv(download.file("www.url.com","save_as_filename.csv"))
+```
+
+```{r}
+#| echo: true
+#| eval: false
+my_data <- GET(url = "api-url.com/input-id", body = list("parameter1","parameter2"))
+```
+
+::: notes
+Built-in and installable functions exist for reading data from various sources
+
+...
+
+Like a link to the online authoritative source for a dataset or maybe an online database
+:::
+
+## Importing Data
+
+Extra step: merge multiple tables, if necessary
+
+```{r}
+#| echo: true
+#| eval: false
+#Join tables by common variables
+all_data <- left_join(observation_data, site_data, join_by(c("lat", "lon")))
+```
+
+::: callout-note
+## Suggestion
+
+You can sometimes replace the need for MS Access databases through R scripts, depending on the functionality you desire. Using R to join related tables allows for automation and ensures your files are in an open format.
+:::
+
+::: notes
+when you first bring in your data, you may want to include the extra step of merging multiple tables if you have relational data
+
+in this example,...
+
+I briefly want to mention that you can replicate some of the functionality of a survey Access database in R
+
+databases for surveys...w/o relying on a
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Importing Our Data
+:::
+
+::: notes
+let's go ahead and import the data for our survey
+:::
+
+## Importing Our Data
+
+Use `read_excel()` to import data from a specific sheet in a workbook
+
+-   Set new "dataframe" as a [*variable*]{.yellow}
+
+```{r}
+#| echo: false
+#Load packages
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+```{r}
+#| echo: true
+#Import raw data
+witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = "2024")
+```
+
+::: callout-note
+## Note
+
+Variables are the basis of reusability!
+:::
+
+::: notes
+To import our data, we can use a function to read a specific sheet from our workbook and convert it to a "dataframe", which is just a datatable in R
+
+We are also going to create a "witch_data" variable and define it as this dataframe
+
+Variables allow us to easily reference complex expressions and enable reusability. If I write all my code referencing the "witch_data" variable and I decide I want to change the input file, I can easily do that in this one line and do not have to tamper with any of the rest of my code.
+:::
+
+# Data Wrangling: [Tidying]{.orange}
+
+<br>
+
+![](images/witch_tidying.jpg){fig-alt="AI-generated image in claymation style of a witch at a desk organizing 3D numbers into rows" fig-align="center"}
+
+::: notes
+and with that one line of code, we are already onto tidying
+:::
+
+## Tidy Data
+
+::: {layout="[[-1], [1], [-1]]"}
+![](images/tidy_graphic.png){fig-alt="Image with 3 subimages of datatables with captions showing that a data set is tidy iff: (1) each variabl is in its own column, (2) each observation is in its own row, and (3) each value is in its own cell" fig-align="center"}
+:::
+
+::: notes
+is a rectangular format for a dataset, specifically where
+:::
+
+## Why Tidy Data?
+
+::: columns
+::: {.column .incremental width="50%"}
+<br>
+
+-   Standardization
+
+-   Interpretability
+
+-   Machine readability
+
+-   Ease of use and reuse
+
+-   Conducive to metadata
+:::
+
+::: {.column width="50%"}
+::: {layout="[[-1], [1], [-1]]"}
+![](images/why_tidy_data.jpg){fig-alt="Graphic made by Hadley Wickham stating, \"The standard structure of tidy data means that \"tidy datasets are all alike... but every messy dataset is messy in its own way,\" with anthropomorphized cartoons of tidy and messy datasets" fig-align="center"}
+:::
+:::
+:::
+
+::: notes
+...really great for...
+
+Related to interpretability - but how can i make a data dictionary defining my columns if my columns aren't variables?
+
+We tidy data because, by keeping data in a standardized format with clear attributes and values, the data can be easily interpreted by humans and manipulated through computers
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center .larger}
+Tidying Our Data
+:::
+
+::: notes
+:::
+
+## Tidying Our Data
+
+Let's take a peak at what we are working with:
+
+```{r}
+#| echo: false
+#| eval: true
+library(gt)
+gt(head(witch_data, 6)) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 20) %>% cols_align(align = "right", columns = everything())
+#%>% tab_caption("First 6 lines of dataset")
+```
+
+::: center
+[*First few lines of dataset*]{.smaller}
+:::
+
+::: callout-caution
+## Why is our data not tidy?
+
+**Answer:** Some column names are values NOT variables
+:::
+
+::: notes
+...these are the first few lines of our dataset - let's go through it column by column
+
+First, we have "Site Number" which is a variable, and all the cells in that column are values of that variable. So that looks good
+
+Same with longitude and latitude
+
+But then we get to... that's not a variable. That's a value of the variable "Date", and it does not tell us anything about what these 0s and 1s are values of - we are missing the variable "presence"
+
+This means we need to restructure our data
+:::
+
+## Tidying Our Data
+
+Let's use `tidyverse` to tidy our data in one line by "pivoting"
+
+```{r}
+#| echo: true
+#Tidy data structure
+tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+```
+
+::: small
+Updated dataframe:
+:::
+
+::: smaller
+*Row Count: 800*
+:::
+
+::: {style="height:320px; overflow-y: scroll"}
+```{r}
+#| echo: false
+gt(tidy_data) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 22, table.width = "60%") %>% cols_align(align = "right", columns = everything())
+```
+:::
+
+::: notes
+Conveniently, R has package (it's actually a package of packages, so super comprehensive) called "tidyverse" made for all things "data tidying"
+
+Instead of manually transforming the presence data column by column and entering 800 lines of dates, we can tidy our data in one line of code
+
+and BAM, here is our organized, interpretable, and skinnier but longer dataset
+
+*scroll*
+:::
+
+## Tidying Our Data {.scrollable}
+
+::: small
+-   In tidy data, column names are variables, so they should be structured as such
+
+-   Common variable naming conventions:
+
+    -   `camelCase`
+    -   `snake_case`
+
+-   We can use the `janitor` package to fix all our column names in a single line of code
+:::
+
+```{r}
+#| echo: true
+#Clean column names
+tidy_data <- clean_names(tidy_data)
+```
+
+```{r}
+#| echo: false
+gt(head(tidy_data,0)) %>% opt_stylize(style = 6, color = 'cyan') %>% tab_options(table.font.size = 25, table.width = "60%") %>% cols_align(align = "right", columns = everything())
+```
+
+::: {.smaller .center}
+*New column headers: spaces removed and snake case used*
+:::
+
+::: notes
+...
+
+Our column names are fairly tidy, but we do have a space in our "Site Number" header, and you cannot have spaces in a variable name because that is not machine readable
+
+Typically, you want to follow one the common variable naming conventions, such as camel case or snake case demonstrated below
+
+And we can convert all of our columns to snake case in one line using a package conveniently designed to do so - and these are our new column headers
+:::
+
+# Data Wrangling: [Exploratory Data Analysis (EDA)]{.orange}
+
+![](images/witch_eda.jpg){fig-alt="AI-generated image in claymation style of a witch looking at graphs and numbers on a wall" fig-align="center"}
+
+::: notes
+moving on to ex...
+:::
+
+## What is EDA? {.small}
+
+Exploratory Data Analysis (EDA) = [getting to know your data before drawing conclusions]{.orange}, often through summarization and/or visualization
+
+*Example packages:* `skimr`, `corrplot`, `summarytools`, `DataExplorer`, `assertr`
+
+<br>
+
+::: {.cursive .small .center}
+[Are there errors in my data?]{.fragment} [Are there outliers?]{.fragment} [How variable is my data?]{.fragment}
+
+[Are my data within their expected range of values?]{.fragment}
+
+[Are my variables correlated?]{.fragment} [Do my variables follow their expected distributions?]{.fragment}
+
+[What hypotheses can I generate?]{.fragment} [Are the assumptions for my analyses met?]{.fragment}
+:::
+
+::: notes
+...
+
+though there are many, many options
+
+EDA can look a LOT of different ways, and can help us answer quite a few different types of questions, including (but not limited to)
+
+, and are the assumptions...
+
+Exploring these questions lends itself to quality control, which is what we are going to use EDA for
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center}
+Exploring Our Data & Performing Quality Control
+:::
+
+::: notes
+let's go ahead and apply this to our survey
+:::
+
+## Exploring Our Data (EDA)
+
+Let's [rewind {{< fa backward-fast >}}]{.orange} and take a closer look at our starting data
+
+-   First, with `str()`
+
+    ```{r}
+    #| echo: true
+    #| eval: true
+    #| class-output: highlight
+    #| output-line-numbers: "|6|7|12"
+    #Glimpse of dataset,including datatypes of columns
+    str(witch_data)
+    ```
+
+::: notes
+let's take a few steps back and look at our original data, so the "witch_data" variable instead of our "tidy_data" variable
+
+can use the str() function to get a quick snapshot of our data
+
+and looking at the output here, I notice a few things
+
+str() shows us the datatypes of our columns
+:::
+
+## Exploring Our Data (EDA) {.scrollable chalkboard-buttons="true"}
+
+-   Then, with `summary()`
+
+::: small
+```{r}
+#| echo: true
+#| eval: true
+#| class-output: highlight
+#| output-line-numbers: "|10|17|14|21"
+#Summary of dataset, including summary stats
+summary(witch_data)
+```
+:::
+
+::: notes
+something is going on here
+
+(*turn off pen*)
+
+and I may know the cause
+:::
+
+##  {.small}
+
+#### Frank and Stein the Wildlife Biologists
+
+[*Roles: field work, data recording*]{.small}
+
+![](images/frank_stein_graphic.png){fig-alt="Graphic of a man labeled \"Frank\" with the note \"Records 'none' rather than '0' on the data sheets,\" and a woman labeled \"Stein\" with the note \"has illegible handwriting (her 0's can look like 2's or 7's)\"" fig-align="left" height="200"}
+
+#### Casper the friendly Biotech
+
+[*Role: data entry/digitization*]{.small}
+
+![](images/casper_graphic.png){fig-alt="Graphic of a boy labeled \"Casper\" with the note \"Enters data exactly as it is written on the datasheet\"" fig-align="left" height="200"}
+
+![](images/qc_6.jpg){.absolute top="300" right="580" fig-alt="Handwritten \"0\" on an orange background made to look similar to a \"6\"" width="100"}
+
+![](images/qc_2.jpg){.absolute top="300" right="470" fig-alt="Handwritten \"1\" on an orange background made to look similar to a \"2\"" width="100"}
+
+![](images/qc_7.jpg){.absolute top="300" right="360" fig-alt="Handwritten \"1\" on an orange background made to look similar to a \"7\"" width="100"}
+
+::: notes
+Here are a few observations I have had of my team. I work with...
+:::
+
+## EDA for Quality Control
+
+See why our presence data is non-numeric
+
+```{r}
+#| echo: true
+#| warning: false
+#Find non-numerics
+tidy_data$presence[which(is.na(as.numeric(tidy_data$presence)))]
+```
+
+<br>
+
+Replace all instances of `"none"` with `0`
+
+```{r}
+#| echo: true
+#Fix non-numerics
+tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+tidy_data$presence <- as.integer(tidy_data$presence)
+```
+
+::: notes
+let's go back to our tidy data and see which values in our presence column are non-numeric
+
+we can see that there are 3 "none"s in our presence/absence data. Thanks, Frank.
+
+I know these are supposed to be 0, so I am going to go ahead and convert all "none" values to 0, without having to worry about tracking down each error manually
+:::
+
+## EDA for Quality Control
+
+Explore distribution
+
+```{r}
+#| echo: true
+#| eval: true
+#Plot histogram of "presence" values
+hist(tidy_data$presence)
+```
+
+Correct misread numbers
+
+```{r}
+#| echo: true
+#Fix typos
+tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+```
+
+::: notes
+now that our data is numeric, I can use a super simple built-in function to plot a histogram
+
+we know that all of the data should be either 0 or 1, but we have some values outside of the expected range
+
+I see some 2's, 6's, and 7's and know Stein's handwriting is most likely the root cause
+
+I know those 6's are supposed to be...
+
+so I can go ahead and convert those to the correct values and apply the changes to all 800 lines of data with just these 2 lines of code
+:::
+
+## More EDA Options {.small}
+
+::: columns
+::: {.column width="50%"}
+-   Use `DataExplorer` to generate a comprehensive report
+    -   Includes summary statistics, distributions, missing data insights, correlation analysis, PCA, qq plots, and more
+
+```{r}
+#| echo: true
+#| eval: false
+create_report(tidy_data, output_format = pdf(), output_file = "report.pdf")
+```
+
+-   Endless options!
+
+```{r}
+#| eval: true
+library(DataExplorer)
+```
+:::
+
+::: {.column width="50%"}
+{{< pdf images/report.pdf width=100% height=500 >}}
+:::
+:::
+
+::: notes
+While I got away with just a few built in functions, there are many more advanced packages for EDA. One cool example is...
+
+which can generate...
+
+not really necessary for our simple dataset, but a great, customizable option that can be used for any data with no work required
+
+The point I really want to make here...
+:::
+
+## [Preservation]{.cursive}
+
+![](images/witch_preserve_data.png){.absolute top="100" right="150" fig-alt="AI-generated image in claymation style of a witch in a cottage putting documents into a vault to preserve them" height="600"}
+
+![](images/workflow_preserve_data.png){.absolute top="80" left="300" fig-alt="A data workflow flow chart with \"Project Setup\", \"Data Wrangling\", \"Preserve Data\", \"Analyze\", \"Summarize Results\", \"Report\", and \"Preserve Products\" connected unidirectionally by arrows, with the \"Preserve Data\" box highlighted in yellow" height="650"}
+
+## Preserving Data and Data Assets {.small}
+
+Yes, **already**!
+
+Preservation should occur [several times]{.orange} during the data management lifecycle and include all data, metadata, and data assets (e.g., protocols, presentations, reports, code)
+
+::: callout-tip
+## Tip
+
+Contact your program's data manager for program-specific preservation guidelines.
+
+-   Fisheries and Ecological Services - *Jonah Withers*
+
+-   Migratory Birds Management - *Tammy Patterson*
+
+-   National Wildlife Refuge Program - *Caylen Cummins*
+
+-   Other programs - *Hilmar Maier*
+:::
+
+[Reminder:]{.yellow} Reproducibility and reuse are impossible without *findability*
+
+::: notes
+Yes, we are already at this step
+
+...
+
+In the FWS, we must preserve our data and data assets in a Board approved repository, which means ServCat or ScienceBase. If you have questions about guidelines for your specific program, reach out to your data manager
+
+Why does this step matter in our reproducible workflow? Well, nothing can be reproduced or reused if it is not accessible, so this is arguably THE most important step
+:::
+
+# 
+
+::: scary
+Witch Survey
+:::
+
+::: {.cursive .center}
+Preserving Our Data
+:::
+
+::: notes
+:::
+
+## Preserving Our Data
+
+[To Do List {{< fa pencil >}}:]{.extrabold .yellow}
+
+1.  Write machine-readable metadata, including a data dictionary
+2.  Preserve raw data and script file (if reusing) in ServCat
+3.  Link new ServCat references to the "Tetlin Witch Survey" ServCat Project
+
+::: fragment
+A step further...
+
+::: center
+Tidy, QC, compile, and preserve all 20 years of data
+:::
+:::
+
+::: notes
+-   ... for the tidied data file, including a data dictionary defining each of the variables and their domains
+
+...
+
+-   I am feeling ambitious so...
+:::
+
+## Preserve Data Assets
+
+Uh oh {{< fa face-frown >}}...
+
+-   All past workbook sheets are in the same untidy format
+
+-   And Frank used `none` instead of `0` since the survey began
+
+::: fragment
+Don't worry, [we can reuse our script]{.yellow}!
+
+::: callout-note
+## Suggestion
+
+Wrapping the script into a function makes this even more streamlined (*optional*)
+:::
+:::
+
+::: notes
+-   Unfortunately, all of the 19 other sheets in the workbook are in the same untidy format, and because Frank has been around since the start of the survey,we have some of the same errors throughout
+
+-   This would be a nightmare to fix manually, but we can reuse the script we just created
+:::
+
+## [Preserve Data Assets]{.small}
+
+::: panel-tabset
+### [Basic: Script]{.smaller}
+
+```{r}
+#| echo: true
+#| eval: false
+
+#Load packages
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+#Import raw data
+witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = "2024")
+
+#Tidy data structure
+tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+
+#Clean column names
+tidy_data <- clean_names(tidy_data)
+
+#Fix non-numerics
+tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+tidy_data$presence <- as.integer(tidy_data$presence)
+
+#Fix typos
+tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+
+#Export tidy csv
+write.csv(tidy_data, file = "data/tidy_witch_data.csv", row.names = FALSE)
+```
+
+### [Advanced: Function]{.smaller}
+
+```{r}
+#| echo: true
+#| eval: false
+
+wrangle_witch_data <- function(year){
+  #Import raw data
+  witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = paste0(year))
+  
+  #Tidy data structure
+  tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+  
+  #Clean column names
+  tidy_data <- clean_names(tidy_data)
+  
+  #Fix non-numerics
+  tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+  tidy_data$presence <- as.integer(tidy_data$presence)
+  
+  #Fix typos
+  tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+  tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+  
+  #Return tidy dataframe
+  return(tidy_data)
+}
+```
+
+### [Advanced: Documented Function]{.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+
+#' Tidy and QC witch data
+#'
+#' @param year The year (YYYY) representing the worksheet name to pull data from
+#'
+#' @return A tidied dataframe
+#' @export
+#'
+#' @examples
+#' clean_witch_data(year = 2024)
+wrangle_witch_data <- function(year){
+  #Import raw data
+  witch_data <- read_excel("data/xlsx/witch_survey.xlsx", sheet = paste0(year))
+  
+  #Tidy data structure
+  tidy_data <- pivot_longer(witch_data, cols = starts_with("08"), names_to = "Date", values_to = "Presence", names_transform = list(Date = mdy), values_transform = list(Presence = as.character))
+  
+  #Clean column names
+  tidy_data <- clean_names(tidy_data)
+  
+  #Fix non-numerics
+  tidy_data$presence[which(tidy_data$presence == "none")] <- 0
+  tidy_data$presence <- as.integer(tidy_data$presence)
+  
+  #Fix typos
+  tidy_data$presence[which(tidy_data$presence == 6)] <- 0
+  tidy_data$presence[which((tidy_data$presence == 2) | (tidy_data$presence == 7))] <- 1
+  
+  #Return tidy dataframe
+  return(tidy_data)
+}
+```
+:::
+
+::: notes
+this is what our script look like up until this point. it seems like we did a lot, but we actually don't have too scary of a script here. I can go ahead and refresh you on the steps we followed
+
+...
+
+very feasible and realistic example of a simple, but super useful script a biologist could make (or request - if you want something like this, contact me)
+:::
+
+## Preserve Data Assets
+
+Can run our function for each year and compile data as follows:
+
+```{r}
+#| echo: true
+#| eval: true
+
+#Tidy first year of data
+compiled_data <- wrangle_witch_data(2005)
+
+#Iterate through each year, tidy data for that year, and join with rest of tidy data
+for(val in 2006:2024){
+  compiled_data <- full_join(compiled_data, wrangle_witch_data(year = val))
+}
+
+#Export
+write.csv(compiled_data, file = "data/csv/compiled_witch_data.csv", row.names = FALSE)
+```
+
+::: notes
+Now, we can...
+
+The ability to use code for iteration is life changing because, now, in just 4 lines, we have iterated through 20 years of messy data and compiled 16000 lines of clean data
+:::
+
+## Preserve Data Assets
+
+Tidy, compiled data ready to be preserved and shared
+
+[*Rows: 16,000*]{.smaller}
+
+::: smaller
+::: {style="height:520px"}
+```{r}
+#| eval: TRUE
+library(DT)
+DT::datatable(compiled_data, options = list(
+  pageLength = 9,
+  dom = 't',
+  columnDefs = list(
+      list(targets = "_all", className = "custom-header-big")
+    )
+  )
+)
+```
+:::
+:::
+
+::: notes
+Here is our...
+
+If I sort the columns, you can see we have all years of data in this table now
+
+off screen, I am going to get this into ServCat as promised
+:::
+
+## Preserve Data Assets
+
+::: small
+Eliminate input files through ServCat API requests!
+:::
+
+```{r}
+#| eval: false
+#| echo: true
+library(httr2)
+
+#' Pull complete Tetlin Witch Survey dataset from ServCat
+#'
+#' @return dataframe of all years witch observation data
+#' @export
+#'
+#' @examples
+#' pull_witch_data()
+pull_witch_data <- function(){
+  #API request
+  url <- "https://ecos.fws.gov/ServCatServices/servcat/v4/rest/DownloadFile/1234"
+  response <- httr2::req_perform(request(url))
+  
+  #Extract file name from response header
+  filename <- sub('.*filename="([^"]+)".*',"\\1", response$headers$`content-disposition`)
+  
+  #Save file
+  writeBin(response$body, paste0("data/",filename))
+  
+  #Import dataset
+  return(read.csv(paste0("data/",filename)))
+}
+
+```
+
+::: small
+From now on, get all data with just: `my_data <- pull_witch_data()`
+:::
+
+::: notes
+I can even go a step further and write a function to pull the authoritative copy of the dataset from servcat, so we can have a fully automated workflow for our subsequent steps - anyone wanted to run or reproduce analyses does not even need any inputs- they can just run "pull_witch_data()" shown at the bottom here, and have the most up-to-date copy
+
+and with that, everything is perfectly set up for analyses, and we will get to that after the break
+:::
+
+# Break Time
+
+
+```{r ggplot-theme}
+#| cache: true
+#| echo: false
+
+theme_fws <- function() {
+  theme_bw() +
+  theme(strip.text = element_text(size = 100),
+        axis.text.x = element_text(size = 60),
+        axis.text.y = element_text(size = 60),  
+        axis.title.x = element_text(size = 80),
+        axis.title.y = element_text(size = 80),
+        plot.margin = margin(t = 20,
+                             r = 40,  
+                             b = 20,  
+                             l = 20))
+}
+```
+
+
+## [Analysis]{.cursive}
+
+![](images/witch_analysis.png){fig-alt="An AI generated image of a claymation witch sitting at a desk in the boreal forest writing code." .absolute top="100" right="150" height=600}
+
+![](images/workflow_analyze.png){.absolute top="80" left="300" fig-alt="A diagram of the data workflow from Project setup to Preserve Products. The Analyze step is highlighted." height=650}
+
+::: notes
+- Thanks Emma. 
+- We've now provided an overview of the first three steps of a script-based workflow: project setup, data wrangling and data preservation. I'll now cover data analysis.
+:::
+
+
+## [Analysis]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   The steps are clear
+-   The workflow is reproducible
+-   Limited opportunities for human error
+:::
+
+::: notes
+- Every ecological data analysis is unique, so it would be challenging to provide a workflow that works in all situations.
+- That said, there are some criteria that can be applied to evaluate whether a workflow is following best practices
+- In general, the step of an analysis should be clear. Not only to future you but to others that might want to better understand the tools and decisions made related to how you performed an analysis.
+- Similarly, the analysis should be reproducible. At a minimum, the steps should be documented, but ideally, someone should be able to pick up your work and reproduce it without any additional tools or knowledge.
+- Finally, we should strive to limit introducing human error into an analysis. Much of this originates from steps in processing the data just prior to analysis.
+:::
+
+
+## [Analysis]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.  Reformat observation data
+2. Get spatial covariates
+3.  Load data into software (PRESENCE, Mark, Distance, etc.)
+4.  Use interface to select options
+5.  Run it and export results
+:::
+:::
+
+::: {.column width="50%"}
+![](images/mark.png){fig-alt="An image of a stack of Microft windows from Program MARK." .shadow width="100%" fig-align="center"}
+:::
+
+:::
+
+::: notes
+- In a traditional manual workflow, the analytical steps might look something like this.
+[click]
+- First, observation data are reformated. This might be done by copying the raw data into another Excel tab and moving columns, calculating values, or pivoting the structure of the spreadsheet.
+[click]
+- Second, spatial covariates are often needed. To get these, one might go online to a GIS data repository, download the data, and load these into a GIS software like ArcGIS Pro. Or better, one might get the data into ArcGIS Pro directly through a web service. Then, the data are processed and associated with the observation data, typically using the tools available in ArcGIS Pro by searching through the toolbox, clicking boxes and saving the output locally.
+[click]
+- Then all these data might be loaded into an analytical software, such as PRESENCE or Mark.
+[click]
+- In the software, the user selects the desired statistical analysis, typically though a point and click menu.
+[click]
+- Finally, one would run the analysis (and rerun, and rerun) and then export the output to a local directory.
+::: 
+
+
+## Compare Workflows
+
+::: {.columns .small}
+
+::: {.column width="50%"}
+### [Manual]{.cursive}
+
+::: {.fragment fragment-index=1}
+-   Restricted to functions in the software
+:::
+
+<br>
+
+::: {.fragment fragment-index=2}
+-   "Black Box" {{< fa box >}}
+:::
+
+::: {.fragment fragment-index=3}
+-   Difficult/time-consuming to document and reproduce steps
+:::
+
+::: {.fragment fragment-index=4}
+-   Must extract results into another software to visualize
+:::
+:::
+
+::: {.column width="50%"}
+### [Scripted]{.cursive}
+
+::: {.fragment fragment-index=1}
+-   Many custom R packages for performing most common ecological data analyses
+:::
+
+::: {.fragment fragment-index=2}
+-   R packages are generally well-documented
+:::
+
+::: {.fragment fragment-index=3}
+- Your code documents your steps
+:::
+
+<br>
+
+::: {.fragment fragment-index=4}
+- Self-contained workflow
+:::
+:::
+
+:::
+
+::: notes
+- Let's compare the features of this workflow to a scripted workflow
+[click]
+- In a manual workflow, we are restricted to functions the software package. Typically, they cover many of the most commonly used statistical analyses, but there will come a time when you want to do something that it cannot do. Alterately, in a scripted workflow in R, the sky in the limit. As Jonah mentioned, there are tens of thousands of custom packages and many specific to ecological data analysis. If it doesn't exist, you could create a new one.
+[click]
+- Many statistical software are a black box. Do we really know what is happening under the hood? In contrast, even functions in R packages can be examined, and if you want, customized. There is complete transparency. In addition, most package are well documented with vignettes, READMEs and help files.
+[click]
+- Describing the steps of a manual workflow can take work and time. There are a surprising number of decisions that you make when you click through software. On the other hand, the code that you write to perform an analysis is like a roadmap on what you did. It's out there for the world to see.
+[click]
+- Finally, to create publication quality figures and tables from results outputted from software like PRESENCE can be a chore. The raw output needs to be imported into something like Excel and manually reformatted. Each time the analysis is rerun, for example with new data, this process needs to be repeated. Alternatively, the analysis step in R is contained with the other steps of data workflow, so the the entire workflow can be rerun easily. 
+:::
+
+
+# 
+
+::: {.scary}
+Witch Survey
+:::
+::: {.cursive .center .larger}
+Analysis
+:::
+
+::: notes
+Let's walk through a scripted-based analysis using our witch survey example.
+:::
+
+
+## Get Covariates
+
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-3|5-7"
+
+# Refuge boundary
+source("./R/spatial_helpers.R")
+tetlin <- get_refuge("Tetlin National Wildlife Refuge")
+
+# NLCD layer
+library(FedData)
+get_nlcd(tetlin, label = "tetlin", year = 2016, landmass = "AK")
+```
+
+::: {.fragment}
+![](images/nlcd.png){fig-alt="A map show National Land Cover Data and the boundary of Tetlin Refuge." height=400}
+:::
+
+::: notes
+- Emma described the data wrangling and preservation steps for our observation data. Often, however, we need to use other people's data as covariates in a model. 
+- Since witches are thought to avoid water but are attracted to forests, we want to acquire these spatial covariates to examine whether our prediction is supported.
+- To do that, I created a function to get the Tetlin Refuge boundary from the FWS cadastral data layer on AGOL using web services. I run the function, called get_refuge.
+[click]
+- Next, I want to forest and water cover within the refuge. To do this, I download the National Land Cover Database (NLCD) data using the get_nlcd function from the FedData package.
+[click]
+- The output looks like this. A tile of NLCD data that encompasses Tetlin refuge.
+:::
+
+
+## Calculate Distances
+
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1|3-12|14-22"
+
+library(terra)
+
+# Calculate distance to forest
+forest <- terra::segregate(nlcd, classes = 42)  # Extract the forest layer
+forest <- terra::classify(forest, 
+                          rcl = matrix(c(1, 0, 1, NA), 
+                                       nrow = 2, 
+                                       ncol = 2))  # Reclassify 0 as NA
+forest <- terra::distance(forest)
+forest <- project(forest, "EPSG: 4326")  # Reproject to WGS84
+forest <- mask(crop(forest, ext(tetlin)), tetlin)
+names(forest) <- "forest"
+
+# Calculate distance to water
+water <- terra::segregate(nlcd, classes = 11)  # Extract the water layer
+water <- terra::classify(water, rcl = matrix(c(1, 0, 1, NA), 
+                                             nrow = 2, 
+                                             ncol = 2))  # Reclassify 0 as NA
+water <- terra::distance(water)
+water <- project(water, "EPSG: 4326")  # Reproject to WGS84
+water <- mask(crop(water, ext(tetlin)), tetlin)
+names(water) <- "water"
+
+```
+
+::: notes
+- But wait!
+- That looked like a lot of other stuff that I don't need. Plus, I want to look like how witches response to distance to water and forest. So I need to do a little more work.
+- First, I load the terra package, which is used to work with raster data in R.
+[click]
+- Then I run a few lines of code to extract the forest layer from the NLCD, reclassify it as 1 or 0, and then for each cell, calculate distance to the nearest forest cell. I then reproject the raster to match the Tetlin boundary, and crop/mask the distance to forest layer to the refuge.
+[click]
+- I repeat the same steps to calculate a distance to water raster.
+:::
+
+
+## 
+
+::: columns
+::: {.column width="50%"}
+![](images/forest_distance.png){fig-alt="A map of Distance to Forest for Tetlin National Wildlife Refuge."}
+:::
+::: {.column width="50%"}
+![](images/water_distance.png){fig-alt="A map of Distance to Water in Tetlin National Wildlife Refuge."}
+:::
+:::
+
+::: notes
+- Here's the output. A raster of distance to forest on the left and distance to water on the right. Great! We're getting somewhere. Note that they appear somewhat spatial correlated, which is something that should be addressed in an analysis, but for our simple example, we will ignore that fact.
+:::
+
+
+## Extract Covariates to Sites
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-3|5-6|8-10|12-15"
+
+# Required packages
+library(sf)
+library(terra)
+
+# Get witch observation data from ServCat
+sites <- pull_witch_data() %>% filter(year == 2024)
+
+# Reformat for `unmarked` package
+sites <- reformat(sites)
+
+# Extract covariates to sites
+sites <- data.frame(sites,
+                    forest = terra::extract(forest, sites)$forest,
+                    water = terra::extract(water, sites)$water)
+```
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| echo: false
+#| cache: true
+
+dat <- read.csv("data/csv/dat.csv")
+
+sc <- scale(dat[,4:5])
+
+dat[,2:3] <- round(dat[2:3], 4)
+dat[,4:5] <- round(dat[,4:5], 2)
+dat <- dat |>
+  rename("site_number" = X.1, 
+         "lat" = Y, 
+         "long" = X)
+
+dat_tbl <- DT::datatable(dat,
+              options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header")
+                  )))
+dat_tbl
+```
+:::
+:::
+:::
+
+::: notes
+- The next step is to extract these raster data to our observations.
+- We also load the sf package, which provides general spatial data management tools
+[click]
+- We get our witch data that Emma preserved on ServCat using her cool custom function, pull_witch_data and name it "sites".
+[click]
+- Next we reformat the tidy "sites" data into a wide format that is needed for analysis. For simplicity sake here, we use a custom function.
+[click]
+- Finally, we append our sites data with the distance to forest and water values at each site.
+[click]
+- Here's what it looks like.
+:::
+
+
+## Single-Season Occupancy Model
+
+::: columns
+
+::: {.column width="55%"}
+``` {r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-2|4-8|10-13|15-16"
+
+# Required package
+library(unmarked)
+
+# Create an unmarked data frame (scaled covariates)
+unmarked_df <- unmarkedFrameOccu(y = sites[,5:13], # observations
+                                 siteCovs = sites[,4:5]) # covariates
+sc <- scale(site_covs)  # scale them
+siteCovs(unmarked_df) <- sc  # add back
+
+# Fit single-season occupancy model
+mod <- unmarked::occu(formula = ~forest ~ water + 
+                                forest, 
+                        data = unmarked_df[[1]])
+
+# Look at estimates
+mod@estimates
+```
+
+
+:::
+
+::: {.column width="45%"}
+::: {.fragment}
+``` {r}
+#| echo: false
+#| cache: true
+
+# Required package
+library(unmarked)
+
+# Load data
+load("./data/rdata/unmarked_df.Rdata")
+
+# Fit single-season occupancy model
+mod <- unmarked::occu(formula = ~forest ~ water + forest, 
+                        data = unmarked_df[[1]])
+
+# Look at the estimates
+mod@estimates
+```
+:::
+:::
+
+:::
+
+::: notes
+- Phew! That was a look of steps, even before running a model!
+- But, the great thing is now that we have the code, we can just rerun that code whenever we get new data.
+- An upfront cost and a long-term saving!
+- For our witch survey, we want to estimate the occurrence of witches across Tetlin.
+- A common statistical method for do this is called occupancy modeling.
+- Without getting into too much detail, a great thing about this family of models is the ability to simultanuously estimate occupancy and detection probability. Given how sneaky those witches are, this could be important. We're probably not detecting all of them.
+- To do this, we load the `unmarked` R Package that includes functions for running occupancy models.
+[click]
+- We then use our sites data from the previous step to create a unmarked data frame that is needed as input data for the unmarked package.
+- We also center and scale our covariate data, which is often needed.
+[click]
+- Hooray! In this step, we run the single-season occupancy model. WWe specify occupancy as a function of forest and water distance and detection as a function of forest distance.
+[click]
+- Finally, we look at the output.
+[click]
+- On the right is the summary of the model estimates, showing the estimates for how occupancy and detection vary with water and forest distance. While this might make sense to a biologist or biometrician, this is not a product that you would share with a decision maker. So, the next step is to translate this into something more digestible. 
+:::
+
+
+## [Summarize Results]{.cursive}
+
+![](images/witch_summarize_results.png){fig-alt="An AI generated image of a claymation witch sitting in front of a computer in the boreal forest. She has a thinking bubble over her head. In the bubble is a statistical plot." .absolute top="100" right="150" height=600}
+![](images/workflow_summarize_results.png){fig-alt="A data workflow diagram, starting at Project Setup and ending with Preserve Products. The Summarize Results step is highlighted." .absolute top="80" left="300" height=650}
+
+::: notes
+As such, the next step in our workflow is to summarize our results.
+:::
+
+
+## [Summarize Results]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+- Customizable
+- Updateable
+- Standardized
+:::
+
+::: notes
+- Like with the analytical step, there are criteria that we can use to evaluate our summarize results steps of the workflow. Here are a few examples. 
+- This step should be customizable. It should be flexible enough to create unique visualizations that look good and clearly communicate results. 
+- It should be updatable, meaning that products can be regenerated or updated efficiently and without a lot of work. In other words, reproducible.
+- Finally, it should be standardized. The products should have a standard "look and feel" that is professional.
+:::
+
+
+## [Summarize Results]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.   Import results and data into Excel, ArcGIS Pro, etc.
+2.   Create summary tables, plots, and maps.
+3.   Reformat style to match document.
+4.   Export as images or Excel files.
+5. (Rinse and repeat...)
+:::
+:::
+
+::: {.column width="50%" .center}
+[![](images/excel.png){.shadow width="55%" fig-alt="A funny image downplaying on our fears of AI by showing a mistake in Excel"}](https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/)
+
+::: {.tiny}
+https://www.reddit.com/r/ProgrammerHumor/comments/fiw1rw/excel/
+:::
+:::
+
+:::
+
+::: notes
+-   A typical manual workflow might look something like this:
+[click]
+- We import our results that were outputted by our software and our data into another software.
+[click]
+- We create our tables, plots, and maps
+- We reformat them to match the document style
+- We export them as images or as Excel tables
+- We rinse and repeat.
+:::
+
+
+## [Summarize Results]{.cursive}: Compare Workflows
+
+::: {.columns .small}
+
+::: {.column width="50%"}
+### [Manual]{.cursive}
+
+::: {.fragment fragment-index=1}
+- Introduce human error 
+:::
+
+::: {.fragment fragment-index=2}
+- Limited plotting function
+:::
+
+::: {.fragment fragment-index=3}
+- Static output
+:::
+:::
+
+::: {.column width="50%"}
+### [Scripted]{.cursive}
+
+::: {.fragment fragment-index=1}
+- Self-contained workflow
+:::
+
+::: {.fragment fragment-index=2}
+- Endless options for visualizations
+:::
+
+::: {.fragment fragment-index=3}
+- Options for static, dynamic, and interactive outputs
+:::
+
+:::
+:::
+
+::: notes
+- How does this compare to a scripted workflow for summarizing results?
+[click]
+- The manual workflow contains many manual steps that often introduce quality issues. The R workflow is free of such errors.
+[click]
+- The manual workflow has limited plotting functions. Excel can only do so much! Alternatively, if you can dream it, you can create it in R.
+[click]
+- The manual workflow is generally limited to static output. Figures are images. Tables are just to look at. Alteratively, a scripted workflow allows for static and dynamic outputs. Decision makers can interactive with plots and tables.
+:::
+
+
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Results]{.cursive}
+:::
+
+::: notes
+Ok, back to our witch survey example. Let's summarize some of our results!
+:::
+
+
+## Witch Survey Results 
+### Occupancy ($\psi$) {.center}
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "1-3|4-7"
+
+# Calculate predicted occupancy
+pred <- rbind(unmarked::plotEffectsData(mod, "state", "forest"), 
+              unmarked::plotEffectsData(mod, "state", "water")) |>
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+``` {r}
+#| out-height: "100%"
+#| cache: true
+
+# Calculate predicted occupancy (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), 
+              plotEffectsData(mod, "state", "water")) |>
+  dplyr::mutate(covariateValue = dplyr::case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+pred_tbl <- pred |> 
+  mutate_if(is.numeric, round, digits = 2) |>
+  DT::datatable(options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header"))))
+pred_tbl
+```
+:::
+:::
+
+:::
+
+::: notes
+- Our witch model output contained a lot of information, but it was not useable by a decision-maker. 
+- Our first step is to use the model output to generate some predictions of occupancy.
+- The R code shown here takes our model output in "mod" and creates a table of predicted values for each site.
+[click]
+- Since the model used scaled values of the covariates, we need to unscale them in the results to be more informative. We save the result as an object called "pred".
+[click]
+Here's what that table looks like.
+:::
+
+
+## Witch Survey Results 
+### Detection {.center}
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| echo: true
+
+# Calculate predicted detection
+pred_det <- unmarked::plotEffectsData(mod, "det", "forest") |>
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+```
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| out-height: "100%"
+#| cache: true
+
+# Calculate predicted detection (unscaled)
+pred_det <- plotEffectsData(mod, "det", "forest") |>
+  mutate(covariateValue = covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]])
+
+pred_det |> 
+  mutate_if(is.numeric, round, digits = 2) |>
+  DT::datatable(options = list(
+                pageLength = 9,
+                dom = 't',
+                columnDefs = list(
+                  list(targets = "_all",
+                       className = "custom-header"))))
+```
+:::
+:::
+
+:::
+
+::: notes
+This is the same step, but for predictions about detection probability.
+[click]
+- And here's what that table looks like.
+- This is all well and good, but it's still not something that you would typically hand a manager.
+- What we need are some visualizations of these results.
+:::
+
+
+## Witch Survey Results
+### Occupancy ($\psi$) {.center}
+
+::: columns
+
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+#| echo: true
+
+library(ggplot2)
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted),
+  group = covariate) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+              linetype = 2,
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+::: {layout="[[-1], [1], [-1]]"}
+```{r}
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted),
+  group = covariate) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+              linetype = 2,
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  theme_fws() +
+  facet_grid(~covariate, scales = "free")
+```
+:::
+:::
+:::
+
+:::
+
+::: notes
+- To do that, we take the tables of predicted values for each site and create some plots
+- We load the ggplot2 package, which allow us to make cool plots
+- We run the ggplot function, using the table of predicted values as input data
+[click]
+- Here's what that looks like.
+- Finally, we have something that a manager might be able to digest. 
+- The plot on the left clearly showed that witch occupancy at Tetlin is high overall. In forest cover, there is a 50% likelihood of witch occurrence. Yikes! As you move away from forest, you're like likely to encounter a witch.
+- Alternatively, witches are still surprisingly prevalent in water cover, but they are more likely to occur further from water.
+- Our predictions of witch occurrence hold true! Thanks Google!
+:::
+
+
+## Witch Survey Results 
+### Detection {.center}
+
+::: columns
+
+::: {.column width="50%"}
+<br>
+```{r}
+#| eval: false
+#| echo: true
+
+# Plot predicted values (detection)
+ggplot(pred, aes(x = covariateValue, 
+                 y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, 
+                         ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+
+::: {.column width="50%"}
+::: {.center-xy-container}
+::: {.fragment}
+``` {r}
+#| out-width: "100%"
+#| fig-height: 8
+
+# Plot predicted values (detection)
+ggplot(pred_det, aes(x = covariateValue, y = Predicted)) +
+         geom_line() +
+         geom_ribbon(aes(ymin = lower, ymax = upper), 
+                     linetype = 2, 
+                     alpha = 0.1) +
+         xlab("Distance to Forest (m)") +
+         ylab("Detection (p)") +
+         theme_fws()
+```
+:::
+:::
+:::
+
+:::
+
+::: notes
+- Now lets do that same step for predictions of witch detection.
+- The code is basically the same, but the input data is the detection prediction data frame.
+[click]
+- Here we see that the probability of detecting a witch increases with distance to forest.
+- Again, the data support our a priori prediction that witches are harder to spot in forest cover.
+- Sneaky witches! 
+- This plots are great, but our original goal was to estimate witch occurrence across Tetlin. Wouldn't a map of these predictions be helpful?
+:::
+
+
+## Witch Survey Results
+### Maps {.center}
+
+```{r}
+#| eval: false
+#| echo: true
+#| file: R/create_map.R
+#| code-line-numbers: "|1|3-8|10|12-14|20|23-74"
+```
+
+::: notes
+- To do this, I wrote an R function to generate an interactive map, using a javascript plugin called leaflet.
+- Luckily, there is an R package (called leaflet) that makes this pretty easy.
+- What you are seeing here is the roxygen header for my function, to demostrate that we can document our functions with metadata.
+[click]
+- The first line is the title of the function and tells everyone what it does
+[click]
+- Next we have the list of parameters or arguments that you need to give the function. In this case, we need a raster of estimates of occupancy, point locations of our sites,  a refuge boundary layer, and other stuff. 
+[click]
+- Below that, we see what this function returns.
+[click]
+- We see what packages are required to run it
+[click]
+- And there's even an example of how to run it.
+[click]
+- Below all that is the actual function
+:::
+
+
+## Witch Occupancy ($\psi$)
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1-5|7-8|10-15"
+
+# Generate a raster of predicted occupancy
+ras <- c(water, forest)  # Combine our rasters
+psi <- unmarked::predict(mod, 
+                         type = "state", 
+                         newdata = ras)
+
+# Source the `create_map()` function
+source("./R/create_map.R")
+
+# Create a map
+create_map(ras = psi, 
+           s = sites, 
+           r = tetlin, 
+           h = 650,
+           w = 300)
+```
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| echo: false
+#| message: false
+#| cache: true
+#| fig-align: center
+
+# create_map function
+source("./R/create_map.R")
+
+# Data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+map_predict <- create_map(ras = psi, s = sites, r = tetlin, h = 600, w = 600)
+map_predict
+```
+:::
+:::
+
+:::
+
+::: notes
+- Ok, let's try it out.
+[click]
+- First, we combine the water and forest rasters.
+- Then we use a function in the unmarked package to predict values of occupancy at each cell
+[click]
+- Next we source our create_map function from the last slide
+[click]
+- And finally, we run it.
+[click]
+- Here's what we see. A map of the probability of witch occurrence across Tetlin Refuge. The red indicates higher probabilities, blue is lower.
+- From this map, it appears that there is a hot spot of witch activity in the west corner of the refuge. We might want to let the manager know about that!
+:::
+
+
+## Precision of Estimates (SE)
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|14"
+
+# Source the `create_map()` function
+source("./R/create_map.R")
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+# Create a map
+create_map(ras = psi, 
+           s = sites, 
+           r = tetlin, 
+           p = "SE",
+           h = 650,
+           w = 300)
+```
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| echo: false
+#| message: false
+#| cache: true
+#| fig-align: center
+
+# create_map function
+source("./R/create_map.R")
+
+# Data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+psi <- terra::rast("data/raster/psi/psi.tif")
+
+map_se <- create_map(ras = psi, 
+           s = sites,
+           r = tetlin,
+           p = "SE",
+           h = 600, w = 600)
+map_se
+```
+:::
+:::
+
+:::
+
+::: notes
+- Typically, this is all we would report, but wouldn't it be interesting to know about the precision of our estimates and whether that varies across the refuge. We could use that to update our sampling design to increase precision of future surveys.
+- Creating a map of the standard error of our occupancy estimates is straightforward.
+[click]
+- All that we need to do is change one argument in the function and...
+[click]
+- Our map updates to show how SEs vary across Tetlin.
+- We see that our estimates at the far western boundary of the refuge are more inprecise, probably because we don't have many sites that are really far from water. Maybe we could consider a change to our design to accomodate that. 
+:::
+
+
+## [Report]{.cursive}
+
+![](images/witch_report.png){fig-alt="An AI generated image of a claymation style witch handing a man a report. They are in the boreal forest. A lynx is in the background" .absolute top="100" right="150" height=600}
+![](images/workflow_report.png){fig-alt="A data workflow diagram, starting with Project Setup and ending with Preserve Products. The Report step is highlighted." .absolute top="80" left="300" height=650}
+
+::: notes
+-   The next step in the workflow is Reporting.
+:::
+
+
+## [Report]{.cursive}
+
+::: callout-tip
+## Criteria for Best Practice
+
+-   Easy to update
+-   Clear link between the data and the report
+-   Reproducible
+:::
+
+::: notes
+- Criteria for best practices for reporting look a lot like the rest of the steps.
+- We wanting reports to be easy to update.
+- We want a clear link between the data and the report.
+- Finally, we want reports to be reproducible by your future self and others after you.
+:::
+
+
+## [Report]{.cursive}: Manual Workflow
+
+::: columns
+
+::: {.column width="50%"}
+### Steps {.center}
+
+::: incremental
+1.  Copy/paste tables and figures into Word
+2. Calculate inline statistics and add into doc
+3. Update formatting to look good
+4. Repeat steps for PowerPoint presentation
+:::
+:::
+
+::: {.column width="50%"}
+[![](images/copy_paste.png){fig-alt="An cartoon image of a man taking off his glasses. In the speech bubble, it say Wow! Copy/paste all day? I'm SOO lucky!" .shadow width="100%" fig-align="center"}](https://grit42.com/news/excel-hell)
+:::
+
+:::
+
+::: notes
+- We are all familiar with the traditional workflow steps for generating reports.
+[click]
+- We copy/paste the tables, figures, and maps 
+[click]
+- We calculate inline statistics and then manually type them into our Word doc
+- We update the formatting until it looks good
+- We rinse and repeat for other formats like PowerPoint.
+:::
+
+
+## Reporting in R: Quarto ![](images/quarto_logo.png){fig-alt="An image of the Quarto logo." .center-inline height="60px"}
+
+[![](images/quarto_illustration.png){fig-alt="An image of a three step workflow for rendering a Quarto document. The first bubble has logos for R and other programming languages. The middle bubble says Quarto and the last bubble shows HTML, PDF and MS Word docs."}](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote)
+
+::: notes
+- R has really grow when it comes to reporting 
+- Quarto was discussed in some detail during the Posit Connect presentation this week.
+-   Quarto is an open source scientific publishing system
+-   Next generation of R Markdown
+-   Supports multiple programming languages (R, Python, Julia, Observable)
+-   Can create articles, reports, presentations, websites
+- Mix text with in-line code to update statistics in the text 
+-   Can output in HTML, PDF, Word and other formats
+:::
+
+
+## Reporting in R: Shiny ![](images/shiny_logo.png){fig-alt="The R Shiny logo." .center-inline height="60px"}
+
+![](images/shiny_app.png){fig-alt="An screenshot of a R Shiny app example."}
+
+::: notes
+- As many of you know, you can also create application from R
+-   Shiny is an R package
+-   Enables building interactive web applications that execute R
+    -   Standalone websites
+    -   Embed interactive charts in Quarto docs
+    -   Build dashboards
+- Primary advantage of a Shiny app is that decision makers can interact with the data.
+:::
+
+
+#
+::: {.scary}
+Witch Survey
+:::
+::: {.center .larger}
+[Report]{.cursive}
+:::
+
+::: notes
+Let's look at reporting our witch survey results.
+:::
+
+
+## Witch Report
+
+
+::: columns
+::: {.column width="50%"}
+[Quarto Code]{.smaller}
+````{{r}}
+---
+title: "Tetlin Witch Report"
+author: Jane Biologist
+format: html
+fig-align: center
+editor: source
+---
+
+
+```{{r setup}}
+#| echo: false
+#| message: false
+
+knitr::opts_chunk$set(warning = FALSE, 
+                      echo = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, 
+                      fig.align = "center")
+library(unmarked)
+library(terra)
+library(tidyverse)
+library(RColorBrewer)
+library(sf)
+library(leaflet)
+```
+
+```{{r load_data}}
+#| cache: true
+
+# Load site data
+dat <- read.csv("data/csv/dat.csv")
+
+source("R/simulate_data.R")
+source("R/create_map.R")
+
+# Scaled covariates
+sc <- dat |>
+    dplyr::select(forest, water) |>
+    scale()
+
+# Load site data and scale them
+load("./data/rdata/unmarked_df.Rdata")
+```
+
+```{{r fit_model}}
+#|cache: true
+
+# Fit single season occupancy model
+mod <- fit_model(unmarked_df)
+```
+
+## Introduction
+
+Invasive witches have become a management concern at Tetlin National Wildlife Refuge. As such, there is a need to estimate witch occurrence within the Refuge.
+
+## Methods
+
+### Data Collection
+
+We visited a sample randomly distributed sites across Tetlin Refuge. At each site, we spent one hour looking and listening for witches. We revisited each site eight times.
+
+### Model
+
+We estimated witch occupancy and detection using a single-season occupancy model. We used the `unmarked` R package. [blah, blah, blah]
+
+
+## Results
+
+We surveyed a total of `r knitr::inline_expr("nrow(dat)")` sites. The average distance to water at our sites was `r knitr::inline_expr("round(mean(dat$water), 2)")` m. The average distance to forest at our sites was `r knitr::inline_expr("round(mean(dat$forest), 2)")` m.
+
+```{{r}}
+#| out-width: "50%"
+#| fig-cap: "A map of the sites surveyed for witches, Tetlin National Wildlife Refuge, Alaska."
+
+# Import data
+tetlin <- sf::st_read("data/shapefile/tetlin.shp", 
+                      quiet = TRUE)
+sites <- read.csv("data/csv/sites.csv")
+
+# Create leaflet map
+base_map(sites, tetlin)
+```
+
+We observed witches on `r knitr::inline_expr("sum(dat[6:13])")` of 800 site visits, for a naive occupancy of `r knitr::inline_expr("round(sum(dat[6:13])/ncell(dat[6:13]), 2)")`. 
+
+```{{r plot_psi}}
+#| fig-height: 3
+#| fig-cap: Occupancy of witches at Tetlin National Wildlife Refuge, Alaska, 2024.
+
+# Calculate predicted values (unscaled)
+pred <- rbind(plotEffectsData(mod, "state", "forest"), plotEffectsData(mod, "state", "water")) %>%
+  mutate(covariateValue = case_when(
+    covariate == "forest" ~ covariateValue * attr(sc, 'scaled:scale')[[1]] + attr(sc, 'scaled:center')[[1]],
+    covariate == "water" ~ covariateValue * attr(sc, 'scaled:scale')[[2]] + attr(sc, 'scaled:center')[[2]]
+  ))
+
+# Plot predicted values (psi)
+ggplot(pred, aes(x = covariateValue, y = Predicted), 
+  group = covariate) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = lower, ymax = upper), 
+              linetype = 2, 
+              alpha = 0.1) +
+  xlab("Distance (m)") +
+  ylab("Psi") +
+  facet_grid(~covariate, scales = "free")
+```
+
+````
+:::
+
+::: {.column width="50%"}
+::: fragment
+[Rendered Report]{.smaller}
+
+```{=html}
+<iframe width="780" height="520" src="qmd/witch_report.html" title="Example Report"></iframe>
+```
+:::
+:::
+
+:::
+
+::: notes
+- On the left is the Quarto code for our witch survey
+- What I want you come away with is that this file includes the code that we already wrote, along with some text and in-line code to create summary statistics. 
+- We are reusing our code to generate the plots and maps. 
+- That all good, but you might be thinking that that report looks like garbage and the reports that I currently produce look good
+- Or maybe your manager isn't comfortable with HTML reports. We do Word docs.
+:::
+
+
+## Prettier Witch Report 
+
+![](images/witch_report_pretty.png){fig-alt="A screenshot of the cover page of a templated Word doc rendered from Quarto." .absolute top="100" left="50" width="35%"}
+![](images/witch_report_pretty2.png){fig-alt="A screenshot of another page of a templated Word doc rendered from Quarto." .absolute top="100" left="600" width="35%"}
+
+::: notes
+- That's ok. You can output reports in Quarto as PDFs or in Word
+- You can create a report that has the same look and feel as your current report
+- Here's an example of that. The same information as the previous HTML report, but saves as a Word doc with the look and feel of a AK Refuge Report.
+:::
+
+
+## Quarto Templates
+
+::: {.center}
+[![](images/akrreportr.png){fig-alt="A screenshot of the GitHub repository for the akrreportr R package." width="70%"}](https://github.com/USFWS/akrreport)
+:::
+
+::: notes
+- This Quarto template is available on GitHub as an R package that you can install locally.
+- Once you create your template, you can render all your Quarto reports with that look.
+:::
+
+
+## Share Products
+
+![](images/posit_connect.png){fig-alt="An image showing the various R packages and programming languages that are compatable with Posit Connect." .center}
+
+::: notes
+- I'll just briefly say that once you have written a report in Quarto or an application in Shiny, it is a straightforward step to making that product available as a website. You can even run it on a schedule to produce an updated report or email it regularly to a decision maker.
+- This can all be done using Posit Connect, a publishing service available to FWS.
+- Check out the presentation on Posit Connect for more details.
+:::
+
+
+## [Preserve Products]{.cursive}
+
+![](images/witch_preserve.png){fig-alt="An AI generated image of a claymation style witch. She is angry and writing on a paper at a desk in the boreal forest. There is a moose in the background." .absolute top="100" right="150" height=600}
+![](images/workflow_preserve_products.png){fig-alt="An image of a data workflow, starting with Project Setup and ending with Preserve Products. The Preserve Products step is highlighted." .absolute top="80" left="300" height=650}
+
+::: notes
+- We can't skip the preservation step. 
+- Although there are some options for preserving data products using web services in R, they are currently a little clunky
+- Therefore, the workflow is best done manually at the moment.
+- Hopefully we can make improvement to that!
+:::
+
+# Summary
+
+![](images/workflow_simple.png){fig-alt="An image of a data workflow, starting with Project Setup and ending with Preserve Products."}
+
+::: notes
+- We've throw a lot at you and your head might be spinning
+- We covered what script based workflows are.
+- Some trick and tips to using them
+- We hope that you have come away with an appreciate for the advantages of a script-based workflow
+- If you aren't using a script based workflow now, we hope that we have helped convince you that the time invested in moving to this approach are worth the effort.
+:::
+
+
+# Questions {background-image="images/witch_flying.png" background-size=contain}
+
+::: notes
+Thank you and we will take questions if there is time.
+:::
