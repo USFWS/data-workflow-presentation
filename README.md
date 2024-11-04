@@ -74,7 +74,6 @@ After attending this presentation, participants will:
 - [Organizing the project directory](https://nicercode.github.io/blog/2013-05-17-organising-my-project/)
 - [Designing projects](https://nicercode.github.io/blog/2013-04-05-projects/)
 - [Project management with RStudio](https://swcarpentry.github.io/r-novice-gapminder/02-project-intro/)
-- [File structure for data management](https://r-dir.com/blog/2013/11/folder-structure-for-data-analysis.html)
 - [Organizing files for data analysis](https://github.com/AndersenLab/IBiS-Bootcamp/wiki/Organizing-files-for-data-analysis)
 - [A meaningful file structure for R projects](https://www.r-bloggers.com/a-meaningful-file-structure-for-r-projects/)
 - [An introduction to Docker for R users](https://colinfay.me/docker-r-reproducibility/)
@@ -147,6 +146,13 @@ After attending this presentation, participants will:
   course](https://www.jumpingrivers.com/training/course/introduction-posit-connect-deployment-management/)
 - [Data-level Permissions Using Posit Connect
   (video)](https://www.youtube.com/watch?v=ivEoeyWJzVY)
+
+**DOI Resources**
+
+- [Alaska Data Management Sharepoint](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Region-Data-Management.aspx)
+- [Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide)
+- [DOI GitHub Enterprise Cloud (DGEC)](https://doimspp.sharepoint.com/sites/ocio-DOI-GitHub-Enterprise/SitePages/Home.aspx)
+- [FWS Using Git and GitHub](https://doimspp.sharepoint.com/sites/fws-gis/SitePages/Using-Git-and-GitHub.aspx)
 
 **Other**
 
