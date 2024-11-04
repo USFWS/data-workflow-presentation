@@ -37,55 +37,12 @@ After attending this presentation, participants will:
 
 # Resources
 
-**Introduction to R**
+**DOI Resources**
 
-- [An Introduction to R book](https://intro2r.com/)
-- [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)
-- [Why learn R](https://datacarpentry.org/R-ecology-lesson/00-before-we-start.html#r_code_is_great_for_reproducibility)
-- [What they forgot to teach you about R](https://rstats.wtf/)
-- [R cheatsheets](https://rstudio.com/resources/cheatsheets/)
-- [Project-oriented workflow](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
-
-**Teaching R**  
-
-- [DataCamp's tidyverse course](https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse)
-- [learnr package](https://rstudio.github.io/learnr/)
-- [RStudio teaching resources](https://education.rstudio.com/teach/materials/)
-- [Data Wrangling, Exploration and Analysis with R "STAT 545"](https://stat545.com/)
-- [Learn the tidyverse](https://www.tidyverse.org/learn/)
-- [Geocomputation with R](https://geocompr.robinlovelace.net/)
-
-**Style Guides**
-
-- [Tidyverse style guide](https://style.tidyverse.org/)  
-- [DataNovia R style guide](https://www.datanovia.com/en/blog/r-coding-style-best-practices/)
-
-**R Packages**
-
-- [Packaging your reproducible analysis](https://thomasleeper.com/2016/11/analysis-as-package/)
-- [R packages](http://r-pkgs.had.co.nz/)
-- [Packaging data analytical work reproducibly using R (and friends)](https://peerj.com/preprints/3192.pdf)
-
-
-**Project management**
-
-- [Stop working directory insanity!](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)
-- [A minimal project tree in R](https://talesofr.wordpress.com/2017/12/12/a-minimal-project-tree-in-r/)
-- [Organizing the project directory](https://nicercode.github.io/blog/2013-05-17-organising-my-project/)
-- [Designing projects](https://nicercode.github.io/blog/2013-04-05-projects/)
-- [Project management with RStudio](https://swcarpentry.github.io/r-novice-gapminder/02-project-intro/)
-- [Organizing files for data analysis](https://github.com/AndersenLab/IBiS-Bootcamp/wiki/Organizing-files-for-data-analysis)
-- [A meaningful file structure for R projects](https://www.r-bloggers.com/a-meaningful-file-structure-for-r-projects/)
-- [An introduction to Docker for R users](https://colinfay.me/docker-r-reproducibility/)
-- [R Docker tutorial](https://ropenscilabs.github.io/r-docker-tutorial/)
-
-
-**Project Directory Templates**
-
-- [MakeProject package](https://cran.r-project.org/web/packages/makeProject/index.html)
-- [rrtools package](https://github.com/benmarwick/rrtools)
-- [prodigenr package](https://cran.r-project.org/web/packages/prodigenr/readme/README.html)
-
+- [Alaska Data Management Sharepoint](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Region-Data-Management.aspx)
+- [Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide)
+- [DOI GitHub Enterprise Cloud (DGEC)](https://doimspp.sharepoint.com/sites/ocio-DOI-GitHub-Enterprise/SitePages/Home.aspx)
+- [FWS Using Git and GitHub](https://doimspp.sharepoint.com/sites/fws-gis/SitePages/Using-Git-and-GitHub.aspx)
 
 **General Coding Best Practices**
 
@@ -96,63 +53,79 @@ After attending this presentation, participants will:
 - [Art of README](https://github.com/noffle/art-of-readme#bonus-exemplars) - see examples and checklist
 - [Introduction to `roxygen2` vignette](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html)
 
+**Introduction to R**
+
+- [R for Data Science book](https://r4ds.hadley.nz/intro.html)
+- [An Introduction to R book](https://intro2r.com/)
+- [Data Wrangling, Exploration and Analysis with R "STAT 545"](https://stat545.com/)
+- [Learn the tidyverse](https://www.tidyverse.org/learn/)
+- [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)
+- [What they forgot to teach you about R](https://rstats.wtf/)
+- [R cheatsheets](https://rstudio.com/resources/cheatsheets/)
+
+**Style Guides**
+
+- [Tidyverse style guide](https://style.tidyverse.org/)  
+- [Google's R style guide](https://google.github.io/styleguide/Rguide.html)  
+- [DataNovia R style guide](https://www.datanovia.com/en/blog/r-coding-style-best-practices/)
+- [styler R package](https://www.tidyverse.org/blog/2017/12/styler-1.0.0/)
+
+**Project management**
+
+- [Stop working directory insanity!](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)  
+- [Project-oriented workflow](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)  
+- [A minimal project tree in R](https://talesofr.wordpress.com/2017/12/12/a-minimal-project-tree-in-r/)  
+- [Organizing the project directory](https://nicercode.github.io/blog/2013-05-17-organising-my-project/)
+- [Designing projects](https://nicercode.github.io/blog/2013-04-05-projects/)
+- [File structure for data management](https://r-dir.com/blog/2013/11/folder-structure-for-data-analysis.html)
+- [Organizing files for data analysis](https://github.com/AndersenLab/IBiS-Bootcamp/wiki/Organizing-files-for-data-analysis)
+- [A meaningful file structure for R projects](https://www.r-bloggers.com/a-meaningful-file-structure-for-r-projects/)
+
+**Project Directory Templates**
+
+- [MakeProject package](https://cran.r-project.org/web/packages/makeProject/index.html)
+- [rrtools package](https://github.com/benmarwick/rrtools)
+- [prodigenr package](https://cran.r-project.org/web/packages/prodigenr/readme/README.html)
+- [refugetools R package (internal DGEC repository)](https://github.com/USFWS/refugetools)
 
 **Version Control**  
 
 - [Happy Git with R](https://happygitwithr.com/)
+- [RStudio User Guide: Version Control](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html)
 
+**R Packages**
 
-**R Shiny**
-
-- [How to deploy a Shiny app to Posit Connect
-  (video)](https://www.youtube.com/watch?v=i61kMfGBFgQ)
-- [Automate ETL for a Shiny app with Posit
-  Connect](https://cran.r-project.org/web/packages/pins/vignettes/posit-connect.html)  
-- [Shiny Usage Tracking in Posit Connect
-  (video)](https://www.youtube.com/watch?v=0iljqY9j64U) 
-- [The Road to Easier Shiny App Deployments - posit::conf(2023)
-  (video)](https://www.youtube.com/watch?v=Um74HcYhhzE)
-- [How to bring modern UI to your Shiny apps
-  (video)](https://www.youtube.com/watch?v=O6WLERr5bKU)
+- [R packages book](http://r-pkgs.had.co.nz/)
+- [Packaging your reproducible analysis](https://thomasleeper.com/2016/11/analysis-as-package/)
+- [RStudio User Guide: Writing Packages](https://docs.posit.co/ide/user/ide/guide/pkg-devel/writing-packages.html)
 
 **Quarto**
 
-- [Tutorial: Hello,
-  Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
-- [Getting Started With Quarto
-  (video)](https://www.youtube.com/watch?v=_f3latmOhew)
-- [How to automate your reporting with Quarto Dashboards and Posit
-  Connect (video)](https://www.youtube.com/watch?v=xnJuXOw7iu8)  
-- [Quarto: Elevating R Markdown for Advanced Publishing
-  (video)](https://www.youtube.com/watch?v=8qR0wtJEDX4)
-- [Quarto Dashboards
-  (video)](https://www.youtube.com/watch?v=_VGJIPRGTy4)
-- [How to build business reports with Quarto
-  (video)](https://www.youtube.com/watch?v=Hl9TvhlzfV4)
+- [Tutorial: Hello, Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
+- [Getting Started With Quarto (video)](https://www.youtube.com/watch?v=_f3latmOhew)
+- [How to automate your reporting with Quarto Dashboards and Posit Connect (video)](https://www.youtube.com/watch?v=xnJuXOw7iu8)  
+- [Quarto: Elevating R Markdown for Advanced Publishing (video)](https://www.youtube.com/watch?v=8qR0wtJEDX4)
+- [Quarto Dashboards (video)](https://www.youtube.com/watch?v=_VGJIPRGTy4)
+- [How to build business reports with Quarto (video)](https://www.youtube.com/watch?v=Hl9TvhlzfV4)
+
+**R Shiny**
+
+- [How to deploy a Shiny app to Posit Connect(video)](https://www.youtube.com/watch?v=i61kMfGBFgQ)
+- [Automate ETL for a Shiny app with Posit Connect](https://cran.r-project.org/web/packages/pins/vignettes/posit-connect.html)  
+- [Shiny Usage Tracking in Posit Connect (video)](https://www.youtube.com/watch?v=0iljqY9j64U) 
+- [The Road to Easier Shiny App Deployments - posit::conf(2023) (video)](https://www.youtube.com/watch?v=Um74HcYhhzE)
+- [How to bring modern UI to your Shiny apps (video)](https://www.youtube.com/watch?v=O6WLERr5bKU)
 
 **Posit Connect**
 
-- [Posit Connect General
-  Information](https://posit.co/products/enterprise/connect/)
+- [Posit Connect General Information](https://posit.co/products/enterprise/connect/)
 - [Posit Connect User Guide](https://docs.posit.co/connect/user/)
 - [Posit Connect How To Guides](https://docs.posit.co/connect/how-to/)
-- [Posit Connect
-  Documentation](https://docs.posit.co/pct/documentation.html)
-- [Deploying to RStudio Connect: A Beginner’s
-  Guide](https://www.appsilon.com/post/deploying-to-rstudio-connect)
-- [What is Posit Connect \| Deploy All of Your R & Python Content
-  (video)](https://www.youtube.com/watch?v=YdRa0ef9TGQ)
-- [Introduction to Posit Connect
-  course](https://www.jumpingrivers.com/training/course/introduction-posit-connect-deployment-management/)
-- [Data-level Permissions Using Posit Connect
-  (video)](https://www.youtube.com/watch?v=ivEoeyWJzVY)
-
-**DOI Resources**
-
-- [Alaska Data Management Sharepoint](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Region-Data-Management.aspx)
-- [Alaska Region Interim Data Management User Guide](https://ak-region-dst.gitbook.io/alaska-region-interim-data-management-user-guide)
-- [DOI GitHub Enterprise Cloud (DGEC)](https://doimspp.sharepoint.com/sites/ocio-DOI-GitHub-Enterprise/SitePages/Home.aspx)
-- [FWS Using Git and GitHub](https://doimspp.sharepoint.com/sites/fws-gis/SitePages/Using-Git-and-GitHub.aspx)
+- [Posit Connect Documentation](https://docs.posit.co/pct/documentation.html)
+- [Deploying to RStudio Connect: A Beginner’s Guide](https://www.appsilon.com/post/deploying-to-rstudio-connect)
+- [What is Posit Connect \| Deploy All of Your R & Python Content (video)](https://www.youtube.com/watch?v=YdRa0ef9TGQ)
+- [Introduction to Posit Connect course](https://www.jumpingrivers.com/training/course/introduction-posit-connect-deployment-management/)
+- [Data-level Permissions Using Posit Connect (video)](https://www.youtube.com/watch?v=ivEoeyWJzVY)
 
 **Other**
 
@@ -166,4 +139,3 @@ After attending this presentation, participants will:
 ![](https://i.creativecommons.org/l/by/4.0/88x31.png) This work is
 licensed under a [Creative Commons Attribution 4.0 International
 License](https://creativecommons.org/licenses/by/4.0/).
-
