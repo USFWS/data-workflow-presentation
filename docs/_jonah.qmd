@@ -1,113 +1,3 @@
----
-format: 
-  revealjs:
-    theme: scss/custom-dark.scss
-    logo: images/FWS-logo.png
-    code-block-height: 500px
-    code-overflow: wrap
-    width: 1280
-    height: 720
-    footer: "[Alaska Data Week 2024](https://doimspp.sharepoint.com/sites/fws-FF07S00000-data/SitePages/Alaska-Data-Week-2024.aspx){.author}"
-editor: source
-highlight-style: a11y
----
-
-```{r setup_index}
-#| echo: false
-
-options(repos = c(CRAN = "https://cloud.r-project.org/"))
-
-knitr::opts_chunk$set(warning = FALSE, 
-                      message = FALSE, 
-                      fig.retina = 3, 
-                      fig.align = "center")
-```
-
-# A Reproducible Data Workflow {.smaller}
-
-<br><br>
-
-::: columns
-::: {.column width="33%"}
-[**McCrea Cobb**]{.author}
-
-::: smaller
-Refuge Inventory and Monitoring\
-{{< fa envelope title="Email address logo" >}} [mccrea_cobb\@fws.gov](mailto:mccrea_cobb@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [mccrea-cobb](https://github.com/mccrea-cobb)
-:::
-:::
-
-::: {.column width="34%"}
-[**Emma Schillerstrom**]{.author}
-
-::: smaller
-Refuge Inventory and Monitoring\
-{{< fa envelope title="Email address logo" >}} [emma_shillerstrom\@fws.gov](mailto:emma_schillerstrom@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [eschillerstrom-usfws](https://github.com/eschillerstrom-usfws)
-:::
-:::
-
-::: {.column width="33%"}
-[**Jonah Withers**]{.author}
-
-::: smaller
-Fisheries and Ecological Services\
-{{< fa envelope title="Email address logo" >}} [jonah_withers\@fws.gov](mailto:jonah_withers@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [JonahWithers-USFWS](https://github.com/JonahWithers-USFWS)
-:::
-:::
-:::
-
-<br><br>
-
-::: {.center .smaller}
-{{< fa brands github title="The GitHub octocat logo" >}} <https://github.com/USFWS/data-workflow-presentation>
-:::
-
-::: notes
-Welcome everyone. My name is Jonah Withers and I'm a data manager with the Fisheries and Ecological Services program. My colleagues and co-presenters of today's talk are McCrea Cobb and Emma Schillerstrom. McCrea is a biometrician with the refuges program and Emma is a data management technician with the refuges program. Today's presentation is on creating reproducible workflows.
-:::
-
-# A Witch-proof Data Workflow {.smaller}
-
-![](images/witch_reproducible_workflow.png){.shadow width="20%" fig-align="center" fig-alt="An image of a witch brewing reproducible data. Image was generate by ChatGPT."}
-
-::: columns
-::: {.column width="33%"}
-[**McCrea Cobb**]{.author}
-
-::: smaller
-Refuge Inventory and Monitoring\
-{{< fa envelope title="Email address logo" >}} [mccrea_cobb\@fws.gov](mailto:mccrea_cobb@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [mccrea-cobb](https://github.com/mccrea-cobb)
-:::
-:::
-
-::: {.column width="34%"}
-[**Emma Schillerstrom**]{.author}
-
-::: smaller
-Refuge Inventory and Monitoring\
-{{< fa envelope title="Email address logo" >}} [emma_shillerstrom\@fws.gov](mailto:emma_schillerstrom@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [eschillerstrom-usfws](https://github.com/eschillerstrom-usfws)
-:::
-:::
-
-::: {.column width="33%"}
-[**Jonah Withers**]{.author}
-
-::: smaller
-Fisheries and Ecological Services\
-{{< fa envelope title="Email address logo" >}} [jonah_withers\@fws.gov](mailto:jonah_withers@fws.gov)\
-{{< fa brands github title="The GitHub octocat logo" >}} [JonahWithers-USFWS](https://github.com/JonahWithers-USFWS)
-:::
-:::
-:::
-
-::: notes
-Or should I say, welcome to our spooky presentation on witch-proof’ workflows! Happy Halloween, and prepare yourselves for a cauldron of tips, tricks, and a dash of magic to keep your data spells reproducible!
-:::
 
 ## Overview
 
@@ -625,10 +515,8 @@ refugetools:::dublin(project = "myProject",
 <br>
 
 ```{r}
-
 text <- readLines("docs/data/txt/project_meta.txt")
 cat(text, sep = "\n")
-
 ```
 :::
 

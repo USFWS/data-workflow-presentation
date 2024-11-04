@@ -17,11 +17,11 @@ $Scary: "Eater", serif;
 $blue: #02426D;
 $light-blue: #A3DBFF;
 $white: #FFFFFF;
-$accent-yellow: #FFC94F;
+$accent-yellow-1: #FFC94F;
 $accent-dark-blue: #012137;
 $accent-orange: #F7885A;
 $accent-light-blue: #D1EDFF;
-$accent-yellow: #FFE4A7;
+$accent-yellow-2: #FFE4A7;
 $accent-champagne: #E9D3AD;
 $accent-blue: #007AC2;
 $accent-green: #265D3A;
@@ -36,6 +36,7 @@ $link-color: $light-blue;
 
 // code block styling
 $code-block-font-size: 0.5em;
+
 $code-block-border-left: $light-blue;
 // $code-block-bg: $accent-orange;
 // $code-block-color: $blue;
@@ -78,7 +79,8 @@ $code-block-border-left: $light-blue;
 
 /* center an inline image horizontally */
 .center-inline {
-  margin: 0!important;}
+  margin: 0!important;
+}
 
 /* center text vertically and horizontally */
 .center-xy {
@@ -102,14 +104,18 @@ $code-block-border-left: $light-blue;
 /* adjust font sizes */
 .small {
   font-size: 0.8em;
-  }
+}
 
 .smaller {
   font-size: 0.5em;
-  }
+}
 
 .tiny {
   font-size: 0.2em;
+}
+
+.medlarge {
+  font-size: 1.2em;
 }
 
 .large {
@@ -131,10 +137,48 @@ $code-block-border-left: $light-blue;
     font-size: 0.5em;
 }
 
-
 /* add shadow to figures */
 .shadow {
   fig-align: "center";
   border-radius: 5px;
   box-shadow: 4.2px 4.5px 2.5px rgba(65, 65, 65, 0.737);
+  
+}
+
+/* change font color */
+.yellow {
+  color: $accent-yellow-1;
+}
+
+/* change font color */
+.orange {
+  color: $accent-orange;
+}
+
+/* change font color */
+.champagne {
+  color: $accent-champagne;
+}
+
+/* marker font */
+.marker {
+  font-family: $Marker;
+}
+
+/* make bolder */
+.extrabold {
+  font-weight: 2000;
+  font-size: 1.2em;
+}
+
+/* style datatable */
+.custom-header-big {
+  background-color: white;
+}
+
+/* headers for DT::datatable() */
+.custom-header {
+  color: black;
+  background-color: white;
+  font-size: 0.5em;
 }
