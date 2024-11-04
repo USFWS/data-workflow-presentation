@@ -515,7 +515,7 @@ refugetools:::dublin(project = "myProject",
 <br>
 
 ```{r}
-text <- readLines("docs/data/txt/project_meta.txt")
+text <- readLines("data/txt/project_meta.txt")
 cat(text, sep = "\n")
 ```
 :::
