@@ -516,7 +516,7 @@ refugetools:::dublin(project = "myProject",
 
 ```{r}
 
-# text <- readLines("C:/Users/jwithers/OneDrive - DOI/Presentations/DataManagementPresentations/DataWeek/data-workflow-presentation/docs/project_meta.txt")
+# text <- readLines("docs/data/project_meta.txt")
 # cat(text, sep = "\n")
 
 ```
